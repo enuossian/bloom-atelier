@@ -1,0 +1,8 @@
+html, .home-body {
+    height: 100%;
+}
+
+.home-body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
