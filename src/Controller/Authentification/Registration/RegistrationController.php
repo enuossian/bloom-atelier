@@ -26,6 +26,10 @@ class RegistrationController extends AbstractController
     #[Route('/inscription', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('visitor_home_index');
+        }
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -57,7 +61,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_waiting_for_email_verif');
         }
 
-        return $this->render('pages/authentification/registration/register.html.twig', [
+        return $this->render('pages/authentication/registration/register.html.twig', [
             'registrationForm' => $form,
         ]);
     }
@@ -65,7 +69,7 @@ class RegistrationController extends AbstractController
     #[Route('/inscription/en-attente-de-verification-du-compte', name: 'app_waiting_for_email_verif')]
     public function waitingForEmailVerif(): Response
     {
-        return $this->render('pages/authentification/registration/waiting_for_email_verif.twig');
+        return $this->render('pages/authentication/registration/waiting_for_email_verif.twig');
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
