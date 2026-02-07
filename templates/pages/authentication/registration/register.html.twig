@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+			{% block title %}Inscription - Bloom Atelier
+			{% endblock %}
+		</title>
+
+		<meta name="robots" content="index, follow">
+		<meta name="description" content="Inscription Bloom Atelier">
+		<meta name="keywords" content="Inscription, maquillage, atelier">
+		<meta name="author" content="Sarah Thomas">
+		<meta name="publisher" content="Enuossian">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+	</head>
+
+	<body>
+
+		<main class="min-vh-100 d-flex align-items-center justify-content-center" style="background: url('/images/static/Wallpaper.jpeg') center / cover no-repeat;">
+
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-10 col-lg-6 col-xl-5">
+
+						<div class="bg-white p-4 p-md-5 rounded-4 shadow">
+
+							<h1 class="text-center fw-bold mb-2">Bloom Atelier</h1>
+							<h2 class="text-center fw-medium mb-4">Inscrivez-vous</h2>
+
+							{% for flash_error in app.flashes('verify_email_error') %}
+								<div class="alert alert-danger text-center">
+									{{ flash_error }}
+								</div>
+							{% endfor %}
+
+							{{ form_start(registrationForm) }}
+
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<label for="registration_form_firstName">
+										Prénom
+										<span class="text-danger">*</span>
+									</label>
+									{{ form_widget(registrationForm.firstName, {attr: {class: 'form-control', 'autofocus':true}}) }}
+									{{ form_errors(registrationForm.firstName) }}
+								</div>
+
+								<div class="col-md-6">
+									<label for="registration_form_lastName">
+										Nom
+										<span class="text-danger">*</span>
+									</label>
+									{{ form_widget(registrationForm.lastName, {attr: {class: 'form-control'}}) }}
+									{{ form_errors(registrationForm.lastName) }}
+								</div>
+							</div>
+
+							<div class="mb-3">
+								<label>Email
+									<span class="text-danger">*</span>
+								</label>
+								{{ form_widget(registrationForm.email, {attr: {class: 'form-control'}}) }}
+								{{ form_errors(registrationForm.email) }}
+							</div>
+
+							<div class="mb-3">
+								<label>Mot de passe
+									<span class="text-danger">*</span>
+								</label>
+								{{ form_widget(registrationForm.password.first, {attr: {class: 'form-control'}}) }}
+								{{ form_errors(registrationForm.password.first) }}
+							</div>
+
+							<div class="mb-3">
+								<label>Confirmation du mot de passe
+									<span class="text-danger">*</span>
+								</label>
+								{{ form_widget(registrationForm.password.second, {attr: {class: 'form-control'}}) }}
+								{{ form_errors(registrationForm.password.second) }}
+							</div>
+
+							<div class="mb-4">
+								{{ form_widget(registrationForm.agreeTerms, {attr: {class: 'form-check-input'}}) }}
+								<label>
+									J’accepte les
+									<a href="{{ path('visitor_home_cgv') }}" target="_blank">
+										conditions générales d’utilisation
+									</a>
+								</label>
+								{{ form_errors(registrationForm.agreeTerms) }}
+							</div>
+
+							<button type="submit" class="btn btn-dark w-100 rounded-pill py-3">
+								Inscription
+							</button>
+
+							{{ form_end(registrationForm) }}
+
+							<div class="text-center mt-4">
+								<p class="mb-2">
+									Déjà un compte ?
+									<a href="{{ path('app_login') }}">Connectez-vous</a>
+								</p>
+								<p>
+									<a href="{{ path('visitor_home_index') }}">Retour à l’accueil</a>
+								</p>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</main>
+
+	</body>
+</html>

@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}Inscription - Bloom Atelier{% endblock %}
+    </title>
+
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Rejoignez Bloom Atelier - Votre studio de beauté et maquillage professionnel. Inscrivez-vous pour accéder à nos ateliers exclusifs.">
+    <meta name="keywords" content="Inscription, maquillage, atelier beauté, cours maquillage, bloom atelier">
+    <meta name="author" content="Sarah Thomas">
+    <meta name="publisher" content="Enuossian">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <style>
+            :root {
+                --primary-green: #00D084;
+                --secondary-green: #00A86B;
+                --accent-pink: #E6B8C9;
+                --dark: #1A1A1A;
+                --dark-soft: #2D2D2D;
+                --white: #FFFFFF;
+                --cream: #FFF9F5;
+                --gray-light: #F5F5F5;
+                --gray-border: #E0E0E0;
+                --text-muted: #757575;
+                --error: #D32F2F;
+                --success: #00A86B;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Montserrat', sans-serif;
+                background: var(--cream);
+                overflow-x: hidden;
+            }
+
+            /* Decorative background elements */
+            .decorative-circle {
+                position: fixed;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            .circle-1 {
+                width: 300px;
+                height: 300px;
+                background: radial-gradient(circle, rgba(0, 208, 132, 0.1) 0%, transparent 70%);
+                top: -100px;
+                right: 10%;
+                animation: float 20s ease-in-out infinite;
+            }
+
+            .circle-2 {
+                width: 200px;
+                height: 200px;
+                background: radial-gradient(circle, rgba(230, 184, 201, 0.15) 0%, transparent 70%);
+                bottom: 10%;
+                left: 5%;
+                animation: float 15s ease-in-out infinite reverse;
+            }
+
+            @keyframes float {
+                0%, 100% { transform: translate(0, 0) rotate(0deg); }
+                33% { transform: translate(30px, -30px) rotate(120deg); }
+                66% { transform: translate(-20px, 20px) rotate(240deg); }
+            }
+
+            /* Image Hero Section */
+            .image-hero {
+                position: relative;
+                background: linear-gradient(135deg, var(--dark) 0%, var(--dark-soft) 100%);
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 60px;
+                min-height: 100vh;
+            }
+
+            .image-hero::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-size: cover;
+                background-position: center;
+                opacity: 0.9;
+                z-index: 1;
+            }
+
+            .image-hero::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(135deg, rgba(0, 208, 132, 0.3) 0%, rgba(230, 184, 201, 0.2) 100%);
+                z-index: 2;
+                mix-blend-mode: overlay;
+            }
+
+            .hero-content {
+                position: relative;
+                z-index: 3;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                justify-content: space-between;
+            }
+
+            .logo-section {
+                animation: fadeInDown 0.8s ease;
+            }
+
+            .logo {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 48px;
+                font-weight: 300;
+                color: var(--white);
+                letter-spacing: 2px;
+                margin-bottom: 10px;
+                text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            .logo strong {
+                font-weight: 700;
+                background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-pink) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .tagline {
+                font-size: 14px;
+                color: rgba(255, 255, 255, 0.8);
+                letter-spacing: 3px;
+                text-transform: uppercase;
+                font-weight: 300;
+            }
+
+            .hero-text {
+                margin-top: auto;
+                margin-bottom: 60px;
+                animation: fadeInUp 1s ease 0.3s both;
+            }
+
+            .hero-text h1 {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 56px;
+                font-weight: 300;
+                color: var(--white);
+                line-height: 1.2;
+                margin-bottom: 20px;
+                text-shadow: 0 2px 30px rgba(0, 0, 0, 0.4);
+            }
+
+            .hero-text p {
+                font-size: 16px;
+                color: rgba(255, 255, 255, 0.9);
+                line-height: 1.8;
+                max-width: 500px;
+                font-weight: 300;
+            }
+
+            .features-list {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                animation: fadeInUp 1s ease 0.5s both;
+            }
+
+            .feature-item {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .feature-icon {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background: rgba(0, 208, 132, 0.2);
+                backdrop-filter: blur(10px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid rgba(0, 208, 132, 0.3);
+                flex-shrink: 0;
+            }
+
+            .feature-text {
+                color: var(--white);
+                font-size: 15px;
+                font-weight: 400;
+            }
+
+            @keyframes fadeInDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Form Section */
+            .form-section {
+                padding: 80px 70px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                background: var(--white);
+                position: relative;
+                overflow: hidden;
+                min-height: 100vh;
+            }
+
+            .form-section::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -20%;
+                width: 400px;
+                height: 400px;
+                background: radial-gradient(circle, rgba(230, 184, 201, 0.08) 0%, transparent 70%);
+                border-radius: 50%;
+                pointer-events: none;
+            }
+
+            .form-container {
+                position: relative;
+                z-index: 1;
+                max-width: 520px;
+                margin: 0 auto;
+                width: 100%;
+            }
+
+            h1 {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 48px;
+                font-weight: 300;
+                color: var(--dark);
+                margin-bottom: 8px;
+                animation: fadeInRight 0.8s ease;
+            }
+
+            h1 strong {
+                font-weight: 700;
+            }
+
+            h2 {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 32px;
+                font-weight: 600;
+                color: var(--dark);
+                margin-bottom: 40px;
+                animation: fadeInRight 0.8s ease 0.1s both;
+            }
+
+            @keyframes fadeInRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            /* Form Styles */
+            .form-label {
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--dark);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 10px;
+                display: block;
+            }
+
+            .form-label span {
+                color: var(--primary-green);
+                font-size: 16px;
+            }
+
+            .form-control {
+                width: 100%;
+                padding: 16px 18px;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 15px;
+                font-weight: 400;
+                border: 2px solid var(--gray-border);
+                border-radius: 12px;
+                background: var(--white);
+                color: var(--dark);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                outline: none;
+            }
+
+            .form-control:focus {
+                border-color: var(--primary-green);
+                box-shadow: 0 0 0 4px rgba(0, 208, 132, 0.1);
+                transform: translateY(-2px);
+            }
+
+            .form-control::placeholder {
+                color: #BDBDBD;
+                font-weight: 300;
+            }
+
+            .form-control:hover:not(:focus) {
+                border-color: #BDBDBD;
+            }
+
+            .text-danger {
+                color: var(--error);
+                font-size: 13px;
+                margin-top: 6px;
+                display: block;
+                font-weight: 500;
+            }
+
+            .form-check {
+                display: flex;
+                align-items: start;
+                gap: 12px;
+                padding: 0;
+            }
+
+            .form-check-input {
+                width: 22px;
+                height: 22px;
+                border: 2px solid var(--gray-border);
+                border-radius: 6px;
+                cursor: pointer;
+                flex-shrink: 0;
+                margin: 2px 0 0 0;
+                background: var(--white);
+                transition: all 0.2s ease;
+            }
+
+            .form-check-input:hover {
+                border-color: var(--primary-green);
+            }
+
+            .form-check-input:checked {
+                background-color: var(--primary-green);
+                border-color: var(--primary-green);
+            }
+
+            .form-check label {
+                font-size: 14px;
+                color: var(--text-muted);
+                line-height: 1.6;
+                font-weight: 400;
+                cursor: pointer;
+            }
+
+            .form-check label a {
+                color: var(--primary-green);
+                text-decoration: none;
+                font-weight: 500;
+                border-bottom: 1px solid transparent;
+                transition: all 0.2s;
+            }
+
+            .form-check label a:hover {
+                border-bottom-color: var(--primary-green);
+            }
+
+            /* Submit Button */
+            .btn-dark {
+                width: 100%;
+                padding: 18px;
+                background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+                color: white;
+                border: none;
+                border-radius: 12px;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 15px;
+                font-weight: 600;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 0 8px 20px rgba(0, 208, 132, 0.25);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .btn-dark::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                transition: left 0.5s;
+            }
+
+            .btn-dark:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 30px rgba(0, 208, 132, 0.35);
+            }
+
+            .btn-dark:hover::before {
+                left: 100%;
+            }
+
+            .btn-dark:active {
+                transform: translateY(-1px);
+            }
+
+            /* Alert Messages */
+            .alert {
+                padding: 14px 18px;
+                border-radius: 10px;
+                margin-bottom: 24px;
+                font-size: 14px;
+                font-weight: 500;
+                animation: slideDown 0.4s ease;
+            }
+
+            .alert-danger {
+                background: rgba(211, 47, 47, 0.1);
+                border: 1px solid rgba(211, 47, 47, 0.3);
+                color: var(--error);
+            }
+
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Bottom Links */
+            .text-center {
+                text-align: center;
+            }
+
+            .text-center p {
+                font-size: 14px;
+                color: var(--text-muted);
+                margin-bottom: 12px;
+            }
+
+            .text-center a {
+                color: var(--primary-green);
+                text-decoration: none;
+                font-weight: 500;
+                border-bottom: 1px solid transparent;
+                transition: all 0.2s;
+            }
+
+            .text-center a:hover {
+                border-bottom-color: var(--primary-green);
+            }
+
+            /* Responsive */
+            @media (max-width: 991px) {
+                .image-hero {
+                    display: none;
+                }
+
+                .form-section {
+                    padding: 60px 40px;
+                }
+            }
+
+            @media (max-width: 640px) {
+                .form-section {
+                    padding: 40px 24px;
+                }
+
+                h1 {
+                    font-size: 38px;
+                }
+
+                h2 {
+                    font-size: 28px;
+                }
+
+                .logo {
+                    font-size: 38px;
+                }
+
+                .hero-text h1 {
+                    font-size: 42px;
+                }
+            }
+
+            /* Row spacing fix */
+            .row.mb-3 {
+                margin-bottom: 24px !important;
+            }
+
+            .mb-3 {
+                margin-bottom: 24px !important;
+            }
+
+            .mb-4 {
+                margin-bottom: 32px !important;
+            }
+
+            .mt-4 {
+                margin-top: 32px !important;
+            }
+
+            .mb-2 {
+                margin-bottom: 16px !important;
+            }
+        </style>
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+
+<body>
+    <div class="decorative-circle circle-1"></div>
+    <div class="decorative-circle circle-2"></div>
+
+    <main class="vh-100">
+        <div class="container-fluid px-0">
+            <div class="row g-0 min-vh-100">
+
+                <!-- Left Side - Image Hero -->
+                <div class="col-lg-5 d-none d-lg-block">
+                    <div class="image-hero" style="background-image: url('/images/static/vert2.jpg');">
+                        <div class="hero-content">
+                            <div class="logo-section">
+                                <div class="logo">Bloom <strong>Atelier</strong></div>
+                                <div class="tagline">Beauty & Makeup Studio</div>
+                            </div>
+
+                            <div class="hero-text">
+                                <h1>Révélez votre<br>beauté naturelle</h1>
+                                <p>Rejoignez notre atelier de beauté et apprenez les techniques professionnelles de maquillage avec nos experts.</p>
+                            </div>
+
+                            <div class="features-list">
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00D084" stroke-width="2">
+                                            <path d="M9 11l3 3L22 4"/>
+                                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                                        </svg>
+                                    </div>
+                                    <div class="feature-text">Sessions exclusives en petits groupes</div>
+                                </div>
+
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00D084" stroke-width="2">
+                                            <circle cx="12" cy="8" r="7"/>
+                                            <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/>
+                                        </svg>
+                                    </div>
+                                    <div class="feature-text">Techniques professionnelles certifiées</div>
+                                </div>
+
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00D084" stroke-width="2">
+                                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                        </svg>
+                                    </div>
+                                    <div class="feature-text">Produits premium inclus</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Form -->
+                <div class="col-lg-7 d-flex justify-content-center px-4 my-4">
+                    <div class="form-section">
+                        <div class="form-container w-100 mx-auto">
+
+                            <h1 class="text-center fw-bold mb-2">Bloom <strong>Atelier</strong></h1>
+                            <h2 class="text-center fw-medium mb-4">Inscrivez-vous</h2>
+
+                            {% for flash_error in app.flashes('verify_email_error') %}
+                                <div class="alert alert-danger text-center" role="alert">{{ flash_error }}</div>
+                            {% endfor %}
+
+                            {{ form_start(registrationForm) }}
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="registration_form_firstName" class="form-label">Prénom <span>*</span></label>
+                                    {{ form_widget(registrationForm.firstName, {attr: {class: 'form-control', autofocus: true, placeholder: 'Marie'}}) }}
+                                    <div class="text-danger">{{ form_errors(registrationForm.firstName) }}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="registration_form_lastName" class="form-label">Nom <span>*</span></label>
+                                    {{ form_widget(registrationForm.lastName, {attr: {class: 'form-control', placeholder: 'Dubois'}}) }}
+                                    <div class="text-danger">{{ form_errors(registrationForm.lastName) }}</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="registration_form_email" class="form-label">Email <span>*</span></label>
+                                {{ form_widget(registrationForm.email, {attr: {class: 'form-control', placeholder: 'marie.dubois@email.fr'}}) }}
+                                <div class="text-danger">{{ form_errors(registrationForm.email) }}</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="registration_form_password_first" class="form-label">Mot de passe <span>*</span></label>
+                                {{ form_widget(registrationForm.password.first, {attr: {class: 'form-control', placeholder: '••••••••'}}) }}
+                                <div class="text-danger">{{ form_errors(registrationForm.password.first) }}</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="registration_form_password_second" class="form-label">Confirmation <span>*</span></label>
+                                {{ form_widget(registrationForm.password.second, {attr: {class: 'form-control', placeholder: '••••••••'}}) }}
+                                <div class="text-danger">{{ form_errors(registrationForm.password.second) }}</div>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                {{ form_widget(registrationForm.agreeTerms, {attr: {class: 'form-check-input'}}) }}
+                                <label for="registration_form_agreeTerms">
+                                    J'accepte les <a href="{{ path('visitor_home_cgv') }}" target="_blank">conditions générales d'utilisation</a>
+                                </label>
+                                <div class="text-danger">{{ form_errors(registrationForm.agreeTerms) }}</div>
+                            </div>
+
+                            <input formnovalidate type="submit" value="Inscription" class="btn btn-dark w-100 rounded-pill py-3">
+
+                            {{ form_end(registrationForm) }}
+
+                            <div class="text-center mt-4">
+                                <p class="mb-2">Déjà un compte ? <a href="{{path('app_login')}}">Connectez-vous</a></p>
+                                <p><a href="{{ path('visitor_home_index') }}">Retour à l'accueil</a></p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</body>
+</html>

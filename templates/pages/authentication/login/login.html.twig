@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>Connexion - Bloom Atelier</title>
+
+		{# SEO #}
+		<meta name="robots" content="index, follow">
+		<meta name="description" content="Connectez-vous à votre compte Bloom Atelier pour gérer vos réservations et accéder à votre espace personnel.">
+		<meta name="keywords" content="connexion, login, Bloom Atelier, maquillage">
+		<meta name="author" content="Sarah Thomas">
+		<meta
+		name="publisher" content="Enuossian">
+
+		{# Google Fonts #}
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</head>
+
+	<body>
+
+		<main class="min-vh-100 d-flex align-items-center justify-content-center" style="background: url('/images/static/Wallpaper.jpeg') center / cover no-repeat;">
+
+
+			<div class="container position-relative">
+				<div class="row justify-content-center">
+					<div class="col-md-8 col-lg-5">
+
+						<div class="bg-white p-4 p-md-5 rounded-4 shadow">
+
+
+							<form method="post">
+
+								<h1 class="text-center fw-bold mb-2">Bloom Atelier</h1>
+								<h2 class="text-center fw-medium mb-4">Connectez-vous</h2>
+
+								{% if error %}
+									<div class="alert alert-danger text-center">
+										{{ error.messageKey|trans(error.messageData, 'security') }}
+									</div>
+								{% endif %}
+
+								<div class="mb-3">
+									<label for="inputEmail">Adresse email</label>
+									<input type="email" name="email" id="inputEmail" class="form-control" value="{{ last_username }}" required autofocus>
+								</div>
+
+								<div class="mb-4">
+									<label for="inputPassword">Mot de passe</label>
+									<input type="password" name="password" id="inputPassword" class="form-control" required>
+								</div>
+
+								<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+
+								<div class="mb-3 form-check">
+									<input type="checkbox" name="_remember_me" id="rememberMe" class="form-check-input">
+									<label for="rememberMe" class="form-check-label">Se souvenir de moi</label>
+								</div>
+
+
+								<div>
+									<input formnovalidate type="submit" value="Connexion" class="btn btn-dark w-100 rounded-pill py-3">
+								</div>
+
+								<div class="text-center mt-4">
+									<p class="mb-2">
+										Pas encore de compte ?
+										<a href="{{ path('app_register') }}">Inscrivez-vous</a>
+									</p>
+									<p>
+										<a href="{{ path('visitor_home_index') }}">Retour à l’accueil</a>
+									</p>
+								</div>
+
+							</form>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</main>
+
+	</body>
+</html>
