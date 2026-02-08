@@ -30,9 +30,6 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
                 path: /
-                # by default, the feature is enabled by checking a checkbox in the
-                # login form, uncomment the following line to always enable it.
-                #always_remember_me: true
 
             # configure the maximum login attempts
             login_throttling:
