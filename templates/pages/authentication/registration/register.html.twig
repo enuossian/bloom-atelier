@@ -66,7 +66,7 @@
 							</div>
 
 							<div class="mb-3">
-								<label>Email
+								<label for="registration_form_email">Email
 									<span class="text-danger">*</span>
 								</label>
 								{{ form_widget(registrationForm.email, {attr: {class: 'form-control'}}) }}
@@ -74,7 +74,7 @@
 							</div>
 
 							<div class="mb-3">
-								<label>Mot de passe
+								<label for="registration_form_password_first">Mot de passe
 									<span class="text-danger">*</span>
 								</label>
 								{{ form_widget(registrationForm.password.first, {attr: {class: 'form-control'}}) }}
@@ -82,7 +82,7 @@
 							</div>
 
 							<div class="mb-3">
-								<label>Confirmation du mot de passe
+								<label for="registration_form_password_second">Confirmation du mot de passe
 									<span class="text-danger">*</span>
 								</label>
 								{{ form_widget(registrationForm.password.second, {attr: {class: 'form-control'}}) }}
@@ -91,7 +91,7 @@
 
 							<div class="mb-4">
 								{{ form_widget(registrationForm.agreeTerms, {attr: {class: 'form-check-input'}}) }}
-								<label>
+								<label for="registration_form_agreeTerms">
 									J’accepte les
 									<a href="{{ path('visitor_home_cgv') }}" target="_blank">
 										conditions générales d’utilisation
