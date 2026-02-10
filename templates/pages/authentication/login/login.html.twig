@@ -65,8 +65,15 @@
 
 
 								<div class="mb-3 form-check">
-									<input type="checkbox" name="_remember_me" id="rememberMe" class="form-check-input">
-									<label for="rememberMe" class="form-check-label">Se souvenir de moi</label>
+									<div class="row">
+										<div class="col-lg-6 my-2">
+											<input type="checkbox" name="_remember_me" id="rememberMe" class="form-check-input">
+											<label for="rememberMe" class="form-check-label">Se souvenir de moi</label>
+										</div>
+										<div class="col-lg-6 my-2 text-lg-end">
+											<a href="{{path('app_forgot_password_request')}}">Mot de passe oublié ?</a>
+										</div>
+									</div>
 								</div>
 
 
