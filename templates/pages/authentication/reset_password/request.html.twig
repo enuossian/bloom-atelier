@@ -1,0 +1,39 @@
+{% extends 'themes/base_visitor.html.twig' %}
+
+{% block title %}Demande de réinitialisation du mot de passe{% endblock %}
+
+{% block description %}
+    Demandez la réinitialisation de votre mot de passe en toute sécurité. Entrez votre adresse e-mail pour recevoir un lien vous permettant de définir un nouveau mot de passe.
+{% endblock %}
+
+{% block keywords %}
+    réinitialisation mot de passe, mot de passe oublié, récupération mot de passe, sécurité compte, demande réinitialisation, accès compte
+{% endblock %}
+
+{% block main %}
+	{% for flash_error in app.flashes('reset_password_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+	<h1 class="text-center my-3 display-5">Réinitialisation du mot de passe</h1>
+
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-md-8 col-lg-5 mx-auto shadow bg-white p-4">
+				{{ form_start(requestForm) }}
+				<div class="mb-3">
+					<label for="reset_password_request_form_email">Email</label>
+					{{ form_widget(requestForm.email, {'attr': {
+                    'class': 'form-control', 
+                    'autofocus': 'autofocus'
+                    }}) }}
+					<small>Entrez votre adresse email et nous vous enverrons le lien de réinitialisation de votre de mot passe.</small>
+				</div>
+
+				<button formnovalidate class="btn btn-primary shadow">Envoyer</button>
+				{{ form_end(requestForm) }}
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
