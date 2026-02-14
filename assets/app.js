@@ -2,4 +2,4 @@
 import './styles/app.scss';
 
 // Bootstrap js part
-require('bootstrap');
+import 'bootstrap';
