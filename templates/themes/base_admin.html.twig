@@ -6,9 +6,9 @@
 		<meta name="description" content="{% block description %}{% endblock %}">
 		<meta name="author" content="Sarah Thomas">
 		<meta name="publisher" content="Enuossian">
+		<meta name="keywords" content="{% block keywords %} {% endblock %}">
 		<title>{% block title %}{% endblock %} · Bloom Atelier</title>
 		
-		{% block keywords %} {% endblock %}
 		<link rel="canonical" href="https://medecine-du-monde.com">
 
 		{# Webpack Encore #}
@@ -212,7 +212,7 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="#">
+									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('app_admin_service_index')}}">
 										<i class="fa-solid fa-spa"></i> 
 										Services
 									</a>
