@@ -8,6 +8,9 @@
 
 {% block main %}
     <h1 class="text-center my-3 display-5">Liste des services</h1>
+
+	{% include 'components/_alert.html.twig' %}
+
     
     <div>
         <a href="{{path('app_admin_service_create')}}" class="btn">Ajouter un service</a>
