@@ -4,6 +4,7 @@ namespace App\Controller\Admin\Service;
 
 use App\Entity\Service;
 use App\Form\Admin\ServiceFormType;
+use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,9 +15,13 @@ use Symfony\Component\Routing\Attribute\Route;
 final class ServiceController extends AbstractController
 {
     #[Route('/service', name: 'app_admin_service_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(ServiceRepository $serviceRepository): Response
     {
-        return $this->render('pages/admin/service/index.html.twig');
+        $services = $serviceRepository->findAll();
+
+        return $this->render('pages/admin/service/index.html.twig', [
+            'services' => $services,
+        ]);
     }
 
     #[Route('/service/create', name: 'app_admin_service_create', methods: ['GET', 'POST'])]

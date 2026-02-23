@@ -34,9 +34,13 @@ class ServiceFormType extends AbstractType
                 'currency' => false,
             ])
             ->add('duration', IntegerType::class, [
+                'required' => true,
                 'attr' => [
                     // 'placeholder' => 'Ex: 180',
                     'class' => 'form-control',
+                    'min' => 60,
+                    'max' => 300,
+                    'step' => 30,
                 ],
             ])
             ->add('description', TextareaType::class, [

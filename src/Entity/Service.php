@@ -45,10 +45,9 @@ class Service
 
     #[Assert\NotBlank(message: 'La durée est obligatoire.')]
     #[Assert\Positive(message: 'La durée doit être positive.')]
-    #[Assert\Range(
-        min: 60,
-        max: 300,
-        notInRangeMessage: 'La durée doit se situer entre {{ min }} et {{ max }} minutes.'
+    #[Assert\Choice(
+        choices: [60, 90, 120, 150, 180, 210, 240, 270, 300],
+        message: 'La durée est invalide. Veuillez choisir une durée par tranches de 30 minutes entre 60 et 300 minutes.'
     )]
     #[ORM\Column]
     private ?int $duration = null;
@@ -207,5 +206,19 @@ class Service
         $this->isActive = $isActive;
 
         return $this;
+    }
+
+    public function getDisplayDuration(): string
+    {
+        $hours = intdiv($this->duration, 60);
+        $minutes = $this->duration % 60;
+
+        if ($hours > 0 && $minutes > 0) {
+            return "{$hours}h{$minutes}";
+        } elseif ($hours > 0) {
+            return "{$hours}h";
+        }
+
+        return "{$minutes} minutes";
     }
 }
