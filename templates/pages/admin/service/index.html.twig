@@ -1,0 +1,72 @@
+{% extends 'themes/base_admin.html.twig' %}
+
+{% block title %}Liste des services{% endblock %}
+
+{% block description %}Liste de tous les services{% endblock %}
+
+{% block keywords %} Liste, consulter, services{% endblock %}
+
+{% block j_query %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block data_tables %}
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.3.7/datatables.min.css" rel="stylesheet" integrity="sha384-MnxpJFHU9dTMYXshJqBDA0d93sG4KKAFEEzynAaDqcPP7BYh11O5HxbJ6iLDWOXS" crossorigin="anonymous">
+ 
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.3.7/datatables.min.js" integrity="sha384-7rAjATpiK3MtvKnoDf5WQz4O8W+3kpl4Jm82apgJgNkeUmZ59yjJT6LqlJpYqhVK" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json',
+                }
+            });
+        } );
+    </script>
+{% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-3 display-5">Liste des services</h1>
+
+	{% include 'components/_alert.html.twig' %}
+
+    
+    <div class="d-flex justify-content-end align-items-center my-3">
+        <a href="{{path('app_admin_service_create')}}" class="">Ajouter un service</a>
+    </div>
+
+    <div class="table-responsive">
+        <table id="myTable" class="table table-striped table-hover table-bordered">
+            <thead class="table-danger">
+                <tr>
+                    <th class="fw-bold">Nom</th>
+                    <th class="fw-bold">Prix</th>
+                    <th class="fw-bold">Durée</th>
+                    <th class="fw-bold">Statut</th>
+                    <th class="fw-bold">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                    <tr>
+                        <td>{{ service.name }}</td>
+                        <td>{{ service.price }} €</td>
+                        <td>{{ service.displayDuration }}</td>
+                        <td>{{ service.isActive }}</td>
+                        <td class="d-flex justify-content-center align-items-center gap-1">
+                            <a href="{{ path('app_admin_service_edit', {'id': service.id}) }}" class="btn btn-sm btn-secondary">Modifier</a>
+                            <form action="{{ path('app_admin_service_delete', {'id': service.id})}}" method="post">
+                                <input type="hidden" name="csrf_token" value="{{csrf_token('service-'~service.id)}}">
+                                <input type="submit" value="Supprimer" class="btn btn-sm btn-danger" onclick="return confirm('Confirmez-vous la suppression de ce service ?')">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    
+    
+{% endblock %}
