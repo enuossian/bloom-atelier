@@ -54,9 +54,12 @@
                         <td>{{ service.price }} €</td>
                         <td>{{ service.displayDuration }}</td>
                         <td>{{ service.isActive }}</td>
-                        <td>
-                            <a href="" class="btn btn-sm btn-secondary">Modifier</a>
-                            <a href="" class="btn btn-sm btn-danger">Supprimer</a>
+                        <td class="d-flex justify-content-center align-items-center gap-1">
+                            <a href="{{ path('app_admin_service_edit', {'id': service.id}) }}" class="btn btn-sm btn-secondary">Modifier</a>
+                            <form action="{{ path('app_admin_service_delete', {'id': service.id})}}" method="post">
+                                <input type="hidden" name="csrf_token" value="{{csrf_token('service-'~service.id)}}">
+                                <input type="submit" value="Supprimer" class="btn btn-sm btn-danger" onclick="return confirm('Confirmez-vous la suppression de ce service ?')">
+                            </form>
                         </td>
                     </tr>
                 {% endfor %}
