@@ -1,21 +1,28 @@
 {% extends 'themes/base_admin.html.twig' %}
 
-{% block title %}Ajout d'un service
-{% endblock %}
+{% block title %}Ajout d'un service{% endblock %}
 
-{% block description %}Ajouter un nouveau service
-{% endblock %}
+{% block description %}Ajouter un nouveau service{% endblock %}
 
-{% block keywords %}
-    Ajouter, nouveau, services
+{% block keywords %}Ajouter, nouveau, services{% endblock %}
+
+{# Tiny_mce #}
+{% block tiny_mce %}
+    <script src="https://cdn.tiny.cloud/1/69xzl36nni7vxdxavmfn6y5p650szgrx9xbla8n8lkds7qoa/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea'
+    });
+</script>
 {% endblock %}
 
 {% block main %}
-    <div class="container my-5">
-        <h1 class="text-center my-4 display-5">Nouveau service</h1>
+    <h1 class="text-center my-4 display-5">Nouveau service</h1>
+    <div class="container">
 
-        <div class="card shadow-sm">
-            <div class="card-body">
+        <div class="row">
+            <div class="col-md-10 mx-auto bg-light shadow p-4">
                 {{ form_start(serviceForm) }}
                 <div class="mb-3">
                     <label for="service_form_name">Nom du service<span class="text-danger">*</span>

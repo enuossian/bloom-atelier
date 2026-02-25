@@ -40,21 +40,28 @@
         <table id="myTable" class="table table-striped table-hover table-bordered">
             <thead class="table-danger">
                 <tr>
-                    <th class="fw-bold">Nom</th>
+                    <th class="fw-bold">Image</th>
+                    <th class="fw-bold">Service</th>
                     <th class="fw-bold">Prix</th>
                     <th class="fw-bold">Durée</th>
                     <th class="fw-bold">Statut</th>
+                    <th class="fw-bold">Créé le</th>
                     <th class="fw-bold">Options</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody> 
                 {% for service in services %}
                     <tr>
+                        <td>
+                            <img width="100" height="100" src="{{ vich_uploader_asset(service) }}" alt="{{ service.imageFile }}" class="img-fluid">
+                        </td>
                         <td>{{ service.name }}</td>
                         <td>{{ service.price }} €</td>
                         <td>{{ service.displayDuration }}</td>
                         <td>{{ service.isActive }}</td>
+                        <td>{{ service.createdAt|format_date() }}</td>
                         <td class="d-flex justify-content-center align-items-center gap-1">
+                            <a href="{{ path('app_admin_service_show', {'id': service.id})}}" class="btn btn-sm btn-dark">Voir</a>
                             <a href="{{ path('app_admin_service_edit', {'id': service.id}) }}" class="btn btn-sm btn-secondary">Modifier</a>
                             <form action="{{ path('app_admin_service_delete', {'id': service.id})}}" method="post">
                                 <input type="hidden" name="csrf_token" value="{{csrf_token('service-'~service.id)}}">

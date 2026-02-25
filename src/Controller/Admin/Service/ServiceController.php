@@ -55,6 +55,16 @@ final class ServiceController extends AbstractController
         ]);
     }
 
+    #[Route('/service/show/{id<\d+>}', name: 'app_admin_service_show', methods: ['GET'])]
+    public function show(Service $service, int $id): Response
+    {
+        $service = $this->serviceRepository->find($id);
+
+        return $this->render('pages/admin/service/show.html.twig', [
+            'service' => $service,
+        ]);
+    }
+
     #[Route('/service/edit/{id<\d+>}', name: 'app_admin_service_edit', methods: ['GET', 'POST'])]
     public function edit(Service $service, Request $request): Response
     {
