@@ -11,52 +11,37 @@ service, détail, {{ service.name }}
 {% endblock %}
 
 {% block main %}
-<section class="py-5">
-    <div class="container">
-
+    <div class="container py-5">
         <div class="row g-5 align-items-center">
 
             <!-- Image -->
             <div class="col-lg-6">
                 {% if service.image %}
-                    <img src="{{ asset('uploads/services/' ~ service.image) }}" 
-                         class="img-fluid rounded-4 shadow" 
-                         alt="{{ service.name }}">
+                    <img src="{{ vich_uploader_asset(service, 'imageFile') }}" alt="{{ service.name }}" class="img-fluid">
                 {% else %}
-                    <div class="bg-light rounded-4 d-flex align-items-center justify-content-center shadow"
-                         style="height: 400px;">
-                        <i class="bi bi-bag-heart fs-1 text-muted"></i>
-                    </div>
+                    <p>Image non disponible</p>
                 {% endif %}
             </div>
 
             <!-- Infos principales -->
             <div class="col-lg-6">
 
-                <h1 class="fw-bold mb-3">
-                    {{ service.name }}
-                </h1>
+                <h1 class="display-5 mb-3">{{ service.name }}</h1>
 
                 <div class="d-flex align-items-center gap-4 mb-4">
-                    <h2 class="fw-bold text-primary mb-0">
-                        {{ service.price }} €
-                    </h2>
-
-                    <div class="border-start ps-4">
-                        <i class="bi bi-clock"></i>
-                        {{ service.displayDuration }}
-                    </div>
+                    <h2 class="text-primary">{{ service.price }} €</h2>
+                    <span>{{ service.displayDuration }}</span>
                 </div>
 
-                <p class="lead text-muted mb-4">
-                    {{ service.description }}
-                </p>
+                <p class="lead mb-4">{{ service.description|raw}}</p>
 
-                <a href="#reservation" class="btn btn-lg btn-dark px-4">
-                    Réserver une session
-                </a>
+
+                <div class="d-flex justify-content-center align-items-center">
+                    <a href="#reservation" class="btn btn-lg btn-dark px-4">
+                        Réserver une session
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</section>
 {% endblock %}

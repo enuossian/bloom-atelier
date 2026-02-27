@@ -56,10 +56,8 @@ final class ServiceController extends AbstractController
     }
 
     #[Route('/service/show/{id<\d+>}', name: 'app_admin_service_show', methods: ['GET'])]
-    public function show(Service $service, int $id): Response
+    public function show(Service $service): Response
     {
-        $service = $this->serviceRepository->find($id);
-
         return $this->render('pages/admin/service/show.html.twig', [
             'service' => $service,
         ]);
@@ -84,19 +82,53 @@ final class ServiceController extends AbstractController
 
         return $this->render('pages/admin/service/edit.html.twig', [
             'serviceForm' => $form,
+            'service' => $service,
         ]);
     }
 
-    #[Route('/service/delete/{id<\d+>}', name: 'app_admin_service_delete', methods: ['POST'])]
+    #[Route('/service/delete/{id<\d+>}', name: 'app_admin_service_delete', methods: ['GET', 'POST'])]
     public function delete(Service $service, Request $request): Response
     {
-        if ($this->isCsrfTokenValid("service-{$service->getId()}", $request->request->get('csrf_token'))) {
+        if ($this->isCsrfTokenValid("delete-service-{$service->getId()}", $request->request->get('csrf_token'))) {
             $this->entityManager->remove($service);
             $this->entityManager->flush();
 
             $this->addFlash('success', 'Le service a été supprimé avec succès.');
         }
 
+        return $this->redirectToRoute('app_admin_service_index');
+    }
+
+    #[Route('/service/active/{id<\d+>}', name: 'app_admin_service_active', methods: ['POST'])]
+    public function active(Service $service, Request $request): Response
+    {
+        // si le token n'est pas valide on redirige vers admin service index
+        if (!$this->isCsrfTokenValid("active-service-{$service->getId()}", $request->request->get('csrf_token'))) {
+            return $this->redirectToRoute('app_admin_service_index');
+        }
+
+        // Si le service est inactif
+        if (!$service->isActive()) {
+            // On l'active
+            $service->setIsActive(true);
+
+            // On génère le message flash
+            $this->addFlash('success', 'Le service est actif.');
+        } else {
+            // Si le service est actif,
+            // On le désactive
+            $service->setIsActive(false);
+
+            // On génère le message flash
+            $this->addFlash('success', 'Le service est inactif.');
+        }
+
+        // On sauvegarde les modifications en bdd
+
+        $this->entityManager->persist($service);
+        $this->entityManager->flush();
+
+        // On redirige l'admin vers admin service index
         return $this->redirectToRoute('app_admin_service_index');
     }
 }

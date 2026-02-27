@@ -18,6 +18,7 @@
 
 2. Vérifier la logique
     - ```php vendor/bin/phpstan analyse```
+    - ```php vendor/bin/phpstan analyse --memory-limit=256M```
     - Ignorer les erreurs qui en réalité ne le sont pas, dans le fichier de configuration de php stan
         - ```
             parameters:

@@ -56,7 +56,7 @@ class ServiceFormType extends AbstractType
                 // autoriser la suppression de l'image
                 'allow_delete' => true,
                 // le label de suppression
-                'delete_label' => "Supprimer l'image actuelle ?",
+                'delete_label' => "Supprimer l'image ?",
 
                 // possibilité de télécharger l'image : false
                 'download_label' => false,
@@ -68,6 +68,10 @@ class ServiceFormType extends AbstractType
                 // définir des pattern à false / associer à asset mapper false
                 'imagine_pattern' => false,
                 'asset_helper' => false,
+                'attr' => [
+                    // 'placeholder' => 'Décrivez votre service en détail...',
+                    'class' => 'form-control mb-3',
+                ],
             ]);
     }
 

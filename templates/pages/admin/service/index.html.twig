@@ -52,21 +52,51 @@
             <tbody> 
                 {% for service in services %}
                     <tr>
-                        <td>
-                            <img width="100" height="100" src="{{ vich_uploader_asset(service) }}" alt="{{ service.imageFile }}" class="img-fluid">
+                        <td class="align-middle">
+                            <div class="d-flex justify-content-center align-items-center gap-1">
+                                {% if service.image %}
+                                    <img src="{{ vich_uploader_asset(service, 'imageFile') | imagine_filter('admin_service_thumb')}}" alt="{{ service.name }}" class="img-fluid">
+                                {% else %}
+                                    <img src="{{ asset('/images/static/no-image.jpg') | imagine_filter('admin_service_thumb') }}" />
+                                {% endif %}
+                            </div>
                         </td>
                         <td>{{ service.name }}</td>
                         <td>{{ service.price }} €</td>
                         <td>{{ service.displayDuration }}</td>
-                        <td>{{ service.isActive }}</td>
+                        <td class="align-middle">
+                            <div class="d-flex flex-column justify-content-center align-items-center gap-1">
+                                {% if service.isActive %}
+                                    <p>Actif</p>
+                                {% else %}
+                                    <p>Inactif</p>
+                                {% endif %}
+                                <form action="{{ path('app_admin_service_active', {'id': service.id})}}" method="post">
+                                    <div class="form-check form-switch">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token('active-service-'~service.id) }}">
+                                        <input 
+                                            class="form-check-input" 
+                                            type="checkbox" 
+                                            role="switch"
+                                            onclick="return confirm('Confirmez-vous cette action ?')"
+                                            onchange="this.form.submit()"
+                                            {{ service.isActive ? 'checked' : ''}}
+                                            >
+                                    </div>
+        
+                                </form>
+                            </div>
+                        </td>
                         <td>{{ service.createdAt|format_date() }}</td>
-                        <td class="d-flex justify-content-center align-items-center gap-1">
-                            <a href="{{ path('app_admin_service_show', {'id': service.id})}}" class="btn btn-sm btn-dark">Voir</a>
-                            <a href="{{ path('app_admin_service_edit', {'id': service.id}) }}" class="btn btn-sm btn-secondary">Modifier</a>
-                            <form action="{{ path('app_admin_service_delete', {'id': service.id})}}" method="post">
-                                <input type="hidden" name="csrf_token" value="{{csrf_token('service-'~service.id)}}">
-                                <input type="submit" value="Supprimer" class="btn btn-sm btn-danger" onclick="return confirm('Confirmez-vous la suppression de ce service ?')">
-                            </form>
+                        <td class="align-middle">
+                             <div class="d-flex justify-content-center align-items-center gap-1">
+                                <a href="{{ path('app_admin_service_show', {'id': service.id})}}" class="btn btn-sm btn-dark">Voir</a>
+                                <a href="{{ path('app_admin_service_edit', {'id': service.id}) }}" class="btn btn-sm btn-secondary">Modifier</a>
+                                <form action="{{ path('app_admin_service_delete', {'id': service.id})}}" method="post">
+                                    <input type="hidden" name="csrf_token" value="{{csrf_token('delete-service-'~service.id)}}">
+                                    <input type="submit" value="Supprimer" class="btn btn-sm btn-danger" onclick="return confirm('Confirmez-vous la suppression de ce service ?')">
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}

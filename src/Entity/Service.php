@@ -77,7 +77,7 @@ class Service
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column]
-    private ?bool $isActive = true;
+    private ?bool $isActive = false;
 
     /**
      * @var Collection<int, Session>

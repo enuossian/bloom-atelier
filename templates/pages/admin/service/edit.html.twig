@@ -1,18 +1,29 @@
 {% extends 'themes/base_admin.html.twig' %}
 
-{% block title %}Modification d'un service
+{% block title %}Modification du service {{ service.id }} : {{ service.name }}
 {% endblock %}
 
-{% block description %}Modifier ce service
+{% block description %}Modifier le service {{ service.id }} : {{ service.name }}
 {% endblock %}
 
 {% block keywords %}
     Modifier, service
 {% endblock %}
 
+{# Tiny_mce #}
+{% block tiny_mce %}
+    <script src="https://cdn.tiny.cloud/1/69xzl36nni7vxdxavmfn6y5p650szgrx9xbla8n8lkds7qoa/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea'
+    });
+</script>
+{% endblock %}
+
 {% block main %}
     <div class="container my-5">
-        <h1 class="text-center my-4 display-5">Modifier un service</h1>
+        <h1 class="text-center my-4 display-5">Modifier le service {{ service.id }} : {{ service.name }}</h1>
 
         <div class="card shadow-sm">
             <div class="card-body">
@@ -31,12 +42,20 @@
                     <div class="text-danger">{{ form_errors(serviceForm.description) }}</div>
 
                 </div>
-                <div class="mb-3">
-                    <label for="service_form_imageFile_file">Image
-                    </label>
-                    {{ form_widget(serviceForm.imageFile) }}
-                    <div class="text-danger">{{ form_errors(serviceForm.imageFile) }}</div>
-
+                <div class="row mb-3">
+                    <div class="col-md-6 text-center">
+                        {% if service.image %}
+                            <img src="{{ vich_uploader_asset(service, 'imageFile') | imagine_filter('admin_service_thumb')}}" alt="{{ service.name }}" class="img-fluid">
+                        {% else %}
+                            <img src="{{ asset('/images/static/no-image.jpg') | imagine_filter('admin_service_thumb') }}" />
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="service_form_imageFile_file">Image
+                        </label>
+                        {{ form_widget(serviceForm.imageFile) }}
+                        <div class="text-danger">{{ form_errors(serviceForm.imageFile) }}</div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-6 mb-3">
