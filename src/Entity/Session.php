@@ -6,6 +6,7 @@ use App\Enum\SessionStatus;
 use App\Repository\SessionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SessionRepository::class)]
 class Session
@@ -15,22 +16,37 @@ class Session
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'Le service est obligatoire.')]
     #[ORM\ManyToOne(inversedBy: 'sessions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Service $service = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, unique: true)]
     private ?string $reference = null;
 
+    #[Assert\NotNull(message: "La date et l'heure de début sont obligatoires.")]
+    #[Assert\GreaterThan('now', message: "La date et l'heure de début ne peuvent pas être antérieures à maintenant.")]
     #[ORM\Column]
     private ?\DateTimeImmutable $startTime = null;
 
+    #[Assert\NotNull(message: "La date et l'heure de fin sont obligatoires.")]
+    #[Assert\LessThan(propertyPath: 'startTime', message: "La date et l'heure de fin ne peuvent pas être antérieures à maintenant.")]
     #[ORM\Column]
     private ?\DateTimeImmutable $endTime = null;
 
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le lieu doit contenir au maximum {{ limit }} caractères.',
+    )]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $location = null;
 
+    #[Assert\NotBlank(message: 'Le nombre de participants est obligatoire.')]
+    #[Assert\Range(
+        min: 1,
+        max: 3,
+        notInRangeMessage: 'You must be between {{ min }}cm and {{ max }}cm tall to enter',
+    )]
     #[ORM\Column]
     private ?int $maxParticipants = null;
 
