@@ -1,0 +1,47 @@
+{% extends 'themes/base_visitor.html.twig' %}
+
+{% block title %}Détail du service – {{ service.name }}{% endblock %}
+
+{% block description %}
+Consultez les informations détaillées du service "{{ service.name }}".
+{% endblock %}
+
+{% block keywords %}
+service, détail, {{ service.name }}
+{% endblock %}
+
+{% block main %}
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+
+            <!-- Image -->
+            <div class="col-lg-6">
+                {% if service.image %}
+                    <img src="{{ vich_uploader_asset(service, 'imageFile') }}" alt="{{ service.name }}" class="img-fluid">
+                {% else %}
+                    <p>Image non disponible</p>
+                {% endif %}
+            </div>
+
+            <!-- Infos principales -->
+            <div class="col-lg-6">
+
+                <h1 class="display-5 mb-3">{{ service.name }}</h1>
+
+                <div class="d-flex align-items-center gap-4 mb-4">
+                    <h2 class="text-primary">{{ service.price }} €</h2>
+                    <span>{{ service.displayDuration }}</span>
+                </div>
+
+                <p class="lead mb-4">{{ service.description|raw}}</p>
+
+
+                <div class="d-flex justify-content-center align-items-center">
+                    <a href="#reservation" class="btn btn-lg btn-dark px-4">
+                        Réserver une session
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

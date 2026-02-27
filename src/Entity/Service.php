@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ServiceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -56,7 +58,7 @@ class Service
         maxSize: '4M',
         extensions: ['png', 'jpg', 'jpeg', 'webp'],
         maxSizeMessage: 'Le fichier est trop volumineux ({{ size }} {{ suffix }}). La taille maximale autorisée est de {{ limit }} {{ suffix }}.',
-        extensionsMessage: "Le format de l'image est invalide.",
+        extensionsMessage: "Seuls les formats 'png', 'jpg', 'jpeg', 'webp' sont autorisés.",
     )]
     #[Vich\UploadableField(mapping: 'services', fileNameProperty: 'image')]
     private ?File $imageFile = null;
@@ -74,8 +76,19 @@ class Service
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\Column(options: ['default' => true])]
-    private bool $isActive = true;
+    #[ORM\Column]
+    private ?bool $isActive = false;
+
+    /**
+     * @var Collection<int, Session>
+     */
+    #[ORM\OneToMany(targetEntity: Session::class, mappedBy: 'service', orphanRemoval: true)]
+    private Collection $sessions;
+
+    public function __construct()
+    {
+        $this->sessions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -220,5 +233,35 @@ class Service
         }
 
         return "{$minutes} minutes";
+    }
+
+    /**
+     * @return Collection<int, Session>
+     */
+    public function getSessions(): Collection
+    {
+        return $this->sessions;
+    }
+
+    public function addSession(Session $session): static
+    {
+        if (!$this->sessions->contains($session)) {
+            $this->sessions->add($session);
+            $session->setService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSession(Session $session): static
+    {
+        if ($this->sessions->removeElement($session)) {
+            // set the owning side to null (unless already changed)
+            if ($session->getService() === $this) {
+                $session->setService(null);
+            }
+        }
+
+        return $this;
     }
 }

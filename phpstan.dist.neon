@@ -15,3 +15,5 @@ parameters:
         - '#Property App\\Entity\\ResetPasswordRequest::\$id \(int\|null\) is never assigned int so it can be removed from the property type#'
         - '#Property App\\Entity\\Service::\$id \(int\|null\) is never assigned int so it can be removed from the property type#'
         - '#Property App\\Entity\\Service::\$slug \(string\|null\) is never assigned string so it can be removed from the property type.#'
+        - '#Property App\\Entity\\Service::\$isActive \(bool\|null\) is never assigned null so it can be removed from the property type.#'
+        - '#Property App\\Entity\\Session::\$id \(int\|null\) is never assigned int so it can be removed from the property type.#'
