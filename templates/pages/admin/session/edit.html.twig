@@ -1,13 +1,25 @@
 {% extends 'themes/base_admin.html.twig' %}
 
-{% block title %}Ajout d'une session{% endblock %}
+{% block title %}Modification de la session {{ session.service.name}} du {{ session.startTime|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm") }}{% endblock %}
 
-{% block description %}Ajouter une nouvelle session{% endblock %}
+{% block description %}Modifier la session {{ session.service.name}} du {{ session.startTime|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm") }}{% endblock %}
 
-{% block keywords %}Ajouter, nouveau, session{% endblock %}
+{% block keywords %}Modifier, session, {{ session.service.name}}{% endblock %}
 
+{% block script %}
+<script>
+document.getElementById('session_form_startTime').addEventListener('change', function() {
+    const duration = {{ session.service.duration }};
+    const start = new Date(this.value);
+    start.setMinutes(start.getMinutes() + duration);
+
+    document.getElementById('session_form_endTime').value =
+        start.toISOString().slice(0,16);
+});
+</script>
+{% endblock %}
 {% block main %}
-    <h1 class="text-center my-4 display-5">Nouvelle session</h1>
+    <h1 class="text-center my-4 display-5">Modifier la session</h1>
     <div class="container">
 
         <div class="row">
@@ -15,7 +27,7 @@
                 {{ form_start(sessionForm) }}
                     <div class="mb-3">
                         <label for="session_form_location">Service<span class="text-danger">*</span></label>
-                        {{ form_widget(sessionForm.service) }}
+                        {{ form_widget(sessionForm.service, {'attr': {'disabled': 'disabled'}}) }}
                         <div class="text-danger">{{ form_errors(sessionForm.service) }}</div>
                     </div>
                     <div class="row">
@@ -46,7 +58,7 @@
                         <div class="text-danger">{{ form_errors(sessionForm.notes) }}</div>
                     </div>
                     <div class="text-center">
-                        <input formnovalidate type="submit" value="Créer" class="btn btn-form text-white w-25">
+                        <input formnovalidate type="submit" value="Enregistrer les modifications" class="btn btn-form text-white w-100%">
                     </div>
                      
                 {{ form_end(sessionForm) }}

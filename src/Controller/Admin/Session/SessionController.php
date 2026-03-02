@@ -5,9 +5,8 @@ namespace App\Controller\Admin\Session;
 use App\Entity\Session;
 use App\Form\Admin\SessionFormType;
 use App\Repository\ServiceRepository;
-//use App\Repository\SessionRepository;
-// use DateTimeImmutable;
-//use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\SessionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,15 +17,19 @@ final class SessionController extends AbstractController
 {
     public function __construct(
         private readonly ServiceRepository $serviceRepository,
-        //private readonly SessionRepository $sessionRepository,
-        //private readonly EntityManagerInterface $entityManager,
+        private readonly SessionRepository $sessionRepository,
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 
     #[Route('/session', name: 'app_admin_session_index', methods: ['GET'])]
     public function index(): Response
     {
-        return $this->render('pages/admin/session/index.html.twig');
+        $sessions = $this->sessionRepository->findAll();
+
+        return $this->render('pages/admin/session/index.html.twig', [
+            'sessions' => $sessions,
+        ]);
     }
 
     #[Route('/session/create', name: 'app_admin_session_create', methods: ['GET', 'POST'])]
@@ -45,13 +48,52 @@ final class SessionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dd('continue');
-            /* $session->setCreatedAt(new DateTimeImmutable());
+            $session->setCreatedAt(new \DateTimeImmutable());
+            $session->setUpdatedAt(new \DateTimeImmutable());
+
+            // à corriger !!!
+            $session->setReference(bin2hex(random_bytes(8)));
+
             $this->entityManager->persist($session);
-            $this->entityManager->flush(); */
+            $this->entityManager->flush();
+
+            $this->addFlash('success', 'La session a été créée avec succès.');
+
+            return $this->redirectToRoute('app_admin_session_index');
         }
 
         return $this->render('pages/admin/session/create.html.twig', [
+            'sessionForm' => $form,
+        ]);
+    }
+
+    #[Route('/session/show/{id<\d+>}', name: 'app_admin_session_show', methods: ['GET'])]
+    public function show(Session $session): Response
+    {
+        return $this->render('/pages/admin/session/show.html.twig', [
+            'session' => $session,
+        ]);
+    }
+
+    #[Route('/session/edit/{id<\d+>}', name: 'app_admin_session_edit', methods: ['GET', 'POST'])]
+    public function edit(Session $session, Request $request): Response
+    {
+        $form = $this->createForm(SessionFormType::class, $session);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $session->setUpdatedAt(new \DateTimeImmutable());
+
+            $this->entityManager->persist($session);
+            $this->entityManager->flush();
+
+            $this->addFlash('success', 'La session a été modifiée avec succès.');
+
+            return $this->redirectToRoute('app_admin_session_index');
+        }
+
+        return $this->render('/pages/admin/session/edit.html.twig', [
+            'session' => $session,
             'sessionForm' => $form,
         ]);
     }

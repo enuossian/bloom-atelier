@@ -56,6 +56,7 @@ class SessionFormType extends AbstractType
             ->add('notes', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'rows' => 5,
                 ],
             ])
             // ->add('createdAt', null, [
