@@ -102,6 +102,14 @@ final class SessionController extends AbstractController
     public function delete(Session $session, Request $request): Response
     {
         if ($this->isCsrfTokenValid("session-delete-{$session->getId()}", $request->request->get('csrf_token'))) {
+            // on vérifie si un bookItem est associé à la session,
+            // si oui, on empeche la suppression
+            if ($session->getBookItems()->count() > 0) {
+                $this->addFlash('danger', 'Impossible de supprimer cette session car elle contient des réservations.');
+
+                return $this->redirectToRoute('app_admin_session_index');
+            }
+
             $this->entityManager->remove($session);
             $this->entityManager->flush();
 

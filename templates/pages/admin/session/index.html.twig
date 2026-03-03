@@ -55,7 +55,7 @@
                         <td>{{ session.service.name }}</td>
                         <td>{{ session.startTime|format_datetime() }}</td>
                         <td>{{ session.endTime|format_datetime() }}</td>
-                        <td>{{ session.service.getDisplayDuration() }}</td>
+                        <td>{{ session.service.displayDuration }}</td>
                         <td>{{ session.maxParticipants }}</td>
                         <td>{{ session.status.label() }}</td>
                         <td>{{ session.createdAt|format_date() }}</td>

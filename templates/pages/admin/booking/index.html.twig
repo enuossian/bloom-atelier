@@ -1,0 +1,76 @@
+{% extends 'themes/base_admin.html.twig' %}
+
+{% block title %}Liste des réservations{% endblock %}
+
+{% block description %}Liste de toutes les réservations{% endblock %}
+
+{% block keywords %} Liste, consulter, réservations{% endblock %}
+
+{% block j_query %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block data_tables %}
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.3.7/datatables.min.css" rel="stylesheet" integrity="sha384-MnxpJFHU9dTMYXshJqBDA0d93sG4KKAFEEzynAaDqcPP7BYh11O5HxbJ6iLDWOXS" crossorigin="anonymous">
+ 
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.3.7/datatables.min.js" integrity="sha384-7rAjATpiK3MtvKnoDf5WQz4O8W+3kpl4Jm82apgJgNkeUmZ59yjJT6LqlJpYqhVK" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json',
+                }
+            });
+        } );
+    </script>
+{% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-3 display-5">Liste des réservations (ADMIN)</h1>
+
+	{% include 'components/_alert.html.twig' %}
+
+    <div class="table-responsive">
+        <table id="myTable" class="table table-striped table-hover table-bordered">
+            <thead class="table-danger">
+                <tr>
+                    <th class="fw-bold">Référence</th>
+                    <th class="fw-bold">Client</th>
+                    <th class="fw-bold">Montant total</th>
+                    <th class="fw-bold">Statut</th>
+                    <th class="fw-bold">Confirmation</th>
+                    <th class="fw-bold">Créé le</th>
+                    <th class="fw-bold">Options</th>
+                </tr>
+            </thead>
+            <tbody> 
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{booking.reference}}</td>
+                    <td>{{booking.user.firstName}} {{booking.user.lastName}}</td>
+                    <td>{{booking.totalAmount}} €</td>
+                    <td>{{booking.status.label()}}</td>
+                    <td>
+                        {% if booking.confirmationSent == true %}
+                            <p>Envoyée</p>
+                        {% else %}
+                            <p>Non envoyée</p>
+                        {% endif %}
+    
+                    </td>
+                    <td>{{booking.createdAt|format_date()}}</td>
+                    <td class="align-middle">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <a href="{{path('app_admin_booking_show', {'id': booking.id})}}" class="btn btn-sm btn-dark">voir</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    
+    
+{% endblock %}
