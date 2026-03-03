@@ -63,7 +63,10 @@
                             <div class="d-flex justify-content-center align-items-center gap-1">
                                 <a href="{{ path('app_admin_session_show', {'id': session.id})}}" class="btn btn-sm btn-dark">voir</a>
                                 <a href="{{path('app_admin_session_edit', {'id': session.id})}}" class="btn btn-sm btn-secondary">modifier</a>
-                                <a href="" class="btn btn-sm btn-danger">supprimer</a>
+                                <form action="{{path('app_admin_session_delete', {'id': session.id})}}" method="POST">
+                                    <input type="hidden" name="csrf_token" value="{{csrf_token('session-delete-'~session.id)}}">
+                                    <input type="submit" value="Supprimer" onclick="return confirm('Confirmez-vous la suppression de cette session ?')" class="btn btn-sm btn-danger">
+                                </form>
                             </div>
                         </td>
                     </tr>

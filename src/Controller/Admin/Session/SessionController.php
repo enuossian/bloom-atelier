@@ -42,8 +42,6 @@ final class SessionController extends AbstractController
             return $this->redirectToRoute('app_admin_service_index');
         }
 
-        if ($this->serviceRepository)
-
         $session = new Session();
 
         $form = $this->createForm(SessionFormType::class, $session);
@@ -98,5 +96,18 @@ final class SessionController extends AbstractController
             'session' => $session,
             'sessionForm' => $form,
         ]);
+    }
+
+    #[Route('/session/{id<\d+>}/delete', name: 'app_admin_session_delete', methods: ['POST'])]
+    public function delete(Session $session, Request $request): Response
+    {
+        if ($this->isCsrfTokenValid("session-delete-{$session->getId()}", $request->request->get('csrf_token'))) {
+            $this->entityManager->remove($session);
+            $this->entityManager->flush();
+
+            $this->addFlash('success', 'La session a été supprimée avec succès.');
+        }
+
+        return $this->redirectToRoute('app_admin_session_index');
     }
 }
