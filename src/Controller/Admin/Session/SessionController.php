@@ -67,7 +67,7 @@ final class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/session/show/{id<\d+>}', name: 'app_admin_session_show', methods: ['GET'])]
+    #[Route('/session/{id<\d+>}/show', name: 'app_admin_session_show', methods: ['GET'])]
     public function show(Session $session): Response
     {
         return $this->render('/pages/admin/session/show.html.twig', [
@@ -75,7 +75,7 @@ final class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/session/edit/{id<\d+>}', name: 'app_admin_session_edit', methods: ['GET', 'POST'])]
+    #[Route('/session/{id<\d+>}/edit', name: 'app_admin_session_edit', methods: ['GET', 'POST'])]
     public function edit(Session $session, Request $request): Response
     {
         $form = $this->createForm(SessionFormType::class, $session, ['edit_mode' => true]);
