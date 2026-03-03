@@ -6,6 +6,8 @@ use App\Enum\SessionStatus;
 use App\Repository\SessionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: SessionRepository::class)]
 class Session
@@ -15,27 +17,42 @@ class Session
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotNull(message: 'Le service est obligatoire.')]
     #[ORM\ManyToOne(inversedBy: 'sessions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Service $service = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, unique: true)]
     private ?string $reference = null;
 
+    #[Assert\NotNull(message: 'La date de début est obligatoire.')]
+    #[Assert\GreaterThan('now', message: 'La date de début doit être dans le futur.')]
     #[ORM\Column]
     private ?\DateTimeImmutable $startTime = null;
 
+    #[Assert\NotNull(message: 'La date de fin est obligatoire.')]
+    #[Assert\GreaterThan(propertyPath: 'startTime', message: 'La date de fin doit être postérieure à la date de début.')]
     #[ORM\Column]
     private ?\DateTimeImmutable $endTime = null;
 
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le lieu doit contenir au maximum {{ limit }} caractères.',
+    )]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $location = null;
 
+    #[Assert\NotBlank(message: 'Le nombre de participants est obligatoire.')]
+    #[Assert\Range(
+        min: 1,
+        max: 3,
+        notInRangeMessage: 'Le nombre de participants doit être compris entre 1 et 3.',
+    )]
     #[ORM\Column]
     private ?int $maxParticipants = null;
 
     #[ORM\Column(enumType: SessionStatus::class)]
-    private ?SessionStatus $status = null;
+    private ?SessionStatus $status = SessionStatus::Available;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $notes = null;
@@ -169,5 +186,36 @@ class Session
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    #[Assert\Callback]
+    public function validateDuration(ExecutionContextInterface $context): void
+    {
+        // arrête le script si l'une des valeurs est nulle
+        if (null === $this->startTime || null === $this->endTime || null === $this->service) {
+            return;
+        }
+
+        // récupère la différence entre le début et la fin de la session
+        // diff() méthode native de DateTimeImmutable retourne un objet DateInterval
+        $diff = $this->startTime->diff($this->endTime);
+
+        // récupère h de différence et multiplie par 60 pour convertir en minutes
+        // récupère les minutes de différence
+        $actualMinutes = ($diff->h * 60) + $diff->i;
+
+        // récupère la durée du service pour comparaison
+        $maxMinutes = $this->service->getDuration();
+
+        if ($actualMinutes !== $maxMinutes) {
+            // context est injecté par symfony permet de créet et attacher des erreurs
+            // buildViolation prépare le message d'erreur
+            $context->buildViolation('La durée de la session doit être exactement de {{ max }}.')
+                ->setParameter('{{ max }}', $this->service->getDisplayDuration())
+                // indique que l'erreu doit s'afficher sur le champ endTime
+                ->atPath('endTime')
+                // appel permettant de déclencher l'erreur
+                ->addViolation();
+        }
     }
 }

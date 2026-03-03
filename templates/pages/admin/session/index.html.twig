@@ -1,0 +1,78 @@
+{% extends 'themes/base_admin.html.twig' %}
+
+{% block title %}Liste des sessions{% endblock %}
+
+{% block description %}Liste de toutes les sessions{% endblock %}
+
+{% block keywords %} Liste, consulter, sessions{% endblock %}
+
+{% block j_query %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block data_tables %}
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.3.7/datatables.min.css" rel="stylesheet" integrity="sha384-MnxpJFHU9dTMYXshJqBDA0d93sG4KKAFEEzynAaDqcPP7BYh11O5HxbJ6iLDWOXS" crossorigin="anonymous">
+ 
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.3.7/datatables.min.js" integrity="sha384-7rAjATpiK3MtvKnoDf5WQz4O8W+3kpl4Jm82apgJgNkeUmZ59yjJT6LqlJpYqhVK" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json',
+                }
+            });
+        } );
+    </script>
+{% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-3 display-5">Liste des sessions</h1>
+
+	{% include 'components/_alert.html.twig' %}
+
+    <div class="d-flex justify-content-end align-items-center my-3">
+        <a href="{{path('app_admin_session_create')}}" class="">Ajouter une session</a>
+    </div>
+
+    <div class="table-responsive">
+        <table id="myTable" class="table table-striped table-hover table-bordered">
+            <thead class="table-danger">
+                <tr>
+                    <th class="fw-bold">Session</th>
+                    <th class="fw-bold">Date de début</th>
+                    <th class="fw-bold">Date de fin</th>
+                    <th class="fw-bold">Durée du service</th>
+                    <th class="fw-bold">Nombre de participants</th>
+                    <th class="fw-bold">Statut</th>
+                    <th class="fw-bold">Créé le</th>
+                    <th class="fw-bold">Options</th>
+                </tr>
+            </thead>
+            <tbody> 
+                {% for session in sessions %}
+                    <tr>
+                        <td>{{ session.service.name }}</td>
+                        <td>{{ session.startTime|format_datetime() }}</td>
+                        <td>{{ session.endTime|format_datetime() }}</td>
+                        <td>{{ session.service.getDisplayDuration() }}</td>
+                        <td>{{ session.maxParticipants }}</td>
+                        <td>{{ session.status.label() }}</td>
+                        <td>{{ session.createdAt|format_date() }}</td>
+                        <td class="align-middle">
+                            <div class="d-flex justify-content-center align-items-center gap-1">
+                                <a href="{{ path('app_admin_session_show', {'id': session.id})}}" class="btn btn-sm btn-dark">voir</a>
+                                <a href="{{path('app_admin_session_edit', {'id': session.id})}}" class="btn btn-sm btn-secondary">modifier</a>
+                                <form action="{{path('app_admin_session_delete', {'id': session.id})}}" method="POST">
+                                    <input type="hidden" name="csrf_token" value="{{csrf_token('session-delete-'~session.id)}}">
+                                    <input type="submit" value="Supprimer" onclick="return confirm('Confirmez-vous la suppression de cette session ?')" class="btn btn-sm btn-danger">
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

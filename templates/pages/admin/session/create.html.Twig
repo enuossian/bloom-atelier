@@ -1,0 +1,56 @@
+{% extends 'themes/base_admin.html.twig' %}
+
+{% block title %}Ajout d'une session{% endblock %}
+
+{% block description %}Ajouter une nouvelle session{% endblock %}
+
+{% block keywords %}Ajouter, nouveau, session{% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-4 display-5">Nouvelle session</h1>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-10 mx-auto bg-light shadow p-4">
+                {{ form_start(sessionForm) }}
+                    <div class="mb-3">
+                        <label for="session_form_location">Service<span class="text-danger">*</span></label>
+                        {{ form_widget(sessionForm.service) }}
+                        <div class="text-danger">{{ form_errors(sessionForm.service) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="session_form_startTime">Date et heure de début<span class="text-danger">*</span></label>
+                            {{ form_widget(sessionForm.startTime) }}
+                            <div class="text-danger">{{ form_errors(sessionForm.startTime) }}</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="session_form_endTime">Date et heure de fin<span class="text-danger">*</span></label>
+                            {{ form_widget(sessionForm.endTime) }}
+                            <div class="text-danger">{{ form_errors(sessionForm.endTime) }}</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="session_form_maxParticipants">Limite de participants<span class="text-danger">*</span></label>
+                        {{ form_widget(sessionForm.maxParticipants) }}
+                        <div class="text-danger">{{ form_errors(sessionForm.maxParticipants) }}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="session_form_location">Lieu</label>
+                        {{ form_widget(sessionForm.location) }}
+                        <div class="text-danger">{{ form_errors(sessionForm.location) }}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="service_form_notes">Notes</label>
+                        {{ form_widget(sessionForm.notes) }}
+                        <div class="text-danger">{{ form_errors(sessionForm.notes) }}</div>
+                    </div>
+                    <div class="text-center">
+                        <input formnovalidate type="submit" value="Créer" class="btn btn-form text-white w-25">
+                    </div>
+                     
+                {{ form_end(sessionForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

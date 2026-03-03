@@ -136,6 +136,20 @@ class Service
         return $this;
     }
 
+    public function getDisplayDuration(): string
+    {
+        $hours = intdiv($this->duration, 60);
+        $minutes = $this->duration % 60;
+
+        if ($hours > 0 && $minutes > 0) {
+            return "{$hours}h{$minutes}";
+        } elseif ($hours > 0) {
+            return "{$hours}h";
+        }
+
+        return "{$minutes} minutes";
+    }
+
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
@@ -219,20 +233,6 @@ class Service
         $this->isActive = $isActive;
 
         return $this;
-    }
-
-    public function getDisplayDuration(): string
-    {
-        $hours = intdiv($this->duration, 60);
-        $minutes = $this->duration % 60;
-
-        if ($hours > 0 && $minutes > 0) {
-            return "{$hours}h{$minutes}";
-        } elseif ($hours > 0) {
-            return "{$hours}h";
-        }
-
-        return "{$minutes} minutes";
     }
 
     /**

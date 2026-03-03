@@ -55,7 +55,7 @@ final class ServiceController extends AbstractController
         ]);
     }
 
-    #[Route('/service/show/{id<\d+>}', name: 'app_admin_service_show', methods: ['GET'])]
+    #[Route('/service/{id<\d+>}/show', name: 'app_admin_service_show', methods: ['GET'])]
     public function show(Service $service): Response
     {
         return $this->render('pages/admin/service/show.html.twig', [
@@ -63,7 +63,7 @@ final class ServiceController extends AbstractController
         ]);
     }
 
-    #[Route('/service/edit/{id<\d+>}', name: 'app_admin_service_edit', methods: ['GET', 'POST'])]
+    #[Route('/service/{id<\d+>}/edit', name: 'app_admin_service_edit', methods: ['GET', 'POST'])]
     public function edit(Service $service, Request $request): Response
     {
         $form = $this->createForm(ServiceFormType::class, $service);
@@ -86,7 +86,7 @@ final class ServiceController extends AbstractController
         ]);
     }
 
-    #[Route('/service/delete/{id<\d+>}', name: 'app_admin_service_delete', methods: ['GET', 'POST'])]
+    #[Route('/service/{id<\d+>}/delete', name: 'app_admin_service_delete', methods: ['GET', 'POST'])]
     public function delete(Service $service, Request $request): Response
     {
         if ($this->isCsrfTokenValid("delete-service-{$service->getId()}", $request->request->get('csrf_token'))) {
@@ -99,7 +99,7 @@ final class ServiceController extends AbstractController
         return $this->redirectToRoute('app_admin_service_index');
     }
 
-    #[Route('/service/active/{id<\d+>}', name: 'app_admin_service_active', methods: ['POST'])]
+    #[Route('/service/{id<\d+>}/active', name: 'app_admin_service_active', methods: ['POST'])]
     public function active(Service $service, Request $request): Response
     {
         // si le token n'est pas valide on redirige vers admin service index
