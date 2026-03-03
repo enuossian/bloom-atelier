@@ -20,7 +20,11 @@ document.getElementById('session_form_startTime').addEventListener('change', fun
 {% endblock %}
 {% block main %}
     <h1 class="text-center my-4 display-5">Modifier la session</h1>
+
     <div class="container">
+        <div class="d-flex justify-content-end align-items-center mb-4">
+            <a href="{{ path('app_admin_session_index') }}" class="btn btn-outline-secondary btn-sm">← Retour</a>
+        </div>
 
         <div class="row">
             <div class="col-md-10 mx-auto bg-light shadow p-4">

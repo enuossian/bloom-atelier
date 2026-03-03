@@ -210,7 +210,7 @@ class Session
         if ($actualMinutes !== $maxMinutes) {
             // context est injecté par symfony permet de créet et attacher des erreurs
             // buildViolation prépare le message d'erreur
-            $context->buildViolation('La durée de la session doit être exactement de {{ max }} min.')
+            $context->buildViolation('La durée de la session doit être exactement de {{ max }}.')
                 ->setParameter('{{ max }}', $this->service->getDisplayDuration())
                 // indique que l'erreu doit s'afficher sur le champ endTime
                 ->atPath('endTime')

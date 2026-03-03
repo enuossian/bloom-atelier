@@ -23,6 +23,7 @@ class SessionFormType extends AbstractType
                 'class' => Service::class,
                 'choice_label' => 'name',
                 'placeholder' => '--Selectionnez un service--',
+                'disabled' => $options['edit_mode'],
                 'attr' => [
                     'class' => 'form-control',
                     'autofocus' => 'autofocus',
@@ -72,6 +73,7 @@ class SessionFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Session::class,
+            'edit_mode' => false,
         ]);
     }
 }

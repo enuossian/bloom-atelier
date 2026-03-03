@@ -42,6 +42,8 @@ final class SessionController extends AbstractController
             return $this->redirectToRoute('app_admin_service_index');
         }
 
+        if ($this->serviceRepository)
+
         $session = new Session();
 
         $form = $this->createForm(SessionFormType::class, $session);
@@ -78,7 +80,7 @@ final class SessionController extends AbstractController
     #[Route('/session/edit/{id<\d+>}', name: 'app_admin_session_edit', methods: ['GET', 'POST'])]
     public function edit(Session $session, Request $request): Response
     {
-        $form = $this->createForm(SessionFormType::class, $session);
+        $form = $this->createForm(SessionFormType::class, $session, ['edit_mode' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
