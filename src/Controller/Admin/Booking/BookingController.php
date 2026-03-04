@@ -34,9 +34,7 @@ final class BookingController extends AbstractController
         ]);
     }
 
-    // Pas de route edit car l'admin ne modifie pas une réservation manuellement : seul le statut peut changer et on le gère automatiquement. 
+    // Pas de route edit car l'admin ne modifie pas une réservation manuellement : seul le statut peut changer et on le gère automatiquement.
 
-    // Pas de route delete car l'admin ne supprime pas une réservation : on gère l'annulation mais la résa reste en base.
-
-
+    // Pas de route delete car l'admin ne supprime pas une réservation : on va gérer l'annulation (plus tard) mais la résa reste en base pour le suivi.
 }
