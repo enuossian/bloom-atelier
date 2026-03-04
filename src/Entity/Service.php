@@ -117,7 +117,7 @@ class Service
         return $this->price;
     }
 
-    public function setPrice(string $price): static
+    public function setPrice(?string $price): static
     {
         $this->price = $price;
 
@@ -129,7 +129,7 @@ class Service
         return $this->duration;
     }
 
-    public function setDuration(int $duration): static
+    public function setDuration(?int $duration): static
     {
         $this->duration = $duration;
 
@@ -192,7 +192,7 @@ class Service
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 

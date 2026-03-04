@@ -146,7 +146,7 @@ class Session
         return $this->maxParticipants;
     }
 
-    public function setMaxParticipants(int $maxParticipants): static
+    public function setMaxParticipants(?int $maxParticipants): static
     {
         $this->maxParticipants = $maxParticipants;
 
