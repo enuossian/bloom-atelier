@@ -1,31 +1,44 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Admin;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class ChangePasswordFormType extends AbstractType
+class EditPasswordProfileFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('currentPassword', PasswordType::class, [
+                'constraints' => [
+                    new UserPassword([
+                        'message' => 'Le mot de passe actuel est invalide.',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
                     'constraints' => [
-                        new NotBlank(message: 'Le nouveau mot de passe est obligatoire.',
+                        new NotBlank(
+                            message: 'Le nouveau mot de passe est obligatoire.',
                         ),
                         new Length(
                             min: 12,
-                            max : 255,
-                            minMessage : 'Le mot de passe doit contenir au minimum {{ limit }} caractères.',
+                            max: 255,
+                            minMessage: 'Le mot de passe doit contenir au minimum {{ limit }} caractères.',
                             maxMessage: 'Le mot de passe doit contenir au maximum {{ limit }} caractères.',
                         ),
                         new Regex(
@@ -34,17 +47,25 @@ class ChangePasswordFormType extends AbstractType
                             message: "Le mot de passe doit être composé d'au moins une lettre majuscule et minuscule, d'un chiffre et d'un caractère spécial.",
                         ),
                     ],
+                    'attr' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'Au moins 12 caractères',
+                    ],
+                ],
+                'second_options' => [
+                    'attr' => ['class' => 'form-control'],
                 ],
                 'invalid_message' => 'Les mots de passe doivent être identiques.',
                 // Instead of being set onto the object directly,
                 // this is read and encoded in the controller
-                'mapped' => false,
             ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults([
+            // Configure your form options here
+        ]);
     }
 }
