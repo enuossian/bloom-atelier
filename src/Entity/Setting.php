@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SettingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SettingRepository::class)]
 class Setting
@@ -16,10 +17,27 @@ class Setting
     #[ORM\ManyToOne(inversedBy: 'settings')]
     private ?User $user = null;
 
-    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "L'email est obligatoire.")]
+    #[Assert\Length(
+        max: 180,
+        maxMessage: "L'email doit contenir au maximum {{ limit }} caractères.",
+    )]
+    #[Assert\Email(
+        message: "L'email est invalide.",
+    )]
+    #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: 'Le numéro de téléphone doit contenir au maximum {{ limit }} caractères.',
+    )]
+    #[Assert\Regex(
+        pattern: '/^0[0-9\s\-]{9,14}$/',
+        match: true,
+        message: 'Le numéro de téléphone est invalide.',
+    )]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $phone = null;
 
     #[ORM\Column]
@@ -50,7 +68,7 @@ class Setting
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(?string $email): static
     {
         $this->email = $email;
 
