@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Enum\SessionStatus;
 use App\Repository\SessionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -62,6 +64,17 @@ class Session
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    /**
+     * @var Collection<int, BookItem>
+     */
+    #[ORM\OneToMany(targetEntity: BookItem::class, mappedBy: 'session')]
+    private Collection $bookItems;
+
+    public function __construct()
+    {
+        $this->bookItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -133,7 +146,7 @@ class Session
         return $this->maxParticipants;
     }
 
-    public function setMaxParticipants(int $maxParticipants): static
+    public function setMaxParticipants(?int $maxParticipants): static
     {
         $this->maxParticipants = $maxParticipants;
 
@@ -217,5 +230,35 @@ class Session
                 // appel permettant de déclencher l'erreur
                 ->addViolation();
         }
+    }
+
+    /**
+     * @return Collection<int, BookItem>
+     */
+    public function getBookItems(): Collection
+    {
+        return $this->bookItems;
+    }
+
+    public function addBookItem(BookItem $bookItem): static
+    {
+        if (!$this->bookItems->contains($bookItem)) {
+            $this->bookItems->add($bookItem);
+            $bookItem->setSession($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookItem(BookItem $bookItem): static
+    {
+        if ($this->bookItems->removeElement($bookItem)) {
+            // set the owning side to null (unless already changed)
+            if ($bookItem->getSession() === $this) {
+                $bookItem->setSession(null);
+            }
+        }
+
+        return $this;
     }
 }
