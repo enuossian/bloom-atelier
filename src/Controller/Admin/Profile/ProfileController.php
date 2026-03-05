@@ -3,8 +3,8 @@
 namespace App\Controller\Admin\Profile;
 
 use App\Entity\User;
-use App\Form\Admin\EditPasswordProfileFormType;
-use App\Form\Admin\ProfileFormType;
+use App\Form\EditPasswordProfileFormType;
+use App\Form\ProfileFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
