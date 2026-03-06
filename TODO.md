@@ -50,5 +50,8 @@
         - Switcher sur la branche `main`
         - Le mettre à jour cette branche: `git pull origin main`
 
+5. Commande permettant de créer un super admin 
+    - `symfony console app:create-super-admin`
+
 
 <!-- End -->
