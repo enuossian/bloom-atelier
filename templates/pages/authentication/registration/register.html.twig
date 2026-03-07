@@ -52,7 +52,7 @@
 										<span class="text-danger">*</span>
 									</label>
 									{{ form_widget(registrationForm.firstName, {attr: {class: 'form-control', 'autofocus':true}}) }}
-									{{ form_errors(registrationForm.firstName) }}
+									<div class="text-danger">{{ form_errors(registrationForm.firstName) }}</div>
 								</div>
 
 								<div class="col-md-6">
@@ -61,7 +61,7 @@
 										<span class="text-danger">*</span>
 									</label>
 									{{ form_widget(registrationForm.lastName, {attr: {class: 'form-control'}}) }}
-									{{ form_errors(registrationForm.lastName) }}
+									<div class="text-danger">{{ form_errors(registrationForm.lastName) }}</div>
 								</div>
 							</div>
 
@@ -70,7 +70,7 @@
 									<span class="text-danger">*</span>
 								</label>
 								{{ form_widget(registrationForm.email, {attr: {class: 'form-control'}}) }}
-								{{ form_errors(registrationForm.email) }}
+								<div class="text-danger">{{ form_errors(registrationForm.email) }}</div>
 							</div>
 
 							<div class="mb-3">
@@ -78,7 +78,7 @@
 									<span class="text-danger">*</span>
 								</label>
 								{{ form_widget(registrationForm.password.first, {attr: {class: 'form-control'}}) }}
-								{{ form_errors(registrationForm.password.first) }}
+								<div class="text-danger">{{ form_errors(registrationForm.password.first) }}</div>
 							</div>
 
 							<div class="mb-3">
@@ -86,7 +86,7 @@
 									<span class="text-danger">*</span>
 								</label>
 								{{ form_widget(registrationForm.password.second, {attr: {class: 'form-control'}}) }}
-								{{ form_errors(registrationForm.password.second) }}
+								<div class="text-danger">{{ form_errors(registrationForm.password.second) }}</div>
 							</div>
 
 							<div class="mb-4">
@@ -97,12 +97,10 @@
 										conditions générales d’utilisation
 									</a>
 								</label>
-								{{ form_errors(registrationForm.agreeTerms) }}
+								<div class="text-danger">{{ form_errors(registrationForm.agreeTerms) }}</div>
 							</div>
 
-							<button type="submit" class="btn btn-dark w-100 rounded-pill py-3">
-								Inscription
-							</button>
+							<input formnovalidate type="submit" value="Inscription" class="btn btn-dark w-100 rounded-pill py-3">
 
 							{{ form_end(registrationForm) }}
 
