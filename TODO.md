@@ -52,6 +52,9 @@
 
 5. Commande permettant de créer un super admin 
     - `symfony console app:create-super-admin`
+    
+6. Commande permettant de charger les fixtures
+    - `php bin/console doctrine:fixtures:load`
 
 
 <!-- End -->

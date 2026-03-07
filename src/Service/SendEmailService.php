@@ -18,7 +18,6 @@ class SendEmailService
      * Permet d'envoyer un email.
      *
      * @param array<string, mixed> $data
-     * @return void
      */
     public function sendEmail(array $data = []): void
     {
@@ -26,7 +25,7 @@ class SendEmailService
             ->from(new Address($data['sender_email'], $data['sender_full_name']))
             ->to($data['recipient_email'])
             ->subject($data['subject'])
-            ->htmlTemplate($data['html_template'])
+            ->htmlTemplate('emails/contact_form_email.html')
             ->context($data['context'])
         ;
 
