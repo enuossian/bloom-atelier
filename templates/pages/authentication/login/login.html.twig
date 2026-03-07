@@ -51,6 +51,8 @@
 									</div>
 								{% endif %}
 
+								{% include 'components/_alert.html.twig' %}				
+
 								<div class="mb-3">
 									<label for="inputEmail">Adresse email</label>
 									<input type="email" name="email" id="inputEmail" class="form-control" value="{{ last_username }}" required autofocus>
