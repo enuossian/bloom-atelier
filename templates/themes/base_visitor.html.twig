@@ -31,6 +31,10 @@
 			{% block javascripts %}
 		{{ encore_entry_script_tags('app') }}
 	{% endblock %}
+
+		{# Font Awesome #}
+		{% block font_awesome %}{% endblock %}
+		
 	</head>
 		<body class="home-body">
 		{# Navbar #}
@@ -53,7 +57,7 @@
 							<a class="nav-link" href="{{path('visitor_home_prestations')}}">Prestations</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{path('visitor_contact_index')}}">Contact</a>
+							<a class="nav-link" href="{{path('app_visitor_contact_index')}}">Contact</a>
 						</li>
 					</ul>
 					<ul class="navbar-nav ms-auto">

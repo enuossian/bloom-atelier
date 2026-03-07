@@ -6,10 +6,60 @@
 
 {% block keywords %}Bloom Atelier, contact, réservation, sessions de maquillage, maquillage, atelier beauté{% endblock %}
 
-{% block main %}
-<div class="container py-5">
-    <h1 class="text-center my-3 display-5">Contact</h1>
-    <p class="text-center mb-5">Pour toute question ou réservation, remplissez le formulaire ci-dessous :</p>
+{# Font Awesome #}
+{% block font_awesome %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
 
-</div>
+{% block main %}
+
+    <h1 class="text-center my-3 display-5">Contact</h1>
+
+    {% include 'components/_alert.html.twig' %}
+
+    <div class="container my-5">
+        <div class="row gap-contact-visitor">
+            <div class="col-lg-6">
+                {{ form_start(contactForm) }}
+                    <div class="row">
+                        <div class="col-lg-6 mb-3">
+                            <label for="contact_form_firstName">Prénom <span class="text-danger">*</span></label>
+                            {{ form_widget(contactForm.firstName) }}
+                            <div class="text-danger">{{ form_errors(contactForm.firstName) }}</div>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="contact_form_lastName">Nom <span class="text-danger">*</span></label>
+                            {{ form_widget(contactForm.lastName) }}
+                            <div class="text-danger">{{ form_errors(contactForm.lastName) }}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 mb-3">
+                            <label for="contact_form_email">Email <span class="text-danger">*</span></label>
+                            {{ form_widget(contactForm.email) }}
+                            <div class="text-danger">{{ form_errors(contactForm.email) }}</div>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="contact_form_phone">Téléphone</label>
+                            {{ form_widget(contactForm.phone) }}
+                            <div class="text-danger">{{ form_errors(contactForm.phone) }}</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact_form_message">Message <span class="text-danger">*</span></label>
+                        {{ form_widget(contactForm.message) }}
+                        <div class="text-danger">{{ form_errors(contactForm.message) }}</div>
+                    </div>
+                    <div>
+                        <input formnovalidate type="submit" class="btn btn-dark w-100 shadow">
+                    </div>
+                {{ form_end(contactForm) }}
+            </div>
+            <div class="col-lg-6 d-flex flex-column justify-content-center align-items-start">
+                <p><strong><i class="fa-solid fa-envelope"></i></strong><a class="text-decoration-none" href="mailto:{{ setting.email}}">{{ setting.email}}</a></p>
+                <p><strong><i class="fa-solid fa-phone"></i></strong><a class="text-decoration-none" href="tel:{{ setting.phone}}">{{ setting.phone}}</a></p>
+                <iframe class="w-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.18279825137!2d2.2950274999999993!3d48.8737917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66fec70fb1d8f%3A0xd9b5676e112e643d!2sArc%20de%20Triomphe!5e0!3m2!1sfr!2sfr!4v1772882846120!5m2!1sfr!2sfr" style="border:0; height:300px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
 {% endblock %}
