@@ -1,0 +1,89 @@
+{% extends 'themes/base_admin.html.twig' %}
+
+{% block title %}Liste des contacts
+{% endblock %}
+
+{% block description %}Liste de toutes les contacts
+{% endblock %}
+
+{% block j_query %}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block data_tables %}
+	<link href="https://cdn.datatables.net/v/bs5/dt-2.3.7/datatables.min.css" rel="stylesheet" integrity="sha384-MnxpJFHU9dTMYXshJqBDA0d93sG4KKAFEEzynAaDqcPP7BYh11O5HxbJ6iLDWOXS" crossorigin="anonymous">
+
+	<script src="https://cdn.datatables.net/v/bs5/dt-2.3.7/datatables.min.js" integrity="sha384-7rAjATpiK3MtvKnoDf5WQz4O8W+3kpl4Jm82apgJgNkeUmZ59yjJT6LqlJpYqhVK" crossorigin="anonymous"></script>
+
+	<script>
+		$(document).ready(function () {
+$('#myTable').DataTable({
+language: {
+url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
+}
+});
+});
+	</script>
+{% endblock %}
+
+{% block main %}
+	<h1 class="text-center my-3 display-5">Liste des contacts</h1>
+
+	{% include 'components/_alert.html.twig' %}
+
+	<div class="table-responsive">
+		<table id="myTable" class="table table-striped table-hover table-bordered">
+			<thead class="table-danger">
+				<tr>
+					<th class="fw-bold">Prénom</th>
+					<th class="fw-bold">Nom</th>
+					<th class="fw-bold">Email</th>
+					<th class="fw-bold">Téléphone</th>
+					<th class="fw-bold">Message</th>
+					<th class="fw-bold">Créé le</th>
+					<th class="fw-bold">Options</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for contact in contacts %}
+					<tr>
+						<td>{{ contact.firstName }}</td>
+						<td>{{ contact.lastName }}</td>
+						<td>{{ contact.email }}</td>
+						<td>{{ contact.phone ? contact.phone : 'Non renseigné' }}</td>
+						<td class="text-center">
+							<a href="#" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-{{contact.id}}">Lire</a>
+
+							<!-- Modal -->
+							<div class="modal fade" id="modal-{{contact.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h1 class="modal-title fs-5" id="exampleModalLabel">Message de {{ contact.firstName }} {{ contact.lastName }}</h1>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+                                            {{ contact.message }}
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+						<td>{{ contact.createdAt|format_date() }}</td>
+						<td class="align-middle">
+							<div class="d-flex justify-content-center align-items-center">
+								<form action="{{path('app_admin_contact_delete', {'id': contact.id})}}" method="POST">
+									<input type="hidden" name="csrf_token" value="{{csrf_token('contact-delete-'~contact.id)}}">
+									<input type="submit" value="Supprimer" onclick="return confirm('Confirmez-vous la suppression de ce contact ?')" class="btn btn-sm btn-danger">
+								</form>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

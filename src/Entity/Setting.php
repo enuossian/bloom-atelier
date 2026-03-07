@@ -33,7 +33,7 @@ class Setting
         maxMessage: 'Le numéro de téléphone doit contenir au maximum {{ limit }} caractères.',
     )]
     #[Assert\Regex(
-        pattern: '/^0[0-9\s\-]{9,14}$/',
+        pattern: '/^[+0-9]+$/',
         match: true,
         message: 'Le numéro de téléphone est invalide.',
     )]
