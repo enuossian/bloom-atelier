@@ -1,0 +1,86 @@
+{% extends 'themes/base_visitor.html.twig' %}
+
+{% block title %}{{ service.name }} — Bloom Atelier{% endblock %}
+
+{% block description %}Consultez les informations détaillées du service "{{ service.name }}".{% endblock %}
+
+{% block keywords %}service, détail, {{ service.name }}{% endblock %}
+
+{% block main %}
+
+<!-- HERO -->
+<div class="position-relative overflow-hidden">
+    {% if service.image %}
+        <img src="{{ vich_uploader_asset(service, 'imageFile') }}" class="w-100 d-block object-fit-cover" style="height: 60vh; filter: brightness(0.90);" alt="{{ service.name }}">
+    {% else %}
+        <div class="w-100 bg-secondary d-block" style="height: 60vh;"></div>
+    {% endif %}
+
+    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-white text-center px-3" style="background: linear-gradient(to top, rgba(0,0,0,0.75), transparent 60%);">
+        <h1 class="display-2 fw-bold mb-3">{{ service.name }}</h1>
+    </div>
+</div>
+
+<!-- DESCRIPTION -->
+<section class="py-5">
+    <div class="container" style="max-width: 960px;">
+        <p class="text-warning text-uppercase fw-semibold mb-1">À propos</p>
+        <h2 class="fw-bold mb-4">Un accompagnement sur-mesure</h2>
+
+        <div class="row g-0 border rounded mt-5 overflow-hidden">
+            <div class="col-12 col-md-4 text-center p-4 border-end">
+                <div class="fs-2 mb-2">⏱</div>
+                <span class="fs-3 fw-bold d-block">{{ service.displayDuration }}</span>
+                <span class="text-muted small text-uppercase fw-medium">Durée</span>
+            </div>
+            <div class="col-12 col-md-4 text-center p-4 border-end">
+                <div class="fs-2 mb-2">👤</div>
+                <span class="fs-3 fw-bold d-block">1 à 3</span>
+                <span class="text-muted small text-uppercase fw-medium">Participants max</span>
+            </div>
+            <div class="col-12 col-md-4 text-center p-4">
+                <div class="fs-2 mb-2">💳</div>
+                <span class="fs-3 fw-bold d-block">{{ service.price }} €</span>
+                <span class="text-muted small text-uppercase fw-medium">Par séance</span>
+            </div>
+        </div>
+        <div class="text-center mt-4 p-4">
+            <p class="text-secondary lh-lg">{{ service.description|raw }}</p>
+        </div>
+
+    </div>
+</section>
+
+<hr class="mx-4">
+
+<!-- SESSIONS -->
+<section class="py-5 bg-light">
+    <div class="container" style="max-width: 860px;">
+        <h2 class="fw-bold mb-4">Sessions disponibles</h2>
+
+        {% for session in sessions %}
+            <div class="d-flex align-items-center justify-content-between gap-3 bg-white border rounded p-4 mb-2">
+                <div>
+                    <p class="fw-semibold mb-1">{{ session.startTime|date('d M Y') }} — {{ session.startTime|date('H\\hi') }} → {{ session.endTime|date('H\\hi') }}</p>
+                    <p class="text-muted small mb-0">{{ session.location ?? 'Lieu non précisé' }}</p>
+                </div>
+                <a href="#" class="btn btn-dark btn-sm flex-shrink-0">Réserver</a>
+            </div>
+        {% else %}
+            <div class="alert alert-secondary">Aucune session disponible pour le moment.</div>
+        {% endfor %}
+
+    </div>
+</section>
+
+
+<!-- CTA -->
+
+
+
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-4 px-4 px-md-5 py-5 bg-dark text-white">
+    <p class="fs-4 fst-italic mb-0">Une question avant de <span class="text-warning">réserver ?</span></p>
+    <a href="{{ path('app_visitor_contact_index') }}" class="btn btn-outline-light btn-sm px-4 py-2">Nous contacter →</a>
+</div>
+
+{% endblock %}

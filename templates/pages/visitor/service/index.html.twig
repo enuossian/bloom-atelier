@@ -1,0 +1,41 @@
+{% extends 'themes/base_visitor.html.twig' %}
+
+{% block title %}Prestations - Bloom Atelier{% endblock %}
+
+{% block description %}Découvrez toutes les prestations proposées par Bloom Atelier.{% endblock %}
+
+{% block keywords %}Bloom Atelier, maquillage, prestations, sessions de maquillage, atelier beauté{% endblock %}
+
+{% block main %}
+    <div class="container py-5">
+        <h1 class="text-center mb-5 display-5">Nos Prestations</h1>
+
+        <div class="row g-4">
+            {% for service in services %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="position-relative overflow-hidden">
+                            {% if service.image %}
+                                <img src="{{ vich_uploader_asset(service, 'imageFile') }}" alt="{{ service.name }}" class="card-img-top" style="height: 220px; object-fit: cover;">
+{#                                 <span class="position-absolute top-0 end-0 m-2 badge bg-light text-dark fw-normal">{{ service.displayDuration }}</span> #}
+                            {% else %}
+                                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 220px;">
+                                    <span class="text-muted small">Image non disponible</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="card-body d-flex flex-column p-4">
+                            <h5 class="card-title fw-semibold mb-2">{{ service.name }}</h5>
+                            <p class="card-text text-muted small flex-grow-1">{{ service.description|striptags|slice(0, 200) ~ (service.description|length > 200 ? '...' : '') }}</p>
+                            <div class="text-end mt-1 pt-5 border-top">
+								<a href="{{ path('app_visitor_service_show', {'id': service.id, 'slug':service.slug}) }}" class="btn btn-dark px-3">Découvrir →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-center text-muted">Aucune prestation disponible pour le moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

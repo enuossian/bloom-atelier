@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Service;
 use App\Entity\Session;
+use App\Enum\SessionStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +18,20 @@ class SessionRepository extends ServiceEntityRepository
         parent::__construct($registry, Session::class);
     }
 
-    //    /**
-    //     * @return Session[] Returns an array of Session objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('s.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Session
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * @return Session[] Returns an array of Session objects
+     */
+    public function findAvailableByService(Service $service): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.service = :service')
+            ->andWhere('s.status = :status')
+            ->andWhere('s.startTime > :now')
+            ->setParameter('service', $service)
+            ->setParameter('status', SessionStatus::Available)
+            ->setParameter('now', new \DateTimeImmutable())
+            ->orderBy('s.startTime', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
