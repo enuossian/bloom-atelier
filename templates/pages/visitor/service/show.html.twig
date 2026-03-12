@@ -6,9 +6,17 @@
 
 {% block keywords %}service, détail, {{ service.name }}{% endblock %}
 
+{% block font_awesome %}<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">{% endblock %}
+
 {% block main %}
 
-<!-- HERO -->
+{% include 'components/_alert.html.twig' %}				
+
+<div class="container my-4">
+    <a href="{{path('app_visitor_service_index')}}" class="text-decoration-none">← Voir tous nos services</a>
+</div>
+
+<!-- HERO SECTION -->
 <div class="position-relative overflow-hidden">
     {% if service.image %}
         <img src="{{ vich_uploader_asset(service, 'imageFile') }}" class="w-100 d-block object-fit-cover" style="height: 60vh; filter: brightness(0.90);" alt="{{ service.name }}">
@@ -29,17 +37,17 @@
 
         <div class="row g-0 border rounded mt-5 overflow-hidden">
             <div class="col-12 col-md-4 text-center p-4 border-end">
-                <div class="fs-2 mb-2">⏱</div>
+                <div class="fs-2 mb-2"><i class="fa-solid fa-clock"></i></div>
                 <span class="fs-3 fw-bold d-block">{{ service.displayDuration }}</span>
                 <span class="text-muted small text-uppercase fw-medium">Durée</span>
             </div>
             <div class="col-12 col-md-4 text-center p-4 border-end">
-                <div class="fs-2 mb-2">👤</div>
+                <div class="fs-2 mb-2"><i class="fa-solid fa-user-group"></i></div>
                 <span class="fs-3 fw-bold d-block">1 à 3</span>
                 <span class="text-muted small text-uppercase fw-medium">Participants max</span>
             </div>
             <div class="col-12 col-md-4 text-center p-4">
-                <div class="fs-2 mb-2">💳</div>
+                <div class="fs-2 mb-2"><i class="fa-solid fa-credit-card"></i></div>
                 <span class="fs-3 fw-bold d-block">{{ service.price }} €</span>
                 <span class="text-muted small text-uppercase fw-medium">Par séance</span>
             </div>
@@ -54,17 +62,20 @@
 <hr class="mx-4">
 
 <!-- SESSIONS -->
-<section class="py-5 bg-light">
+<section class="py-5">
     <div class="container" style="max-width: 860px;">
         <h2 class="fw-bold mb-4">Sessions disponibles</h2>
 
         {% for session in sessions %}
             <div class="d-flex align-items-center justify-content-between gap-3 bg-white border rounded p-4 mb-2">
                 <div>
-                    <p class="fw-semibold mb-1">{{ session.startTime|date('d M Y') }} — {{ session.startTime|date('H\\hi') }} → {{ session.endTime|date('H\\hi') }}</p>
+                    <p class="fw-semibold mb-1">{{ session.startTime|format_date() }} — {{ session.startTime|date('H\\hi') }} → {{ session.endTime|date('H\\hi') }}</p>
                     <p class="text-muted small mb-0">{{ session.location ?? 'Lieu non précisé' }}</p>
                 </div>
-                <a href="#" class="btn btn-dark btn-sm flex-shrink-0">Réserver</a>
+                <form action="{{ path('app_visitor_booking_create', {'id': session.id}) }}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token('booking-create' ~ session.id) }}">
+                    <input type="submit" value="Réserver" class="btn btn-dark btn-sm flex-shrink-0">
+                </form>
             </div>
         {% else %}
             <div class="alert alert-secondary">Aucune session disponible pour le moment.</div>
