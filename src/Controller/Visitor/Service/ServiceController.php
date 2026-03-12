@@ -17,7 +17,7 @@ final class ServiceController extends AbstractController
     ) {
     }
 
-    #[Route('/services', name: 'visitor_home_prestations', methods: ['GET'])]
+    #[Route('/services', name: 'app_visitor_service_index', methods: ['GET'])]
     public function index(): Response
     {
         $services = $this->serviceRepository->findBy(['isActive' => true]);
@@ -28,7 +28,7 @@ final class ServiceController extends AbstractController
     }
 
     #[Route('/service/{id<\d+>}/{slug}', name: 'app_visitor_service_show', methods: ['GET'])]
-    public function show(Service $service): Response
+    public function showService(Service $service): Response
     {
         $sessions = $this->sessionRepository->findAvailableByService($service);
 

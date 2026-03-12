@@ -79,6 +79,17 @@ class Booking
         return $this;
     }
 
+    public function calculateTotalAmount(): string
+    {
+        $total = 0;
+
+        foreach ($this->bookItems as $bookItem) {
+            $total += $bookItem->getPrice();
+        }
+
+        return $total;
+    }
+
     public function getStatus(): ?BookingStatus
     {
         return $this->status;
