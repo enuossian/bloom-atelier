@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Visitor\Booking;
+namespace App\Controller\User\Booking;
 
 use App\Entity\Booking;
 use App\Entity\BookItem;
@@ -23,7 +23,7 @@ final class BookingController extends AbstractController
     ) {
     }
 
-    #[Route('/booking/create/{id<\d+>}', name: 'app_visitor_booking_create', methods: ['POST'])]
+    #[Route('/booking/create/{id<\d+>}', name: 'app_user_booking_create', methods: ['POST'])]
     public function create(Session $session, Request $request): Response
     {
         // Vérifier le token CSRF
@@ -57,11 +57,22 @@ final class BookingController extends AbstractController
         }
 
         // Récupérer le panier en cours
-
         $booking = $this->bookingRepository->findOneBy([
-            'status' => BookingStatus::Pending,
             'user' => $user,
+            'status' => BookingStatus::Pending,
         ]);
+
+        // Vérifier que la session n'est pas déjà dans le panier
+        foreach ($booking->getBookItems() as $item) {
+            if ($item->getSession() === $session) {
+                $this->addFlash('warning', 'Cette session est déjà dans votre panier.');
+
+                return $this->redirectToRoute('app_visitor_service_show', [
+                    'id' => $session->getService()->getId(),
+                    'slug' => $session->getService()->getSlug(),
+                ]);
+            }
+        }
 
         // Sinon créer une nouvelle réservation
         if (!$booking) {
@@ -97,5 +108,50 @@ final class BookingController extends AbstractController
             'id' => $session->getService()->getId(),
             'slug' => $session->getService()->getSlug(),
         ]);
+    }
+
+    #[Route('/booking', name: 'app_user_booking_index', methods: ['GET'])]
+    public function index(): Response
+    {
+        // Récupérer le panier en cours
+        $booking = $this->bookingRepository->findOneBy([
+            'user' => $this->getUser(),
+            'status' => BookingStatus::Pending,
+        ]);
+
+        return $this->render('pages/user/booking/index.html.twig', [
+            'booking' => $booking,
+        ]);
+    }
+
+    #[Route('/booking/remove/{id}', name: 'app_user_booking_remove_item', methods: ['POST'])]
+    public function removeItem(BookItem $bookItem, Request $request): Response
+    {
+        // Vérifier le token CSRF
+        if ($this->isCsrfTokenValid("booking-remove-{$bookItem->getId()}", $request->request->get('csrf_token'))) {
+            // Récupérer le panier en cours
+            $booking = $bookItem->getBooking();
+
+            // Supprimer le bookItem du panier (bookItem sera automatiquement supprimé de la base de données grâce à l'option "orphanRemoval=true" dans l'entité Booking)
+            $booking->removeBookItem($bookItem);
+
+            // Supprimer le booking s'il ne contient plus de bookItem et éviter d'avoir des paniers vides dans la base de données
+            if ($booking->getBookItems()->isEmpty()) {
+                $this->entityManager->remove($booking);
+            } else {
+                // Recalculer le montant total du panier
+                $booking->setTotalAmount($booking->calculateTotalAmount());
+                // Mettre à jour la date de modification du panier
+                $booking->setUpdatedAt(new \DateTimeImmutable());
+            }
+
+            // Executer les requêtes en base de données
+            $this->entityManager->flush();
+
+            // Afficher un message de succès
+            $this->addFlash('success', 'La session a été supprimée du panier.');
+        }
+
+        return $this->redirectToRoute('app_user_booking_index');
     }
 }
