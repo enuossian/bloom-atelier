@@ -214,11 +214,11 @@ final class BookingController extends AbstractController
                 'booking_id' => (string) $booking->getId(),
                 'reference' => (string) $booking->getReference(),
             ],
-            'success_url' => $this->generateUrl(
+            'success_url' => rawurldecode($this->generateUrl(
                 'app_user_booking_success',
-                ['id' => $booking->getId()],
+                ['session_id' => '{CHECKOUT_SESSION_ID}'],
                 UrlGeneratorInterface::ABSOLUTE_URL
-            ),
+            )),
             'cancel_url' => $this->generateUrl(
                 'app_user_booking_cancel',
                 [],
@@ -227,5 +227,66 @@ final class BookingController extends AbstractController
         ]);
 
         return $this->redirect($session->url, 303);
+    }
+
+    #[Route('/booking/success', name: 'app_user_booking_success', methods: ['GET'])]
+    public function success(Request $request): Response
+    {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $sessionId = $request->query->get('session_id');
+
+        if (!$sessionId) {
+            throw $this->createAccessDeniedException();
+        }
+
+        \Stripe\Stripe::setApiKey($this->getParameter('stripe_secret_key'));
+
+        $session = \Stripe\Checkout\Session::retrieve($sessionId);
+
+        if ('paid' !== $session->payment_status) {
+            throw $this->createAccessDeniedException();
+        }
+
+        if (!isset($session->metadata->booking_id)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $bookingId = $session->metadata->booking_id;
+
+        $booking = $this->bookingRepository->find($bookingId);
+
+        if (!$booking || $booking->getUser() !== $user) {
+            throw $this->createAccessDeniedException();
+        }
+
+        if (BookingStatus::Pending === $booking->getStatus()) {
+            $booking->setStatus(BookingStatus::Paid);
+            $booking->setUpdatedAt(new \DateTimeImmutable());
+
+            foreach ($booking->getBookItems() as $item) {
+                $item->getSession()->updateStatus();
+            }
+
+            $this->entityManager->flush();
+
+            $this->addFlash('success', 'Votre paiement a été validé. Merci !');
+        }
+
+        return $this->render('pages/user/booking/success.html.twig', [
+            'booking' => $booking,
+        ]);
+    }
+
+    #[Route('/booking/cancel', name: 'app_user_booking_cancel', methods: ['GET'])]
+    public function cancel(): Response
+    {
+        $this->addFlash('warning', 'Le paiement a été annulé.');
+
+        return $this->redirectToRoute('app_user_booking_index');
     }
 }
