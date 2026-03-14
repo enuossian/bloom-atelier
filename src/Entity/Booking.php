@@ -87,7 +87,7 @@ class Booking
             $total += $bookItem->getPrice();
         }
 
-        return $total;
+        return (string) $total;
     }
 
     public function getStatus(): ?BookingStatus
@@ -170,12 +170,7 @@ class Booking
 
     public function removeBookItem(BookItem $bookItem): static
     {
-        if ($this->bookItems->removeElement($bookItem)) {
-            // set the owning side to null (unless already changed)
-            if ($bookItem->getBooking() === $this) {
-                $bookItem->setBooking(null);
-            }
-        }
+        $this->bookItems->removeElement($bookItem);
 
         return $this;
     }

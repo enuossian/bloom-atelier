@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 #[Route('user')]
 final class BookingController extends AbstractController
@@ -63,14 +64,16 @@ final class BookingController extends AbstractController
         ]);
 
         // Vérifier que la session n'est pas déjà dans le panier
-        foreach ($booking->getBookItems() as $item) {
-            if ($item->getSession() === $session) {
-                $this->addFlash('warning', 'Cette session est déjà dans votre panier.');
+        if ($booking) {
+            foreach ($booking->getBookItems() as $item) {
+                if ($item->getSession() === $session) {
+                    $this->addFlash('warning', 'Cette session est déjà dans votre panier.');
 
-                return $this->redirectToRoute('app_visitor_service_show', [
-                    'id' => $session->getService()->getId(),
-                    'slug' => $session->getService()->getSlug(),
-                ]);
+                    return $this->redirectToRoute('app_visitor_service_show', [
+                        'id' => $session->getService()->getId(),
+                        'slug' => $session->getService()->getSlug(),
+                    ]);
+                }
             }
         }
 
@@ -99,6 +102,7 @@ final class BookingController extends AbstractController
         $this->entityManager->persist($bookItem);
 
         $booking->setTotalAmount($booking->calculateTotalAmount());
+        $booking->setUpdatedAt(new \DateTimeImmutable());
 
         $this->entityManager->flush();
 
@@ -124,13 +128,18 @@ final class BookingController extends AbstractController
         ]);
     }
 
-    #[Route('/booking/remove/{id}', name: 'app_user_booking_remove_item', methods: ['POST'])]
+    #[Route('/booking/remove/{id<\d+>}', name: 'app_user_booking_remove_item', methods: ['POST'])]
     public function removeItem(BookItem $bookItem, Request $request): Response
     {
         // Vérifier le token CSRF
         if ($this->isCsrfTokenValid("booking-remove-{$bookItem->getId()}", $request->request->get('csrf_token'))) {
             // Récupérer le panier en cours
             $booking = $bookItem->getBooking();
+
+            // Vérifier que le panier appartient à l'utilisateur connecté
+            if ($booking->getUser() !== $this->getUser()) {
+                throw $this->createAccessDeniedException();
+            }
 
             // Supprimer le bookItem du panier (bookItem sera automatiquement supprimé de la base de données grâce à l'option "orphanRemoval=true" dans l'entité Booking)
             $booking->removeBookItem($bookItem);
@@ -153,5 +162,70 @@ final class BookingController extends AbstractController
         }
 
         return $this->redirectToRoute('app_user_booking_index');
+    }
+
+    #[Route('/booking/checkout', name: 'app_user_booking_checkout', methods: ['POST'])]
+    public function checkout(Request $request): Response
+    {
+        if (!$this->isCsrfTokenValid('booking-checkout', $request->request->get('csrf_token'))) {
+            return $this->redirectToRoute('app_user_booking_index');
+        }
+
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $booking = $this->bookingRepository->findOneBy([
+            'user' => $user,
+            'status' => BookingStatus::Pending,
+        ]);
+
+        if (!$booking || $booking->getBookItems()->isEmpty()) {
+            $this->addFlash('danger', 'Votre panier est vide.');
+
+            return $this->redirectToRoute('app_user_booking_index');
+        }
+
+        \Stripe\Stripe::setApiKey($this->getParameter('stripe_secret_key'));
+
+        $lineItems = [];
+
+        foreach ($booking->getBookItems() as $bookItem) {
+            $lineItems[] = [
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => $bookItem->getSession()->getService()->getName(),
+                    ],
+                    'unit_amount' => (int) ($bookItem->getPrice() * 100),
+                ],
+                'quantity' => 1,
+            ];
+        }
+
+        $session = \Stripe\Checkout\Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'metadata' => [
+                'booking_id' => (string) $booking->getId(),
+                'reference' => (string) $booking->getReference(),
+            ],
+            'success_url' => $this->generateUrl(
+                'app_user_booking_success',
+                ['id' => $booking->getId()],
+                UrlGeneratorInterface::ABSOLUTE_URL
+            ),
+            'cancel_url' => $this->generateUrl(
+                'app_user_booking_cancel',
+                [],
+                UrlGeneratorInterface::ABSOLUTE_URL
+            ),
+        ]);
+
+        return $this->redirect($session->url, 303);
     }
 }
