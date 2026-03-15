@@ -1,0 +1,32 @@
+{% extends 'themes/base_visitor.html.twig' %}
+
+{% block title %}Réservation confirmée{% endblock %}
+
+{% block description %}Votre réservation a bien été enregistrée.{% endblock %}
+
+{% block main %}
+<div class="container py-5" style="max-width: 700px;">
+    {% include 'components/_alert.html.twig' %}
+
+    <h2 class="fw-bold mb-1">Réservation confirmée</h2>
+    <p class="text-muted mb-4">Référence : <strong>{{ booking.reference }}</strong></p>
+
+    {% for bookItem in booking.bookItems %}
+        <div class="d-flex align-items-center justify-content-between gap-3 bg-white border rounded p-4 mb-2">
+            <div>
+                <p class="fw-semibold mb-1">{{ bookItem.session.service.name }}</p>
+                <p class="text-muted small mb-0">
+                    {{ bookItem.session.startTime|date('d M Y') }} — {{ bookItem.session.startTime|date('H\\hi') }} → {{ bookItem.session.endTime|date('H\\hi') }}
+                </p>
+                <p class="text-muted small mb-0">{{ bookItem.session.location ?? 'Lieu non précisé' }}</p>
+            </div>
+            <span class="fw-bold">{{ bookItem.price }} €</span>
+        </div>
+    {% endfor %}
+
+    <div class="d-flex justify-content-between align-items-center mt-4 p-4 bg-white border rounded">
+        <span class="fw-bold fs-5">Total payé</span>
+        <span class="fw-bold fs-5">{{ booking.totalAmount }} €</span>
+    </div>
+</div>
+{% endblock %}

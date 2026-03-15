@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\BookingStatus;
 use App\Enum\SessionStatus;
 use App\Repository\SessionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -229,6 +230,36 @@ class Session
                 ->atPath('endTime')
                 // appel permettant de déclencher l'erreur
                 ->addViolation();
+        }
+    }
+
+    public function updateStatus(): void
+    {
+        // Session annulée, on ne touche pas au statut
+        if (SessionStatus::Cancelled === $this->status) {
+            return;
+        }
+
+        // Session passée
+        if ($this->endTime < new \DateTimeImmutable()) {
+            $this->status = SessionStatus::Completed;
+
+            return;
+        }
+
+        // Compter les places prises (bookings payés)
+        $paidCount = 0;
+        foreach ($this->bookItems as $bookItem) {
+            if (BookingStatus::Paid === $bookItem->getBooking()->getStatus()) {
+                ++$paidCount;
+            }
+        }
+
+        // Mettre à jour le statut selon les places restantes
+        if ($paidCount >= $this->maxParticipants) {
+            $this->status = SessionStatus::Full;
+        } else {
+            $this->status = SessionStatus::Available;
         }
     }
 

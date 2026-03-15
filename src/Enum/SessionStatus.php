@@ -7,6 +7,7 @@ enum SessionStatus: string
     case Available = 'available';
     case Full = 'full';
     case Cancelled = 'cancelled';
+    case Completed = 'completed';
 
     public function label(): string
     {
@@ -14,6 +15,7 @@ enum SessionStatus: string
             SessionStatus::Available => 'Disponible',
             SessionStatus::Full => 'Complète',
             SessionStatus::Cancelled => 'Annulée',
+            SessionStatus::Completed => 'Terminée',
         };
     }
 }

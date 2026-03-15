@@ -1,0 +1,58 @@
+{% extends 'themes/base_visitor.html.twig' %}
+
+{% block title %}
+	Mon panier | Réservation de sessions
+{% endblock %}
+
+{% block description %}
+	Consultez les sessions que vous avez ajoutées à votre panier et finalisez votre réservation en quelques clics.
+{% endblock %}
+
+{% block main %}
+
+
+	<div class="container py-5" style="max-width: 900px;">
+		{% include 'components/_alert.html.twig' %}
+		<h2 class="fw-bold mb-4">Mon panier</h2>
+
+		{% if booking and booking.bookItems|length > 0 %}
+			{% for bookItem in booking.bookItems %}
+				<div class="d-flex align-items-center justify-content-between gap-3 bg-white border rounded p-5 mb-2">
+					<div>
+						<p class="fw-semibold mb-1 fs-5">{{ bookItem.session.service.name }}</p>
+						<p class="small">
+							{{ bookItem.session.startTime|date('d M Y') }}
+							—
+							{{ bookItem.session.startTime|date('H\\hi') }}
+							→
+							{{ bookItem.session.endTime|date('H\\hi') }}
+						</p>
+					</div>
+					<div class="d-flex align-items-center gap-3">
+						<span class="fw-bold">{{ bookItem.price }}
+							€</span>
+						<form action="{{ path('app_user_booking_remove_item', {'id': bookItem.id}) }}" method="POST">
+							<input type="hidden" name="csrf_token" value="{{ csrf_token('booking-remove-' ~ bookItem.id) }}">
+							<button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+						</form>
+					</div>
+				</div>
+			{% endfor %}
+
+			<div class="d-flex justify-content-between align-items-center mt-4 p-4 bg-white border rounded">
+				<span class="fw-bold fs-5">Total</span>
+				<span class="fw-bold fs-5">{{ booking.totalAmount }}
+					€</span>
+			</div>
+
+			<div class="d-flex justify-content-end mt-3">
+				<form action="{{ path('app_user_booking_checkout') }}" method="POST">
+					<input type="hidden" name="csrf_token" value="{{ csrf_token('booking-checkout') }}">
+					<button type="submit" class="btn btn-dark btn-lg px-4">Payer</button>
+				</form>
+			</div>
+		{% else %}
+			<div class="alert alert-secondary">Votre panier est vide.</div>
+		{% endif %}
+	</div>
+{% endblock %}
