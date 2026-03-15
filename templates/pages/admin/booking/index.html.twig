@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block main %}
-    <h1 class="text-center my-3 display-5">Liste des réservations (ADMIN)</h1>
+    <h1 class="text-center my-3 display-5">Liste des réservations</h1>
 
     {% include 'components/_alert.html.twig' %}
 
@@ -48,18 +48,17 @@
                 {% for booking in bookings %}
                 <tr>
                     <td>{{booking.reference}}</td>
-                    <td>{{booking.user.firstName}} {{booking.user.lastName}}</td>
-                    <td>{{booking.totalAmount}} €</td>
-                    <td>{{booking.status.label()}}</td>
                     <td>
-                        {% if booking.confirmationSent == true %}
-                            <p>Envoyée</p>
-                        {% else %}
-                            <p>Non envoyée</p>
-                        {% endif %}
-    
+                        {{ booking.user ? booking.user.firstName ~ ' ' ~ booking.user.lastName : 'Client supprimé' }}
                     </td>
-                    <td>{{booking.createdAt|format_date()}}</td>
+                    <td>{{booking.totalAmount}} €</td>
+                    <td>
+                        <span class="badge bg-secondary">{{ booking.status.label() }}</span>
+                    </td>
+                    <td>
+                        {{ booking.confirmationSent ? 'Envoyée' : 'Non envoyée' }}
+                    </td>
+                    <td>{{booking.createdAt|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm")}}</td>
                     <td class="align-middle">
                         <div class="d-flex justify-content-center align-items-center">
                             <a href="{{path('app_admin_booking_show', {'id': booking.id})}}" class="btn btn-sm btn-dark">voir</a>
