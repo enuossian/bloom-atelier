@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -22,17 +23,25 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $title = null;
-
+    #[Assert\NotBlank(message: 'Le commentaire est obligatoire.')]
+    #[Assert\Length(
+        max: 1000,
+        maxMessage: 'Le commentaire doit contenir au maximum {{ limit }} caractères.',
+    )]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
+    #[Assert\NotBlank(message: 'La note est obligatoire.')]
+    #[Assert\Range(
+        min: 1,
+        max: 5,
+        notInRangeMessage: 'La note doit être comprise entre {{ min }} et {{ max }}.',
+    )]
     #[ORM\Column]
     private ?int $rating = null;
 
     #[ORM\Column]
-    private ?bool $isVisible = null;
+    private ?bool $isVisible = false;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -65,18 +74,6 @@ class Comment
     public function setUser(?User $user): static
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(?string $title): static
-    {
-        $this->title = $title;
 
         return $this;
     }
@@ -139,5 +136,18 @@ class Comment
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function getDisplayStars(): string
+    {
+        $fullStar = '<i class="fas fa-star" style="color: gold;"></i>';
+        $emptyStar = '<i class="far fa-star" style="color: gold;"></i>';
+        $stars = '';
+
+        for ($i = 1; $i <= 5; ++$i) {
+            $stars .= $i <= $this->rating ? $fullStar : $emptyStar;
+        }
+
+        return $stars;
     }
 }
