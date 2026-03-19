@@ -55,11 +55,11 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 							<a href="#" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-{{contact.id}}">Lire</a>
 
 							<!-- Modal -->
-							<div class="modal fade" id="modal-{{contact.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal fade" id="modal-{{contact.id}}" tabindex="-1" aria-labelledby="modal-{{contact.id}}" aria-hidden="true">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h1 class="modal-title fs-5" id="exampleModalLabel">Message de {{ contact.firstName }} {{ contact.lastName }}</h1>
+											<h1 class="modal-title fs-5" id="modal-{{contact.id}}">Message de {{ contact.firstName }} {{ contact.lastName }}</h1>
 											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
