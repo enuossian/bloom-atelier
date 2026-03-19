@@ -43,6 +43,11 @@ final class ServiceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // rediriger l'utilisateur non connecté vers la page de connexion
+            if (!$this->isGranted('ROLE_USER')) {
+                return $this->redirectToRoute('app_login');
+            }
+
             /**
              * @var User
              */
@@ -51,7 +56,6 @@ final class ServiceController extends AbstractController
             $comment->setService($service);
             $comment->setUser($user);
             $comment->setCreatedAt(new \DateTimeImmutable());
-            $comment->setUpdatedAt(new \DateTimeImmutable());
 
             $this->entityManager->persist($comment);
             $this->entityManager->flush();

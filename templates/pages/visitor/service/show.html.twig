@@ -106,15 +106,17 @@
 		{% endif %}
 		<div class="container my-4" style="max-width: 860px;">
 			{% for comment in service.comments %}
-				<div class="mb-4 p-3 border rounded bg-light">
-					<span class="">
-						{{ comment.displayStars|raw }}
-						{{ comment.rating }}/5</span>
-					<small class="text-muted">{{ comment.createdAt|format_date }}</small>
-					<p>{{ comment.user.firstName }}
-						{{ comment.user.lastName }}</p>
-					<p>{{ comment.content }}</p>
-				</div>
+				{% if comment.isVisible %}
+					<div class="mb-4 p-3 border rounded bg-light">
+						<span class="">
+							{{ comment.displayStars|raw }}
+							{{ comment.rating }}/5</span>
+						<small class="text-muted">{{ comment.createdAt|format_date }}</small>
+						<p>{{ comment.user.firstName }}
+							{{ comment.user.lastName }}</p>
+						<p>{{ comment.content }}</p>
+					</div>
+				{% endif %}
 			{% endfor %}
 		</div>
 		<div class="container my-5" style="max-width: 860px;">
