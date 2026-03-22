@@ -6,10 +6,13 @@
   //color: #453232;
 }
 
+// bg color navbar ? background-color: #FBF2EA;
+
 .navbar-brand {
   font-family: "Pacifico", cursive;
   font-weight: 400;
   font-style: normal;
+  border-bottom: 2px solid;
 }
 
 // liens 
@@ -22,3 +25,11 @@ a:hover {
     color: #555555; /* légèrement plus clair au survol */
 }
 
+// font des titres
+
+.cormorant-garamond {
+  font-family: "Cormorant Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}

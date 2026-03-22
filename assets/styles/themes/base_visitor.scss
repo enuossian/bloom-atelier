@@ -1,4 +1,5 @@
-html, .home-body {
+html,
+.home-body {
     height: 100%;
 }
 
@@ -7,3 +8,41 @@ html, .home-body {
     grid-template-rows: auto 1fr auto;
 }
 
+.btn-brown {
+    background-color: #3d2e27;
+    color: #fff;
+}
+
+.btn-brown:hover {
+    background-color: #d4857a;
+    color: #fff;
+}
+
+.btn-login:hover {
+    background-color: #3d2e27;
+    color: #fff;
+}
+
+.btn-clear {
+    border: 1px solid #b5a49a;
+}
+
+.btn-clear:hover {
+    border: 1px solid #3d2e27;
+}
+
+.btn-length {
+    min-width: 120px;
+    text-align: center;
+}
+
+.btn-length-lg {
+    min-width: 180px;
+    text-align: center;
+}
+
+.footer {
+    height: 350px;
+    color: #fff;
+    background: linear-gradient(to top, #e8788a 0%, #f7a6b1 100%);
+}

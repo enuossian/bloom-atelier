@@ -3,15 +3,18 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>{% block title %}{% endblock %} - Bloom Atelier</title>
-		
+		<title>
+			{% block title %}{% endblock %}
+			- Bloom Atelier</title>
+
 
 		{# SEO #}
 		<meta name="robots" content="index, follow">
 		<meta name="description" content="{% block description %}{% endblock %}">
 		<meta name="keywords" content="{% block keywords %}{% endblock %}">
 		<meta name="author" content="Sarah Thomas">
-		<meta name="publisher" content="Enuossian">
+		<meta
+		name="publisher" content="Enuossian">
 
 
 		{# Google Font #}
@@ -30,62 +33,64 @@
 		{# WebpackEncore JS #}
 			{% block javascripts %}
 		{{ encore_entry_script_tags('app') }}
-	{% endblock %}
+		{% endblock %}
 
 		{# Font Awesome #}
-		{% block font_awesome %}{% endblock %}
-		
-	</head>
-		<body class="home-body">
-		{# Navbar #}
+		{% block font_awesome %}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+		{% endblock %}
 
-			<nav class="navbar navbar-expand-lg shadow"> 
-				<div class="container-fluid">
-				<a class="navbar-brand" href="{{path('visitor_home_index')}}">Bloom Atelier</a>
+	</head>
+		<body
+		class="home-body"> {# Navbar #}
+
+		<nav class="navbar navbar-expand-lg shadow beige-color py-4">
+			<div class="container-fluid">
+				<a class="navbar-brand cormorant-garamond fw-bold" href="{{path('visitor_home_index')}}">BLOOM ATELIER</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
+					<ul class="navbar-nav ms-auto gap-lg-4">
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="{{path('visitor_home_index')}}">Accueil</a>
+							<a class="nav-link" aria-current="page" href="{{path('visitor_home_index')}}">ACCUEIL</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{path('visitor_home_concept')}}">Concept</a>
+							<a class="nav-link" href="{{path('visitor_home_concept')}}">CONCEPT</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_visitor_service_index')}}">Prestations</a>
+							<a class="nav-link" href="{{path('app_visitor_service_index')}}">PRESTATIONS</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_visitor_contact_index')}}">Contact</a>
+							<a class="nav-link" href="{{path('app_visitor_contact_index')}}">CONTACT</a>
 						</li>
 					</ul>
-					<ul class="navbar-nav ms-auto">
-					{% if app.user %}
-						{% if is_granted('ROLE_ADMIN') %}
-							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_admin_home')}}">Espace admin</a>
-							</li>
-						{% endif %}
-						{% if is_granted('ROLE_USER') %}
-							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_user_home')}}">Espace privé</a>
-							</li>
-						{% endif %}
+					<ul class="navbar-nav ms-auto gap-3">
+						{% if app.user %}
+							{% if is_granted('ROLE_ADMIN') %}
+								<li class="nav-item">
+									<a class="nav-link " href="{{path('app_admin_home')}}">Espace admin</a>
+								</li>
+							{% endif %}
+							{% if is_granted('ROLE_USER') %}
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('app_user_home')}}">Espace privé</a>
+								</li>
+							{% endif %}
 
+							<li class="nav-item">
+								<a class="nav-link " href="{{path('app_logout')}}">DÉCONNEXION</a>
+							</li>
+						{% else %}
+							<li class="nav-item">
+								<a class="btn btn-login btn-clear btn-length rounded-0" href="{{path('app_register')}}">INSCRIPTION</a>
+							</li>
+							<li class="nav-item">
+								<a class="btn btn-brown btn-length rounded-0" href="{{path('app_login')}}">CONNEXION</a>
+							</li>
+						{% endif %}
 						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
-						</li>
-					{% else %}
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_register')}}">Inscription</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_login')}}">Connexion</a>
-						</li>
-					{% endif %}
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_user_booking_index')}}">Panier</a>
+							<a class="btn btn-clear rounded-0" href="{{path('app_user_booking_index')}}"><i class="fa-solid fa-cart-shopping"></i></a>
 						</li>
 					</ul>
 				</div>
@@ -93,15 +98,15 @@
 		</nav>
 
 		{# Main #}
-        <main>
+		<main>
 			{% block main %}{% endblock %}
-        </main>
+		</main>
 
 		{# Footer #}
-        <footer class="text-center">
-            <p>Enuossian</p>
+		<footer class="text-center footer">
+			<p>Enuossian</p>
 			<a href="{{path('visitor_home_cgv')}}">CGV</a>
 			<a href="{{path('visitor_home_mentions')}}">Mentions légales</a>
-        </footer>
+		</footer>
 	</body>
 </html>
