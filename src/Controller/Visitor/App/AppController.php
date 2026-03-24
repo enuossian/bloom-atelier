@@ -17,7 +17,8 @@ final class AppController extends AbstractController
     #[Route('/', name: 'visitor_home_index')]
     public function index(): Response
     {
-        $services = $this->serviceRepository->findAll();
+        // récupète tous les services actifs
+        $services = $this->serviceRepository->findBy(['isActive' => true]);
 
         return $this->render('pages/visitor/app/index.html.twig', [
             'services' => $services,

@@ -1,62 +1,197 @@
 {% extends "themes/base_visitor.html.twig" %}
 
-{% block title %}Accueil - Bloom Atelier{% endblock %}
-{% block description %}Accueil - Réservez votre session de maquillage{% endblock %}
-{% block keywords %}maquillage, session, réservation, atelier{% endblock %}
+{% block title %}Accueil - Bloom Atelier
+{% endblock %}
+{% block description %}Accueil - Réservez votre session de maquillage
+{% endblock %}
+{% block keywords %}maquillage, session, réservation, atelier
+{% endblock %}
 
 {% block main %}
-{# <header class="py-3 d-flex align-items-center">
-    <div class="container">
-        <div class="row align-items-center g-5">
+	{# <header class="py-3 d-flex align-items-center">
+		    <div class="container">
+		        <div class="row align-items-center g-5">
+		
+		            <div class="col-lg-6 order-2 order-lg-1">
+		                <h1 class="display-3 fw-light mb-4">L'art de révéler votre beauté</h1>
+		                <p class="mb-5 fw-light">
+		                    Des sessions personnalisées pour apprendre les techniques de beauté dans un espace doux et bienveillant, pensé entièrement pour vous.
+		                </p>
+		                <div class="d-flex gap-5">
+		                    <a href="{{ path('app_visitor_service_index') }}" class="btn btn-brown px-4 py-3 rounded-0 btn-length">Découvrir</a>
+		                    <a href="{{ path('app_visitor_contact_index') }}" class="btn btn-clear px-4 py-3 rounded-0 btn-length">Nous contacter</a>
+		                </div>
+		            </div>
+		
+		            <div class="col-lg-6 order-1 order-lg-2 d-flex justify-content-center">
+		                <img src="/images/static/hero-img.jpg" alt="Session de maquillage" class="img-fluid w-100" style="border-radius: 2px;">
+		            </div>
+		        </div>
+		    </div>
+		</header> #}
 
-            <div class="col-lg-6 order-2 order-lg-1">
-                <h1 class="display-3 fw-light mb-4">L'art de révéler votre beauté</h1>
-                <p class="mb-5 fw-light">
-                    Des sessions personnalisées pour apprendre les techniques de beauté dans un espace doux et bienveillant, pensé entièrement pour vous.
-                </p>
-                <div class="d-flex gap-5">
-                    <a href="{{ path('app_visitor_service_index') }}" class="btn btn-brown px-4 py-3 rounded-0 btn-length">Découvrir</a>
-                    <a href="{{ path('app_visitor_contact_index') }}" class="btn btn-clear px-4 py-3 rounded-0 btn-length">Nous contacter</a>
+    <!-- Hero section  -->
+    
+	<header>
+		<div class="container my-5">
+			<div class="row">
+				<div class="col-md-6 order-md-2 d-flex justify-content-center align-items-center">
+					<img src="/images/static/hero-img.jpg" alt="Image de Sarah Thomas" class="img-fluid">
+				</div>
+				<div class="col-md-6 order-md-1 d-flex flex-column justify-content-center align-items-center gap-5">
+					<h1 class="display-3 fw-light my-4">L'art de <span class="display-3 pink">révéler</span> votre beauté</h1>
+					<p>
+						Des sessions personnalisées pour apprendre les techniques de beauté dans un espace doux et bienveillant, pensé entièrement pour vous.
+					</p>
+					<div class="d-flex gap-5 mb-5">
+						<a href="{{ path('app_visitor_service_index') }}" class="btn btn-brown px-5 py-3 rounded-0 btn-length-lg">Découvrir</a>
+						<a href="{{ path('app_visitor_contact_index') }}" class="btn btn-clear px-5 py-3 rounded-0 btn-length-lg">Nous contacter</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+<!-- Prestations -->
+
+	<section class="bg-white py-5">
+    <div class="container-fluid px-lg-5">
+
+        <!-- Titre -->
+        <div class="mb-5">
+            <h2 class="display-6 fw-light">
+                Nos <em class="pink">prestations</em>
+            </h2>
+            <div style="width: 60px; height: 2px; background: #e8788a;"></div>
+        </div>
+
+        <div class="row g-4 align-items-stretch">
+
+            {% set service = services[0] %}
+            <div class="col-12 col-lg-5">
+                <div class="h-100 p-4 p-lg-5 bg-brown text-light d-flex flex-column justify-content-between">
+
+                    <div>
+                        <h3 class="fw-light mb-3 fs-2 cormorant-garamond">
+                            {{ service.name }}
+                        </h3>
+
+                        <p class="fw-light mb-4 opacity-75">
+                            {{ service.description|raw }}
+                        </p>
+
+                        <div class="d-flex gap-4 mb-4">
+                            <div>
+                                <strong class="d-block fs-4 cormorant-garamond">
+                                    {{ service.price }} €
+                                </strong>
+                                <small class="text-white-50">Prix</small>
+                            </div>
+                            <div>
+                                <strong class="d-block fs-4 cormorant-garamond">
+                                    {{ service.displayDuration }}
+                                </strong>
+                                <small class="text-white-50">Durée</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="{{ path('app_visitor_service_show', {'id': service.id, 'slug': service.slug}) }}"
+                       class="btn btn-clear rounded-0 px-4 py-2 text-light align-self-start">
+                        Découvrir →
+                    </a>
+
                 </div>
             </div>
 
-            <div class="col-lg-6 order-1 order-lg-2 d-flex justify-content-center">
-                <img src="/images/static/hero-img.jpg" alt="Session de maquillage" class="img-fluid w-100" style="border-radius: 2px;">
-            </div>
-        </div>
-    </div>
-</header> #}
-<header>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 order-md-2 d-flex justify-content-center align-items-center mt-3">
-                <img src="/images/static/hero-img.jpg" alt="Image de Sarah Thomas" class="img-fluid">
-            </div>
-            <div class="col-md-6 order-md-1 d-flex flex-column justify-content-center align-items-center gap-5">
-                <h1 class="display-3 fw-light my-4">L'art de révéler votre beauté</h1>
-                <p>
-                    Des sessions personnalisées pour apprendre les techniques de beauté dans un espace doux et bienveillant, pensé entièrement pour vous.
-                </p>
-                <div class="d-flex gap-5">
-                    <a href="{{ path('app_visitor_service_index') }}" class="btn btn-brown px-5 py-3 rounded-0 btn-length-lg">Découvrir</a>
-                    <a href="{{ path('app_visitor_contact_index') }}" class="btn btn-clear px-5 py-3 rounded-0 btn-length-lg">Nous contacter</a>
+            <div class="col-12 col-lg-7">
+                <div class="row g-4">
+
+                    {% for service in services|slice(1, 2) %}
+                        <div class="col-12">
+                            <div class="p-4 p-lg-5 border bg-white h-100 d-flex flex-column justify-content-between">
+
+                                <div>
+                                    <h3 class="fw-light mb-2 fs-3 cormorant-garamond">
+                                        {{ service.name }}
+                                    </h3>
+
+                                    <p class="fw-light mb-4 text-brown opacity-75">
+                                        {{ service.description|striptags|slice(0, 120) }}...
+                                    </p>
+                                </div>
+
+                                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
+
+                                    <div class="d-flex gap-4">
+                                        <div>
+                                            <strong class="d-block fs-5 cormorant-garamond">
+                                                {{ service.price }} €
+                                            </strong>
+                                            <small class="text-muted">Prix</small>
+                                        </div>
+                                        <div>
+                                            <strong class="d-block fs-5 cormorant-garamond">
+                                                {{ service.displayDuration }}
+                                            </strong>
+                                            <small class="text-muted">Durée</small>
+                                        </div>
+                                    </div>
+
+                                    <a href="{{ path('app_visitor_service_show', {'id': service.id, 'slug': service.slug}) }}"
+                                       class="btn btn-outline-dark rounded-0 px-4 py-2">
+                                        Découvrir →
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
                 </div>
             </div>
-        </div>
-    </div>
-</header>
 
-<section class="bg-light py-5">
-    <h2 class="display-6 fw-light mb-4">Nos prestations</h2>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-5">
-                
-            </div>
-            <div class="col-md-7">
-            
-            </div>
         </div>
     </div>
 </section>
+
+<!-- Demande spécifique -->
+
+	<section>
+		<div class="container-fluid py-5 bg-clear-brown">
+			<div class="text-center">
+				<h4 class="fs-5">Vous avez une demande spécifique ?</h4>
+				<p>Nous pouvons adapter nos prestations à vos besoins particuliers.</p>
+				<a href="{{ path('app_visitor_service_show', {'id': service.id, 'slug': service.slug}) }}" class="btn btn-dark rounded-0 px-4 py-2 text-light">Contactez-nous</a>
+			</div>
+		</div>
+	</section>
+
+<!-- À propos -->
+
+	<section>
+		<div class="container-fluid my-5">
+			<div class="row">
+				<div class="col-md-6 d-flex justify-content-center align-items-center">
+					<img src="/images/static/front-hero1.jpg" alt="Image de Sarah Thomas" class="img-fluid w-75">
+				</div>
+				<div class="col-md-6 ">
+					<h2 class="display-6 fw-light mt-5">Notre<em class="pink display-6"> histoire</em></h2>
+					<span class="fs-5">Sarah Thomas, fondatrice</span>
+                    <div class="mx-5 my-5">
+                        <p>Passionnée par l'univers de la beauté depuis plus de 10 ans, Sarah Thomas a fondé Bloom Atelier avec une conviction profonde : chaque personne porte en elle une beauté unique qui ne demande qu'à s'épanouir.
+                        </p>
+                        <p>
+                        Formée aux techniques de maquillage professionnel à Paris, Sarah a exercé dans le monde du cinéma, de la mode et du mariage avant de se consacrer entièrement à l'accompagnement individuel. Son approche mêle expertise technique et bienveillance, pour que chaque session soit avant tout un moment de bien-être et de confiance en soi.
+                        </p>
+                        <p>
+                        Spécialisée en maquillage, relooking et conseil en colorimétrie, elle vous accompagne dans la découverte de votre style personnel, celui qui vous ressemble vraiment.
+                        </p>
+                        </div>
+                        <a href="{{ path('app_visitor_service_show', {'id': service.id, 'slug': service.slug}) }}" class="btn btn-dark rounded-0 px-4 py-2 text-light text-center">En savoir plus</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
 {% endblock %}
