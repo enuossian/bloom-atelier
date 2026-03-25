@@ -31,6 +31,12 @@ final class AppController extends AbstractController
         return $this->render('pages/visitor/app/concept.html.twig');
     }
 
+    #[Route('/a-propos', name: 'visitor_home_about_us')]
+    public function about_us(): Response
+    {
+        return $this->render('pages/visitor/app/about_us.html.twig');
+    }
+
     #[Route('/cgv', name: 'visitor_home_cgv')]
     public function cgv(): Response
     {

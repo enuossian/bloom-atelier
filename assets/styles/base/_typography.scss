@@ -1,39 +1,22 @@
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: $font-body;
   font-weight: 400;
   font-size: small;
-  font-style: normal;
-  //color: #453232;
 }
-
-// bg color navbar ? background-color: #FBF2EA;
-
-.navbar-brand {
-  font-family: "Pacifico", cursive;
-  font-weight: 400;
-  font-style: normal;
-  border-bottom: 2px solid;
-}
-
-// liens 
 
 a {
-    color: #333333; /* gris foncé */
-}
+  color: $color-dark-gray;
 
-a:hover {
-    color: #555555; /* légèrement plus clair au survol */
+  &:hover {
+    color: $color-medium-gray;
+  }
 }
-
-// font des titres
 
 .cormorant-garamond {
-  font-family: "Cormorant Garamond", serif;
-  font-optical-sizing: auto;
+  font-family: $font-display;
   font-weight: 300;
-  font-style: normal;
 }
 
 .pink {
-  color: #d4857a;
+  color: $color-pink;
 }

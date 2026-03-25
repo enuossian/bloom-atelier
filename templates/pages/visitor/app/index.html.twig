@@ -8,27 +8,6 @@
 {% endblock %}
 
 {% block main %}
-	{# <header class="py-3 d-flex align-items-center">
-		    <div class="container">
-		        <div class="row align-items-center g-5">
-		
-		            <div class="col-lg-6 order-2 order-lg-1">
-		                <h1 class="display-3 fw-light mb-4">L'art de révéler votre beauté</h1>
-		                <p class="mb-5 fw-light">
-		                    Des sessions personnalisées pour apprendre les techniques de beauté dans un espace doux et bienveillant, pensé entièrement pour vous.
-		                </p>
-		                <div class="d-flex gap-5">
-		                    <a href="{{ path('app_visitor_service_index') }}" class="btn btn-brown px-4 py-3 rounded-0 btn-length">Découvrir</a>
-		                    <a href="{{ path('app_visitor_contact_index') }}" class="btn btn-clear px-4 py-3 rounded-0 btn-length">Nous contacter</a>
-		                </div>
-		            </div>
-		
-		            <div class="col-lg-6 order-1 order-lg-2 d-flex justify-content-center">
-		                <img src="/images/static/hero-img.jpg" alt="Session de maquillage" class="img-fluid w-100" style="border-radius: 2px;">
-		            </div>
-		        </div>
-		    </div>
-		</header> #}
 
     <!-- Hero section  -->
     
@@ -36,7 +15,7 @@
 		<div class="container my-5">
 			<div class="row">
 				<div class="col-md-6 order-md-2 d-flex justify-content-center align-items-center">
-					<img src="/images/static/hero-img.jpg" alt="Image de Sarah Thomas" class="img-fluid">
+					<img src="{{ asset('images/static/hero-img.jpg') }}" alt="Image de Sarah Thomas" class="img-fluid">
 				</div>
 				<div class="col-md-6 order-md-1 d-flex flex-column justify-content-center align-items-center gap-5">
 					<h1 class="display-3 fw-light my-4">L'art de <span class="display-3 pink">révéler</span> votre beauté</h1>
@@ -44,8 +23,8 @@
 						Des sessions personnalisées pour apprendre les techniques de beauté dans un espace doux et bienveillant, pensé entièrement pour vous.
 					</p>
 					<div class="d-flex gap-5 mb-5">
-						<a href="{{ path('app_visitor_service_index') }}" class="btn btn-brown px-5 py-3 rounded-0 btn-length-lg">Découvrir</a>
-						<a href="{{ path('app_visitor_contact_index') }}" class="btn btn-clear px-5 py-3 rounded-0 btn-length-lg">Nous contacter</a>
+						<a href="{{ path('app_visitor_service_index') }}" class="btn btn-brown px-5 py-3 rounded-0">Découvrir</a>
+						<a href="{{ path('app_visitor_contact_index') }}" class="btn btn-clear px-5 py-3 rounded-0">Nous contacter</a>
 					</div>
 				</div>
 			</div>
@@ -60,7 +39,7 @@
         <!-- Titre -->
         <div class="mb-5">
             <h2 class="display-6 fw-light">
-                Nos <em class="pink">prestations</em>
+                Nos <span class="display-6 fw-light pink">prestations</span>
             </h2>
             <div style="width: 60px; height: 2px; background: #e8788a;"></div>
         </div>
@@ -112,7 +91,7 @@
                             <div class="p-4 p-lg-5 border bg-white h-100 d-flex flex-column justify-content-between">
 
                                 <div>
-                                    <h3 class="fw-light mb-2 fs-3 cormorant-garamond">
+                                    <h3 class="fw-light mb-2 fs-2 cormorant-garamond">
                                         {{ service.name }}
                                     </h3>
 
@@ -162,7 +141,7 @@
 			<div class="text-center">
 				<h4 class="fs-5">Vous avez une demande spécifique ?</h4>
 				<p>Nous pouvons adapter nos prestations à vos besoins particuliers.</p>
-				<a href="{{ path('app_visitor_service_show', {'id': service.id, 'slug': service.slug}) }}" class="btn btn-dark rounded-0 px-4 py-2 text-light">Contactez-nous</a>
+				<a href="{{ path('app_visitor_contact_index') }}" class="btn btn-dark rounded-0 px-4 py-2 text-light">Contactez-nous</a>
 			</div>
 		</div>
 	</section>
@@ -173,7 +152,7 @@
 		<div class="container-fluid my-5">
 			<div class="row">
 				<div class="col-md-6 d-flex justify-content-center align-items-center">
-					<img src="/images/static/front-hero1.jpg" alt="Image de Sarah Thomas" class="img-fluid w-75">
+					<img src="{{ asset('images/static/front-hero1.jpg') }}" alt="Image de Sarah Thomas" class="img-fluid w-75">
 				</div>
 				<div class="col-md-6 ">
 					<h2 class="display-6 fw-light mt-5">Notre<em class="pink display-6"> histoire</em></h2>

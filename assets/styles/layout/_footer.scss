@@ -1,0 +1,9 @@
+.footer {
+  height: 350px;
+  color: $color-white;
+  background: linear-gradient(
+    to top,
+    $color-bright-pink,
+    $color-light-pink
+  );
+}

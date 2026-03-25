@@ -20,8 +20,7 @@
 		{# Google Font #}
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 		{# Favicon #}
 
 
@@ -42,27 +41,34 @@
 
 	</head>
 		<body
-		class="home-body"> {# Navbar #}
+		class="home-body"> 
+		
+		{% set clientPathInfo = app.request.pathInfo %}
 
-		<nav class="navbar navbar-expand-lg shadow beige-color py-4">
+		{# Navbar #}
+
+		<nav class="navbar navbar-expand-lg shadow py-4">
 			<div class="container-fluid">
-				<a class="navbar-brand cormorant-garamond fw-bold" href="{{path('visitor_home_index')}}">BLOOM ATELIER</a>
+				<a class="navbar-brand fw-bold" href="{{path('visitor_home_index')}}">BLOOM ATELIER</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav ms-auto gap-lg-4">
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="{{path('visitor_home_index')}}">ACCUEIL</a>
+							<a class="nav-link {{ clientPathInfo ==  path('visitor_home_index') ? 'active' : ''}}" {{ clientPathInfo ==  path('visitor_home_index') ? 'aria-current="page"' : ''}} href="{{path('visitor_home_index')}}">ACCUEIL</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{path('visitor_home_concept')}}">CONCEPT</a>
+							<a class="nav-link {{ clientPathInfo ==  path('visitor_home_concept') ? 'active' : ''}}" {{ clientPathInfo ==  path('visitor_home_concept') ? 'aria-current="page"' : ''}} href="{{path('visitor_home_concept')}}">CONCEPT</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_visitor_service_index')}}">PRESTATIONS</a>
+							<a class="nav-link {{ clientPathInfo ==  path('app_visitor_service_index') ? 'active' : ''}}" {{ clientPathInfo ==  path('app_visitor_service_index') ? 'aria-current="page"' : ''}} href="{{path('app_visitor_service_index')}}">PRESTATIONS</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_visitor_contact_index')}}">CONTACT</a>
+							<a class="nav-link {{ clientPathInfo ==  path('visitor_home_about_us') ? 'active' : ''}}" {{ clientPathInfo ==  path('visitor_home_about_us') ? 'aria-current="page"' : ''}} href="{{path('visitor_home_about_us')}}">À PROPOS</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link {{ clientPathInfo ==  path('app_visitor_contact_index') ? 'active' : ''}}" {{ clientPathInfo ==  path('app_visitor_contact_index') ? 'aria-current="page"' : ''}} href="{{path('app_visitor_contact_index')}}">CONTACT</a>
 						</li>
 					</ul>
 					<ul class="navbar-nav ms-auto gap-3">
@@ -83,10 +89,10 @@
 							</li>
 						{% else %}
 							<li class="nav-item">
-								<a class="btn btn-login btn-clear btn-length rounded-0" href="{{path('app_register')}}">INSCRIPTION</a>
+								<a class="btn btn-login btn-clear px-3 rounded-0" href="{{path('app_register')}}">INSCRIPTION</a>
 							</li>
 							<li class="nav-item">
-								<a class="btn btn-brown btn-length rounded-0" href="{{path('app_login')}}">CONNEXION</a>
+								<a class="btn btn-brown px-3 rounded-0" href="{{path('app_login')}}">CONNEXION</a>
 							</li>
 						{% endif %}
 						<li class="nav-item">
