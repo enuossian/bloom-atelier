@@ -8,7 +8,32 @@
 
 {% block main %}
 
-<div>
-    <h1 class="text-center my-3 display-5">À propos de nous</h1>
-</div>
+<!-- À propos -->
+
+	<section>
+		<div class="container-fluid my-5">
+			<div class="row">
+				<div class="col-md-6 d-flex justify-content-center align-items-center">
+					<img src="{{ asset('images/static/front-hero1.jpg') }}" alt="Image de Sarah Thomas" class="img-fluid w-75">
+				</div>
+				<div class="col-md-6 ">
+					<h2 class="display-6 fw-light mt-5 cormorant-garamond">Notre<span class="pink display-6 cormorant-garamond">
+							histoire</span>
+					</h2>
+					<span class="fs-5">Sarah Thomas, fondatrice</span>
+					<div class="mx-5 my-5">
+						<p>Passionnée par l'univers de la beauté depuis plus de 10 ans, Sarah Thomas a fondé Bloom Atelier avec une conviction profonde : chaque personne porte en elle une beauté unique qui ne demande qu'à s'épanouir.
+						</p>
+						<p>
+							Formée aux techniques de maquillage professionnel à Paris, Sarah a exercé dans le monde du cinéma, de la mode et du mariage avant de se consacrer entièrement à l'accompagnement individuel. Son approche mêle expertise technique et bienveillance, pour que chaque session soit avant tout un moment de bien-être et de confiance en soi.
+						</p>
+						<p>
+							Spécialisée en maquillage, relooking et conseil en colorimétrie, elle vous accompagne dans la découverte de votre style personnel, celui qui vous ressemble vraiment.
+						</p>
+					</div>
+					<a href="{{ path('visitor_home_about_us')}}" class="btn btn-brown rounded-0 px-4 py-2 text-light text-center">En savoir plus</a>
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}

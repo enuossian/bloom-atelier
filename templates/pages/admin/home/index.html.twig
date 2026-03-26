@@ -1,9 +1,93 @@
 {% extends 'themes/base_admin.html.twig' %}
 
-{% block title %} Tableau de bord administrateur {% endblock %}
+{% block title %}
+	Tableau de bord administrateur
+{% endblock %}
 
-{% block description %}Tableau de bord administrateur {% endblock %}
+{% block description %}Tableau de bord administrateur
+{% endblock %}
 
 {% block main %}
-<h1 class="text-center display-5 my-3">Bonjour, {{ app.user.firstName }} {{ app.user.lastName }}</h1>
+
+<div class="container-fluid py-4">
+
+    <h1 class="cormorant-garamond display-6 mb-2">Bonjour {{ app.user.firstName }} {{ app.user.lastName }},</h1>
+    <p class="text-muted fw-light mb-5">Vue d'ensemble de votre activité</p>
+
+    <div class="row g-3 mb-5">
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card border rounded-0 p-4 container-bg">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p class="text-muted small text-uppercase fw-light">Utilisateurs</p>
+                        <span class="cormorant-garamond display-5">{{ users_counted }}</span>
+                    </div>
+                </div>
+                <a href="{{ path('app_admin_user_index') }}" class="small mt-3 pink">Gérer →</a>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card border rounded-0 p-4 container-bg">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p class="text-muted small text-uppercase fw-light">Services</p>
+                        <span class="cormorant-garamond display-5">{{ services_counted }}</span>
+                    </div>
+                </div>
+                <a href="{{ path('app_admin_service_index') }}" class="small mt-3 pink">Gérer →</a>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card border rounded-0 p-4 container-bg">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p class="text-muted small text-uppercase fw-light">Sessions</p>
+                        <span class="cormorant-garamond display-5">{{ sessions_counted }}</span>
+                    </div>
+                </div>
+                <a href="{{ path('app_admin_session_index') }}" class="small mt-3 pink">Gérer →</a>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card border rounded-0 p-4 container-bg">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p class="text-muted small text-uppercase fw-light">Réservations</p>
+                        <span class="cormorant-garamond display-5">{{ bookings_counted }}</span>
+                    </div>
+                </div>
+                <a href="{{ path('app_admin_booking_index') }}" class="small mt-3 pink">Gérer →</a>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card border rounded-0 p-4 container-bg">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p class="text-muted small text-uppercase fw-light">Avis</p>
+                        <span class="cormorant-garamond display-5">{{ comments_counted }}</span>
+                    </div>
+                </div>
+                <a href="{{ path('app_admin_comment_index') }}" class="small mt-3 pink">Gérer →</a>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card border rounded-0 p-4 container-bg">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p class="text-muted small text-uppercase fw-light">Contacts</p>
+                        <span class="cormorant-garamond display-5">{{ contacts_counted }}</span>
+                    </div>
+                </div>
+                <a href="{{ path('app_admin_contact_index') }}" class="small mt-3 pink">Gérer →</a>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}

@@ -1,7 +1,6 @@
 // transition section services
 .card {
   transition: all 0.3s ease;
-  border: none;
 
   &:hover {
     transform: translateY(-8px);
