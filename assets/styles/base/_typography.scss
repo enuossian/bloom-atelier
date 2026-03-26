@@ -19,4 +19,10 @@ a {
 
 .pink {
   color: $color-pink;
+
+  // applique le style rose à l'icone étoile dans Comment
+
+  i {
+    color: $color-pink !important;
+  }
 }

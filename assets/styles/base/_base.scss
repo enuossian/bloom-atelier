@@ -10,10 +10,18 @@ body {
   background-color: $color-dark-brown;
 }
 
-.bg-clear-brown {
+.bg-light-brown {
+  background-color: $color-light-brown;
+}
+
+.bg-beige {
   background-color: $color-medium-beige;
 }
 
 .active {
   color: $color-pink !important;
+}
+
+.text-brown-light {
+  color: $color-border;
 }

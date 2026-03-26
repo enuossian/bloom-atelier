@@ -35,14 +35,12 @@
 		{% endblock %}
 
 		{# Font Awesome #}
-		{% block font_awesome %}
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-		{% endblock %}
+			{% block font_awesome %}
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> {% endblock %}
 
 	</head>
-		<body
-		class="home-body"> 
-		
+	<body class="home-body">
+
 		{% set clientPathInfo = app.request.pathInfo %}
 
 		{# Navbar #}
@@ -56,19 +54,19 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav ms-auto gap-lg-4">
 						<li class="nav-item">
-							<a class="nav-link {{ clientPathInfo ==  path('visitor_home_index') ? 'active' : ''}}" {{ clientPathInfo ==  path('visitor_home_index') ? 'aria-current="page"' : ''}} href="{{path('visitor_home_index')}}">ACCUEIL</a>
+							<a class="nav-link {{ clientPathInfo ==  path('visitor_home_index') ? 'active' : ''}}" {{ clientPathInfo == path('visitor_home_index') ? 'aria-current="page"' : ''}} href="{{path('visitor_home_index')}}">ACCUEIL</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {{ clientPathInfo ==  path('visitor_home_concept') ? 'active' : ''}}" {{ clientPathInfo ==  path('visitor_home_concept') ? 'aria-current="page"' : ''}} href="{{path('visitor_home_concept')}}">CONCEPT</a>
+							<a class="nav-link {{ clientPathInfo ==  path('visitor_home_concept') ? 'active' : ''}}" {{ clientPathInfo == path('visitor_home_concept') ? 'aria-current="page"' : ''}} href="{{path('visitor_home_concept')}}">CONCEPT</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {{ clientPathInfo ==  path('app_visitor_service_index') ? 'active' : ''}}" {{ clientPathInfo ==  path('app_visitor_service_index') ? 'aria-current="page"' : ''}} href="{{path('app_visitor_service_index')}}">PRESTATIONS</a>
+							<a class="nav-link {{ clientPathInfo ==  path('app_visitor_service_index') ? 'active' : ''}}" {{ clientPathInfo == path('app_visitor_service_index') ? 'aria-current="page"' : ''}} href="{{path('app_visitor_service_index')}}">PRESTATIONS</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {{ clientPathInfo ==  path('visitor_home_about_us') ? 'active' : ''}}" {{ clientPathInfo ==  path('visitor_home_about_us') ? 'aria-current="page"' : ''}} href="{{path('visitor_home_about_us')}}">À PROPOS</a>
+							<a class="nav-link {{ clientPathInfo ==  path('visitor_home_about_us') ? 'active' : ''}}" {{ clientPathInfo == path('visitor_home_about_us') ? 'aria-current="page"' : ''}} href="{{path('visitor_home_about_us')}}">À PROPOS</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {{ clientPathInfo ==  path('app_visitor_contact_index') ? 'active' : ''}}" {{ clientPathInfo ==  path('app_visitor_contact_index') ? 'aria-current="page"' : ''}} href="{{path('app_visitor_contact_index')}}">CONTACT</a>
+							<a class="nav-link {{ clientPathInfo ==  path('app_visitor_contact_index') ? 'active' : ''}}" {{ clientPathInfo == path('app_visitor_contact_index') ? 'aria-current="page"' : ''}} href="{{path('app_visitor_contact_index')}}">CONTACT</a>
 						</li>
 					</ul>
 					<ul class="navbar-nav ms-auto gap-3">
@@ -96,7 +94,9 @@
 							</li>
 						{% endif %}
 						<li class="nav-item">
-							<a class="btn btn-clear rounded-0" href="{{path('app_user_booking_index')}}"><i class="fa-solid fa-cart-shopping"></i></a>
+							<a class="btn btn-clear rounded-0" href="{{path('app_user_booking_index')}}">
+								<i class="fa-solid fa-cart-shopping"></i>
+							</a>
 						</li>
 					</ul>
 				</div>
@@ -109,10 +109,14 @@
 		</main>
 
 		{# Footer #}
-		<footer class="text-center footer">
-			<p>Enuossian</p>
-			<a href="{{path('visitor_home_cgv')}}">CGV</a>
-			<a href="{{path('visitor_home_mentions')}}">Mentions légales</a>
+		<footer class="text-center footer pb-3">
+			<p class="text-brown-light">© 2026 BLOOM ATELIER</p>
+			<div class="text-light"></div>
+			<div class="d-flex gap-3 justify-content-center align-items-center">
+				<a href="{{path('visitor_home_cgv')}}" class="text-brown-light">CGV</a>
+				<a href="{{path('visitor_home_mentions')}}" class="text-brown-light">Mentions légales</a>
+				<a href="{{path('visitor_home_mentions')}}" class="text-brown-light">Politique de confidentialité</a>
+			</div>
 		</footer>
 	</body>
 </html>

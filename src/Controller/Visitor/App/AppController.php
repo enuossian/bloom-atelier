@@ -2,6 +2,7 @@
 
 namespace App\Controller\Visitor\App;
 
+use App\Repository\CommentRepository;
 use App\Repository\ServiceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,6 +12,7 @@ final class AppController extends AbstractController
 {
     public function __construct(
         private readonly ServiceRepository $serviceRepository,
+        private readonly CommentRepository $commentRepository,
     ) {
     }
 
@@ -20,8 +22,12 @@ final class AppController extends AbstractController
         // récupète tous les services actifs
         $services = $this->serviceRepository->findBy(['isActive' => true]);
 
+        // récupère 3 commentaires visibles
+        $comments = $this->commentRepository->findBy(['isVisible' => true], ['createdAt' => 'DESC'], 3);
+
         return $this->render('pages/visitor/app/index.html.twig', [
             'services' => $services,
+            'comments' => $comments,
         ]);
     }
 

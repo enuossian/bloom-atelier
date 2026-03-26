@@ -1,0 +1,10 @@
+// transition section services
+.card {
+  transition: all 0.3s ease;
+  border: none;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  }
+}
