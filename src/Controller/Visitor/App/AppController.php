@@ -2,22 +2,45 @@
 
 namespace App\Controller\Visitor\App;
 
+use App\Repository\CommentRepository;
+use App\Repository\ServiceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class AppController extends AbstractController
 {
+    public function __construct(
+        private readonly ServiceRepository $serviceRepository,
+        private readonly CommentRepository $commentRepository,
+    ) {
+    }
+
     #[Route('/', name: 'visitor_home_index')]
     public function index(): Response
     {
-        return $this->render('pages/visitor/app/index.html.twig');
+        // récupète tous les services actifs
+        $services = $this->serviceRepository->findBy(['isActive' => true]);
+
+        // récupère 3 commentaires visibles
+        $comments = $this->commentRepository->findBy(['isVisible' => true], ['createdAt' => 'DESC'], 3);
+
+        return $this->render('pages/visitor/app/index.html.twig', [
+            'services' => $services,
+            'comments' => $comments,
+        ]);
     }
 
     #[Route('/notre-concept', name: 'visitor_home_concept')]
     public function concept(): Response
     {
         return $this->render('pages/visitor/app/concept.html.twig');
+    }
+
+    #[Route('/a-propos', name: 'visitor_home_about_us')]
+    public function about_us(): Response
+    {
+        return $this->render('pages/visitor/app/about_us.html.twig');
     }
 
     #[Route('/cgv', name: 'visitor_home_cgv')]

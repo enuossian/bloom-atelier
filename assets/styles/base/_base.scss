@@ -1,8 +1,27 @@
-
 body {
-    background-color: $color-background;
+  background-color: $color-background;
 }
 
 .container-bg {
-  background-color: #fffcf8;
+  background-color: $color-light-beige;
+}
+
+.bg-brown {
+  background-color: $color-dark-brown;
+}
+
+.bg-light-brown {
+  background-color: $color-light-brown;
+}
+
+.bg-beige {
+  background-color: $color-medium-beige;
+}
+
+.active {
+  color: $color-pink !important;
+}
+
+.text-brown-light {
+  color: $color-border;
 }

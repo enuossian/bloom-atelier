@@ -1,24 +1,28 @@
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: $font-body;
   font-weight: 400;
   font-size: small;
-  font-style: normal;
-  //color: #453232;
 }
-
-.navbar-brand {
-  font-family: "Pacifico", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-
-// liens 
 
 a {
-    color: #333333; /* gris foncé */
+  color: $color-dark-gray;
+
+  &:hover {
+    color: $color-medium-gray;
+  }
 }
 
-a:hover {
-    color: #555555; /* légèrement plus clair au survol */
+.cormorant-garamond {
+  font-family: $font-display;
+  font-weight: 300;
 }
 
+.pink {
+  color: $color-pink;
+
+  // applique le style rose à l'icone étoile dans Comment
+
+  i {
+    color: $color-pink !important;
+  }
+}

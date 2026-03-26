@@ -1,0 +1,22 @@
+.btn-brown {
+  background-color: $color-dark-brown;
+  color: $color-white;
+
+  &:hover {
+    background-color: $color-pink;
+  }
+}
+
+.btn-login:hover {
+  background-color: $color-dark-brown;
+  color: $color-white;
+}
+
+.btn-clear {
+  border: 1px solid $color-border;
+
+  &:hover {
+    border-color: $color-dark-brown;
+  }
+}
+

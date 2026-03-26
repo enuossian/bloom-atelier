@@ -1,29 +1,240 @@
 {% extends "themes/base_visitor.html.twig" %}
 
-{% block title %}Accueil - Bloom Atelier{% endblock %}
-{% block description %}Accueil - Réservez votre session de maquillage{% endblock %}
-{% block keywords %}maquillage, session, réservation, atelier{% endblock %}
+{% block title %}Accueil - Bloom Atelier
+{% endblock %}
+{% block description %}Accueil - Réservez votre session de maquillage
+{% endblock %}
+{% block keywords %}maquillage, session, réservation, atelier
+{% endblock %}
 
 {% block main %}
-<h1>accueil</h1>
-{# <section class="py-5">
-    <div class="container container-bg rounded-4 py-5 px-4">
-        <div class="row align-items-center g-4">
-            <div class="col-lg-6 order-2 order-lg-1">
-                <div class="m-3">
-                    <h1 class="display-4 mb-4">Sublimez votre style avec Bloom Atelier</h1>
-                    <p class="lead mb-4">
-                        Participez à nos sessions de maquillage en petit groupe et découvrez nos conseils personnalisés.
-                    </p>
-                    <a href="#" class="btn btn-dark btn-lg rounded-pill w-75 p-3">
-                        Découvrir
-                    </a>
+
+	<!-- Hero section  -->
+
+	<header>
+		<div class="container my-5">
+			<div class="row">
+				<div class="col-md-6 order-md-2 d-flex justify-content-center align-items-center">
+					<img src="{{ asset('images/static/hero-img.jpg') }}" alt="Image de Sarah Thomas" class="img-fluid">
+				</div>
+				<div class="col-md-6 order-md-1 d-flex flex-column justify-content-center align-items-center gap-5">
+					<h1 class="display-3 fw-light my-4 cormorant-garamond">L'art de
+						<span class="display-3 pink cormorant-garamond">révéler</span>
+						votre beauté</h1>
+					<p>
+						Des sessions personnalisées pour apprendre les techniques de beauté dans un espace doux et bienveillant, pensé entièrement pour vous.
+					</p>
+					<div class="d-flex gap-5 mb-5">
+						<a href="{{ path('app_visitor_service_index') }}" class="btn btn-brown px-5 py-3 rounded-0">Découvrir</a>
+						<a href="{{ path('app_visitor_contact_index') }}" class="btn btn-clear px-5 py-3 rounded-0">Nous contacter</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Prestations -->
+<section class="bg-white py-5">
+    <div class="container-fluid px-lg-5">
+
+        <!-- Titre -->
+        <div class="mb-5">
+            <h2 class="display-6 fw-light cormorant-garamond">
+                Nos <span class="display-6 fw-light cormorant-garamond pink">prestations</span>
+            </h2>
+        </div>
+
+        <div class="row g-4 align-items-stretch">
+
+            {# Card principale #}
+            {% set service = services[0] %}
+            <div class="col-12 col-lg-5">
+                <div class="card h-100 bg-brown text-light border-0 rounded-0 p-4 p-lg-5 d-flex flex-column justify-content-between">
+
+                    <div class="card-body p-0">
+                        <h3 class="card-title fw-light fs-2 cormorant-garamond mb-3">
+                            {{ service.name }}
+                        </h3>
+
+                        <p class="card-text opacity-75 mb-4">
+                            {{ service.description|raw }}
+                        </p>
+
+                        <div class="d-flex gap-4 mb-4">
+                            <div>
+                                <strong class="d-block fs-4 cormorant-garamond">
+                                    {{ service.price }} €
+                                </strong>
+                                <small class="opacity-50">Prix</small>
+                            </div>
+                            <div>
+                                <strong class="d-block fs-4 cormorant-garamond">
+                                    {{ service.displayDuration }}
+                                </strong>
+                                <small class="opacity-50">Durée</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer bg-transparent border-0 p-0">
+                        <a href="{{ path('app_visitor_service_show', {'id': service.id, 'slug': service.slug}) }}"
+                           class="btn btn-clear text-light rounded-0 px-4 py-2">
+                           Découvrir →
+                        </a>
+                    </div>
+
                 </div>
             </div>
-            <div class="col-lg-6 d-flex justify-content-center order-1 order-lg-2">
-                <img src="/images/static/hero.jpg" alt="Session de maquillage" class="img-fluid rounded w-100">
+
+            {# Cards secondaires #}
+            <div class="col-12 col-lg-7">
+                <div class="row g-4">
+
+                    {% for service in services|slice(1, 2) %}
+                        <div class="col-12">
+                            <div class="card h-100 border rounded-0 p-4 p-lg-5 d-flex flex-column justify-content-between">
+
+                                <div class="card-body p-0">
+                                    <h3 class="card-title fw-light fs-3 cormorant-garamond mb-3">
+                                        {{ service.name }}
+                                    </h3>
+
+                                    <p class="card-text opacity-75 mb-4">
+                                        {{ service.description|striptags|slice(0, 120) }}...
+                                    </p>
+                                </div>
+
+                                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
+
+                                    <div class="d-flex gap-4">
+                                        <div>
+                                            <strong class="d-block fs-5 cormorant-garamond">
+                                                {{ service.price }} €
+                                            </strong>
+                                            <small class="opacity-50">Prix</small>
+                                        </div>
+                                        <div>
+                                            <strong class="d-block fs-5 cormorant-garamond">
+                                                {{ service.displayDuration }}
+                                            </strong>
+                                            <small class="opacity-50">Durée</small>
+                                        </div>
+                                    </div>
+
+                                    <a href="{{ path('app_visitor_service_show', {'id': service.id, 'slug': service.slug}) }}"
+                                       class="btn btn-outline-dark rounded-0 px-4 py-2">
+                                       Découvrir →
+                                    </a>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
             </div>
+
         </div>
     </div>
-</section> #}
+</section>
+
+	<!-- Demande spécifique -->
+
+	<section>
+		<div class="container-fluid py-5 bg-beige">
+			<div class="text-center">
+				<h4 class="display-6 fw-light cormorant-garamond">Vous avez une demande spécifique ?</h4>
+				<p>Nous pouvons adapter nos prestations à vos besoins particuliers.</p>
+				<a href="{{ path('app_visitor_contact_index') }}" class="btn btn-brown rounded-0 px-4 py-2 text-light">Contactez-nous</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- À propos -->
+
+	<section>
+		<div class="container-fluid my-5">
+			<div class="row">
+				<div class="col-md-6 d-flex justify-content-center align-items-center">
+					<img src="{{ asset('images/static/front-hero1.jpg') }}" alt="Image de Sarah Thomas" class="img-fluid w-75">
+				</div>
+				<div class="col-md-6 ">
+					<h2 class="display-6 fw-light mt-5 cormorant-garamond">Notre<span class="pink display-6 cormorant-garamond">
+							histoire</span>
+					</h2>
+					<span class="fs-5">Sarah Thomas, fondatrice</span>
+					<div class="mx-5 my-5">
+						<p>Passionnée par l'univers de la beauté depuis plus de 10 ans, Sarah Thomas a fondé Bloom Atelier avec une conviction profonde : chaque personne porte en elle une beauté unique qui ne demande qu'à s'épanouir.
+						</p>
+						<p>
+							Formée aux techniques de maquillage professionnel à Paris, Sarah a exercé dans le monde du cinéma, de la mode et du mariage avant de se consacrer entièrement à l'accompagnement individuel. Son approche mêle expertise technique et bienveillance, pour que chaque session soit avant tout un moment de bien-être et de confiance en soi.
+						</p>
+						<p>
+							Spécialisée en maquillage, relooking et conseil en colorimétrie, elle vous accompagne dans la découverte de votre style personnel, celui qui vous ressemble vraiment.
+						</p>
+					</div>
+					<a href="{{ path('visitor_home_about_us')}}" class="btn btn-brown rounded-0 px-4 py-2 text-light text-center">En savoir plus</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Avis clients -->
+<section class="bg-brown text-light py-5">
+    <div class="container-fluid px-lg-5">
+
+        <div class="mb-5">
+            <h2 class="display-6 fw-light cormorant-garamond">
+                Vos <span class="pink cormorant-garamond display-6 fw-light ">témoignages</span>
+            </h2>
+        </div>
+
+        {% if comments is not empty %}
+            <div class="row g-4">
+                {% for comment in comments %}
+                    <div class="col-12 col-md-4">
+                        <div class="border border-light border-opacity-25 p-4 h-100 d-flex flex-column gap-3 bg-light-brown">
+
+                            <div class="pink">
+                                {{ comment.displayStars|raw }}
+                            </div>
+
+                            <p class="cormorant-garamond fst-italic fw-light fs-5 flex-grow-1 text-brown-light">
+                                « {{ comment.content }} »
+                            </p>
+
+                            <div class="border-top border-light border-opacity-25 pt-3">
+                                <strong class="d-block small">
+                                    {{ comment.user.firstName }} {{ comment.user.lastName|first }}.
+                                </strong>
+                                <small class="pink">
+                                    {{ comment.service.name }}
+                                </small>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    </div>
+</section>
+
+	<!-- Engagement -->
+
+	<section>
+		<div class="container-fluid my-5 py-5">
+			<div class="text-center">
+				<h2 class="display-3 fw-light cormorant-garamond">
+                Prêtes à <span class="pink cormorant-garamond display-3 fw-light ">commencer ?</span>
+            </h2>
+				<p>Réservez votre session dès maintenant et offrez-vous un moment rien que pour vous.</p>
+				<a href="{{ path('app_visitor_contact_index') }}" class="btn btn-brown rounded-0 px-4 py-2 text-light">Réserver une session</a>
+			</div>
+		</div>
+	</section>
+
+
 {% endblock %}
