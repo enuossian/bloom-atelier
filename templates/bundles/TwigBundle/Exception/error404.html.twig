@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Erreur 404</title>
+		<style>
+			body {
+				margin: 0;
+				font-family: 'Poppins', sans-serif;
+				background-color: #f5f5f5;
+				color: #333;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				text-align: center;
+			}
+
+			h1 {
+				font-size: 3rem;
+				margin-bottom: 1rem;
+				color: #e63946;
+			}
+
+			p {
+				font-size: 1.2rem;
+				margin-bottom: 2rem;
+			}
+
+			.illustration {
+				width: 200px;
+				margin-bottom: 2rem;
+			}
+
+			.btn {
+				text-decoration: none;
+				padding: 0.75rem 1.5rem;
+				background-color: #3d2e27;
+				color: #ffffff;
+				border-radius: 5px;
+				transition: background-color 0.3s;
+
+				&:hover {
+					background-color: #e8788a;
+				}
+			}
+		</style>
+	</head>
+	<body>
+
+		<img class="illustration" src="{{ asset('images/static/404-illustration.png') }}" alt="Erreur">
+		<h1>Oups !</h1>
+		<p>Une erreur est survenue sur la page que vous cherchez.</p>
+		<a href="{{ path('visitor_home_index') }}" class="btn">Retour à l'accueil</a>
+
+	</body>
+</html>
