@@ -1,8 +1,92 @@
-{% extends 'themes/base_user.html.twig' %}
+{% extends 'themes/base_visitor.html.twig' %}
 
-{% block title %} Espace utilisateur - Bloom Atelier{% endblock %}
-{% block description %} Tableau de borod {% endblock %}
+{% block title %}Mon espace
+{% endblock %}
+{% block description %}Tableau de bord utilisateur
+{% endblock %}
 
 {% block main %}
-    <h1 class="text-center display-5 my-3">Bonjour, {{ app.user.firstName }} {{ app.user.lastName }}</h1>
+	<div class="container py-4">
+		<h1 class="cormorant-garamond display-5 mb-1">
+			Bonjour
+			{{ app.user.firstName }},
+		</h1>
+		<p class="text-muted fw-light mb-5">Voici votre espace personnel</p>
+
+		<div class="row g-3 mb-5">
+			<div class="col-12 col-md-6">
+				<div class="card border rounded-0 p-4 container-bg">
+					<p class="text-muted small text-uppercase fw-light mb-1">Sessions à venir</p>
+					<span class="cormorant-garamond display-5">{{ upcomingSessionsCounted }}</span>
+				</div>
+			</div>
+			<div class="col-12 col-md-6">
+				<div class="card border rounded-0 p-4 container-bg">
+					<p class="text-muted small text-uppercase fw-light mb-1">Sessions passées</p>
+					<span class="cormorant-garamond display-5">{{ passedSessionsCounted }}</span>
+				</div>
+			</div>
+		</div>
+
+		<section class="mb-5">
+			<h2 class="cormorant-garamond fs-3 fw-light mb-3">Sessions à venir</h2>
+			{% if upcomingSessions is not empty %}
+				{% for session in upcomingSessions %}
+					<div class="card border rounded-0 p-4 mb-2 container-bg d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
+						<div>
+							<p class="fw-normal mb-1">{{ session.service.name }}</p>
+							<p class="text-muted small mb-0">
+								Session du
+								{{ session.startTime|format_datetime(pattern: "dd/MM/yyyy 'de' HH'h'mm") }}
+								à
+								{{ session.endTime|format_datetime(pattern="HH'h'mm") }}
+							</p>
+							<p class="text-muted small mb-0">{{ session.location ? session.location : 'Lieu non précisé' }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			{% else %}
+				<p class="text-muted fw-light">Aucune session à venir.</p>
+			{% endif %}
+		</section>
+
+		<section class="mb-5">
+			<h2 class="cormorant-garamond fs-3 fw-light mb-3">Sessions passées</h2>
+			{% if passedSessions is not empty %}
+				{% for session in passedSessions %}
+					<div class="card border rounded-0 p-4 mb-2 container-bg d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
+						<div>
+							<p class="fw-normal mb-1">{{ session.service.name }}</p>
+							<p class="text-muted small mb-0">
+								Session du
+								{{ session.startTime|format_datetime(pattern: "dd/MM/yyyy 'de' HH'h'mm") }}
+								à
+								{{ session.endTime|format_datetime(pattern="HH'h'mm") }}
+							</p>
+							<p class="text-muted small mb-0">{{ session.location ? session.location : 'Lieu non précisé' }}</p>
+						</div>
+						<div>
+							<a href="{{ path('app_visitor_service_show', {'id': session.service.id, 'slug': session.service.slug}) }}#comment-container" class="btn btn-sm btn-brown border-0">Laisser un avis</a>
+						</div>
+
+					</div>
+				{% endfor %}
+			{% else %}
+				<p class="text-muted fw-light">Aucune session passée.</p>
+			{% endif %}
+		</section>
+		<section class="card border rounded-0 p-4 container-bg mt-5">
+    <div class="text-center">
+        <p class="fw-normal mb-2">Un changement d'avis ?</p>
+        <p class="text-muted mb-1">
+            Contactez notre support pour toute modification ou annulation de session.
+        </p>
+        <p class="text-muted mb-3">
+            Attention : les sessions qui débutent dans moins de 24h ne peuvent pas être modifiées ou annulées.
+        </p>
+        <a href="{{ path('app_visitor_contact_index') }}" class="btn btn-clear">Contacter le support</a>
+    </div>
+</section>
+
+	</div>
 {% endblock %}
