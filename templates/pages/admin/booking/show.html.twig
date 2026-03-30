@@ -93,7 +93,7 @@
                                     <strong>{{ item.session.service.name }}</strong>
                                 </td>
                                 <td>
-                                    {{ item.session.startTime|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm") }}
+                                    {{ item.session.startTime|format_datetime() }}
                                 </td>
                                 <td>
                                     {{ item.session.service.displayDuration }}
