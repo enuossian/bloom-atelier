@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Maintenance en cours</title>
+
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+		<style>
+			body {
+				background-color: #f8f5f2;
+				height: 100vh;
+			}
+
+			.maintenance-container {
+				height: 100vh;
+			}
+
+			.text-content {
+				max-width: 450px;
+			}
+
+			.badge-custom {
+				font-size: 12px;
+				letter-spacing: 1px;
+				text-transform: uppercase;
+				color: #a67c52;
+			}
+
+			.btn-brown {
+				background-color: #a67c52;
+				color: #fff;
+			}
+
+			.btn-brown:hover {
+				background-color: #8c6843;
+				color: #fff;
+			}
+
+			.image-container img {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container maintenance-container d-flex align-items-center">
+			<div class="row w-100 align-items-center">
+				<div class="col-12 col-md-6 d-flex justify-content-center">
+					<div class="text-content text-center text-md-start">
+						<div class="badge-custom mb-3">Maintenance</div>
+						<h1 class="mb-3">Nous revenons très vite</h1>
+						<p class="text-muted mb-4">
+							Notre site est actuellement en cours de maintenance.<br>
+							Merci pour votre patience.
+						</p>
+					</div>
+				</div>
+				<div class="col-12 col-md-6 text-center image-container">
+					<img src="{{ asset('/images/static/maintenance.png') }}" alt="Maintenance en cours">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
