@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -19,10 +20,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 )]
 class CreateSuperAdminCommand extends Command
 {
-    public SymfonyStyle $io;
+    private SymfonyStyle $io;
 
     public function __construct(
         private readonly ValidatorInterface $validator,
+        private readonly UserRepository $userRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly UserPasswordHasherInterface $hasher,
     ) {
@@ -33,7 +35,7 @@ class CreateSuperAdminCommand extends Command
     {
         $this
             ->addArgument('email', InputArgument::OPTIONAL, 'The super admin email')
-            ->addArgument('password', InputArgument::OPTIONAL, 'The super admin password')
+            ->addArgument('plainPassword', InputArgument::OPTIONAL, 'The super admin plain password')
         ;
     }
 
@@ -61,16 +63,17 @@ class CreateSuperAdminCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output): void
     {
-        $this->io->title('Création du super administrateur');
+        $email = $input->getArgument('email');
+        $plainPassword = $input->getArgument('plainPassword');
 
-        $email = (string) $input->getArgument('email');
-        $plainPassword = (string) $input->getArgument('password');
+        $this->io->title('Création du super administrateur');
 
         if (empty($email)) {
             $email = $this->io->ask('Email du super admin');
             $input->setArgument('email', $email);
         }
 
+        $this->io->note('Attention au mot de passe');
         $this->io->text('Le mot de passe doit contenir au moins: ');
         $this->io->listing([
             'Une lettre minuscule',
@@ -80,22 +83,22 @@ class CreateSuperAdminCommand extends Command
         ]);
 
         if (!empty($plainPassword)) {
-            $this->io->warning('Le mot de passe ne doit pas être affiché en clair dans le terminal, veuillez renseigner cette valeur à nouveau');
+            $this->io->warning('Le mot de passe ne doit pas être renseigné en clair dans le terminal. Veuillez renseigner à nouveau le mot de passe');
         }
 
-        $plainPassword = $this->io->askHidden('Le mot de passe sécurisé');
-        $input->setArgument('password', $plainPassword);
+        $plainPassword = $this->io->askHidden('Le mot de passe');
+        $input->setArgument('plainPassword', $plainPassword);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $email = (string) $input->getArgument('email');
-        $plainPassword = (string) $input->getArgument('password');
+        $email = $input->getArgument('email');
+        $plainPassword = $input->getArgument('plainPassword');
 
         $superAdmin = new User();
 
-        $superAdmin->setFirstName('Sarah');
-        $superAdmin->setLastName('Thomas');
+        $superAdmin->setFirstName('Hawa');
+        $superAdmin->setLastName('Toure');
         $superAdmin->setEmail($email);
         $superAdmin->setRoles(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_USER']);
         $superAdmin->setIsVerified(true);
@@ -114,23 +117,24 @@ class CreateSuperAdminCommand extends Command
             return Command::FAILURE;
         }
 
-        $users = $this->entityManager->getRepository(User::class)->findAll();
+        // Encodage du mot de passe
+        $passwordHashed = $this->hasher->hashPassword($superAdmin, $plainPassword);
+        $superAdmin->setPassword($passwordHashed);
+
+        $users = $this->userRepository->findAll();
 
         foreach ($users as $user) {
             if (in_array('ROLE_SUPER_ADMIN', $user->getRoles())) {
-                $this->io->error('Problem: Le super admin existe déjà.');
+                $this->io->warning('Le super admin existe déjà.');
 
                 return Command::FAILURE;
             }
         }
 
-        $passwordHashed = $this->hasher->hashPassword($superAdmin, $plainPassword);
-        $superAdmin->setPassword($passwordHashed);
-
         $this->entityManager->persist($superAdmin);
         $this->entityManager->flush();
 
-        $this->io->success('Le super administrateur a été ajouté avec succès.');
+        $this->io->success('Le super administrateur a bien été créé');
 
         return Command::SUCCESS;
     }
