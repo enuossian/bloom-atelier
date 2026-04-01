@@ -55,14 +55,6 @@ final class ServiceController extends AbstractController
         ]);
     }
 
-    #[Route('/service/{id<\d+>}/show', name: 'app_admin_service_show', methods: ['GET'])]
-    public function show(Service $service): Response
-    {
-        return $this->render('pages/admin/service/show.html.twig', [
-            'service' => $service,
-        ]);
-    }
-
     #[Route('/service/{id<\d+>}/edit', name: 'app_admin_service_edit', methods: ['GET', 'POST'])]
     public function edit(Service $service, Request $request): Response
     {
@@ -90,6 +82,13 @@ final class ServiceController extends AbstractController
     public function delete(Service $service, Request $request): Response
     {
         if ($this->isCsrfTokenValid("delete-service-{$service->getId()}", $request->request->get('csrf_token'))) {
+            foreach ($service->getSessions() as $session) {
+                if (!$session->getBookItems()->isEmpty()) {
+                    $this->addFlash('danger', 'Vous ne pouvez pas supprimer ce service car il possède des sessions déjà réservées.');
+
+                    return $this->redirectToRoute('app_admin_service_index');
+                }
+            }
             $this->entityManager->remove($service);
             $this->entityManager->flush();
 

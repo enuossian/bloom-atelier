@@ -89,7 +89,7 @@
                         <td>{{ service.createdAt|format_date() }}</td>
                         <td class="align-middle">
                              <div class="d-flex justify-content-center align-items-center gap-1">
-                                <a href="{{ path('app_admin_service_show', {'id': service.id})}}" class="btn btn-sm btn-dark">Voir</a>
+                                <a href="{{ path('app_visitor_service_show', {'id': service.id, 'slug': service.slug})}}" target="_blank" class="btn btn-sm btn-dark">Voir</a>
                                 <a href="{{ path('app_admin_service_edit', {'id': service.id}) }}" class="btn btn-sm btn-secondary">Modifier</a>
                                 <form action="{{ path('app_admin_service_delete', {'id': service.id})}}" method="post">
                                     <input type="hidden" name="csrf_token" value="{{csrf_token('delete-service-'~service.id)}}">
