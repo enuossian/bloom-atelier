@@ -9,10 +9,9 @@
 {# Tiny_mce #}
 {% block tiny_mce %}
     <script src="https://cdn.tiny.cloud/1/69xzl36nni7vxdxavmfn6y5p650szgrx9xbla8n8lkds7qoa/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
-
 <script>
     tinymce.init({
-        selector: 'textarea'
+        selector: 'textarea#service_form_description'
     });
 </script>
 {% endblock %}
@@ -30,12 +29,17 @@
                     {{ form_widget(serviceForm.name) }}
                     <div class="text-danger">{{ form_errors(serviceForm.name) }}</div>
                 </div>
-
                 <div class="mb-3">
                     <label for="service_form_description">Description<span class="text-danger">*</span>
                     </label>
                     {{ form_widget(serviceForm.description) }}
                     <div class="text-danger">{{ form_errors(serviceForm.description) }}</div>
+                </div>
+                <div class="mb-3">
+                    <label for="service_form_shortDescription">Courte description<span class="text-danger">*</span>
+                    </label>
+                    {{ form_widget(serviceForm.shortDescription) }}
+                    <div class="text-danger">{{ form_errors(serviceForm.shortDescription) }}</div>
                 </div>
                 <div class="mb-3">
                     <label for="service_form_imageFile_file">Image
