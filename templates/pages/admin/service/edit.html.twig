@@ -12,7 +12,7 @@
 
 <script>
     tinymce.init({
-        selector: 'textarea'
+        selector: 'textarea#service_form_description'
     });
 </script>
 {% endblock %}
@@ -36,7 +36,12 @@
                     </label>
                     {{ form_widget(serviceForm.description) }}
                     <div class="text-danger">{{ form_errors(serviceForm.description) }}</div>
-
+                </div>
+                <div class="mb-3">
+                    <label for="service_form_shortDescription">Courte description<span class="text-danger">*</span>
+                    </label>
+                    {{ form_widget(serviceForm.shortDescription) }}
+                    <div class="text-danger">{{ form_errors(serviceForm.shortDescription) }}</div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6 text-center">

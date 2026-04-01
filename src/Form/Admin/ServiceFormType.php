@@ -43,6 +43,13 @@ class ServiceFormType extends AbstractType
                     'step' => 30,
                 ],
             ])
+            ->add('shortDescription', TextareaType::class, [
+                'attr' => [
+                    // 'placeholder' => 'Décrivez votre service en quelques mots...',
+                    'class' => 'form-control',
+                    'rows' => 5,
+                ],
+            ])
             ->add('description', TextareaType::class, [
                 'attr' => [
                     // 'placeholder' => 'Décrivez votre service en détail...',
