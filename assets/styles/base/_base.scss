@@ -25,3 +25,8 @@ body {
 .text-brown-light {
   color: $color-border;
 }
+
+// espace dans edit service admin entre label et chechbox de l'image
+.vich-image div label {
+    margin-right: 0.5rem; 
+}

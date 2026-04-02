@@ -29,7 +29,7 @@
 		<meta name="theme-color" content="#712cf9">
 
         {# Font Awesome #}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
 		{# Jquery #}
 		{% block j_query %}
@@ -183,7 +183,7 @@
 	</head>
 
 	<body>
-		<header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+		<header class="navbar flex-md-nowrap p-0" data-bs-theme="dark">
 			<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="{{ path('app_user_home')}}">Bloom Atelier</a>
 			<ul class="navbar-nav flex-row d-md-none">
 				<li class="nav-item text-nowrap">
@@ -197,8 +197,8 @@
 			<div class="row">
 
                 {# Sidebar #}
-<div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary d-none d-md-block">
-					<div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+<div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-brown d-none d-md-block">
+					<div class="offcanvas-md offcanvas-end bg-brown" tabindex="-1" id="sidebarMenu" role="dialog" aria-labelledby="sidebarMenuLabel">
 						<div class="offcanvas-header">
 							<h5 class="offcanvas-title" id="sidebarMenuLabel">Bloom Atelier</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
@@ -206,43 +206,43 @@
 						<div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
 							<ul class="nav flex-column">
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('app_admin_home')}}">
+									<a class="nav-link d-flex align-items-center gap-2 text-brown-light fs-6" href="{{path('app_admin_home')}}">
 										<i class="fa-solid fa-house"></i>
 										Tableau de bord
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('app_admin_service_index')}}">
+									<a class="nav-link d-flex align-items-center gap-2 text-brown-light fs-6" href="{{path('app_admin_service_index')}}">
 										<i class="fa-solid fa-spa"></i> 
 										Services
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{ path('app_admin_session_index')}}">
+									<a class="nav-link d-flex align-items-center gap-2 text-brown-light fs-6" href="{{ path('app_admin_session_index')}}">
 										<i class="fa-solid fa-calendar"></i>
 										Sessions
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('app_admin_booking_index')}}">
+									<a class="nav-link d-flex align-items-center gap-2 text-brown-light fs-6" href="{{path('app_admin_booking_index')}}">
 										<i class="fa-solid fa-file-invoice"></i> 
 										Réservations
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('app_admin_user_index')}}">
+									<a class="nav-link d-flex align-items-center gap-2 text-brown-light fs-6" href="{{path('app_admin_user_index')}}">
 										<i class="fa-solid fa-users"></i>
 										Utilisateurs
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('app_admin_contact_index')}}">
+									<a class="nav-link d-flex align-items-center gap-2 text-brown-light fs-6" href="{{path('app_admin_contact_index')}}">
 										<i class="fa-solid fa-envelope"></i> 
 										Contact
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('app_admin_comment_index')}}">
+									<a class="nav-link d-flex align-items-center gap-2 text-brown-light fs-6" href="{{path('app_admin_comment_index')}}">
 										<i class="fa-solid fa-star"></i> 
 										Avis
 									</a>
@@ -253,13 +253,13 @@
 
 							<ul class="nav flex-column mb-auto">
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('app_admin_profile_index')}}">
+									<a class="nav-link d-flex align-items-center gap-2 text-brown-light fs-6" href="{{path('app_admin_profile_index')}}">
 										<i class="fa-solid fa-user"></i>
 										Mon profil
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('app_admin_setting_index')}}">
+									<a class="nav-link d-flex align-items-center gap-2 text-brown-light fs-6" href="{{path('app_admin_setting_index')}}">
 										<i class="fa-solid fa-gear"></i>
 										Paramètres
 									</a>
@@ -270,19 +270,19 @@
 
 							<ul class="nav flex-column mb-auto">
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('app_user_home')}}">
+									<a class="nav-link d-flex align-items-center gap-2 text-brown-light fs-6" href="{{path('app_user_home')}}">
 										<i class="fa-solid fa-outdent"></i>
 										Espace utilisateur
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('visitor_home_index')}}">
+									<a class="nav-link d-flex align-items-center gap-2 text-brown-light fs-6" href="{{path('visitor_home_index')}}">
 										<i class="fa-solid fa-arrow-rotate-left"></i>
 										Retour au site
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('app_logout')}}">
+									<a class="nav-link d-flex align-items-center gap-2 text-brown-light fs-6" href="{{path('app_logout')}}">
 										<i class="fa-solid fa-arrow-right-from-bracket"></i>
 										Déconnexion
 									</a>
