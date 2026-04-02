@@ -25,10 +25,10 @@ class ServiceFormType extends AbstractType
                 ],
             ])
             ->add('price', MoneyType::class, [
+                // la valeur par défaut est float mais Doctrine utilise string pour le type decimal
+                'input' => 'string',
                 'attr' => [
                     'class' => 'form-control',
-                    // la valeur par défaut est float mais Doctrine utilise string pour le type decimal
-                    'input' => 'string',
                     // 'placeholder' => 'Ex: 150'
                 ],
                 'currency' => false,
@@ -47,14 +47,14 @@ class ServiceFormType extends AbstractType
                 'attr' => [
                     // 'placeholder' => 'Décrivez votre service en quelques mots...',
                     'class' => 'form-control',
-                    'rows' => 5,
+                    'rows' => 2,
                 ],
             ])
             ->add('description', TextareaType::class, [
                 'attr' => [
                     // 'placeholder' => 'Décrivez votre service en détail...',
                     'class' => 'form-control',
-                    'rows' => 10,
+                    'rows' => 8,
                 ],
             ])
             ->add('imageFile', VichImageType::class, [

@@ -17,32 +17,31 @@
 {% endblock %}
 
 {% block main %}
-    <h1 class="text-center my-4 display-5">Nouveau service</h1>
-    <div class="container">
-
+    <h1 class="display-6 text-center mb-5">Nouveau service</h1>
+    <div class="container mb-5">
         <div class="row">
-            <div class="col-md-10 mx-auto bg-light shadow p-4">
+            <div class="col-md-10 mx-auto container-bg shadow p-4">
                 {{ form_start(serviceForm) }}
                 <div class="mb-3">
-                    <label for="service_form_name">Nom du service<span class="text-danger">*</span>
+                    <label for="service_form_name" class="form-label">Nom du service<span class="text-danger"> *</span>
                     </label>
                     {{ form_widget(serviceForm.name) }}
                     <div class="text-danger">{{ form_errors(serviceForm.name) }}</div>
                 </div>
                 <div class="mb-3">
-                    <label for="service_form_description">Description<span class="text-danger">*</span>
-                    </label>
-                    {{ form_widget(serviceForm.description) }}
-                    <div class="text-danger">{{ form_errors(serviceForm.description) }}</div>
-                </div>
-                <div class="mb-3">
-                    <label for="service_form_shortDescription">Courte description<span class="text-danger">*</span>
+                    <label for="service_form_shortDescription" class="form-label">Courte description<span class="text-danger">*</span>
                     </label>
                     {{ form_widget(serviceForm.shortDescription) }}
                     <div class="text-danger">{{ form_errors(serviceForm.shortDescription) }}</div>
                 </div>
                 <div class="mb-3">
-                    <label for="service_form_imageFile_file">Image
+                    <label for="service_form_description" class="form-label">Description complète<span class="text-danger">*</span>
+                    </label>
+                    {{ form_widget(serviceForm.description) }}
+                    <div class="text-danger">{{ form_errors(serviceForm.description) }}</div>
+                </div>
+                <div class="mb-3">
+                    <label for="service_form_imageFile_file" class="form-label">Image
                     </label>
                     {{ form_widget(serviceForm.imageFile) }}
                     <div class="text-danger">{{ form_errors(serviceForm.imageFile) }}</div>
@@ -50,8 +49,8 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-6 mb-3">
-                        <label for="service_form_price">Prix
-                            <span class="text-danger">*</span>
+                        <label for="service_form_price" class="form-label">Prix
+                            <span class="text-danger"> *</span>
                         </label>
 						<div class="input-group">
                         	{{ form_widget(serviceForm.price) }}
@@ -61,14 +60,14 @@
 
                     </div>
                     <div class="col-lg-6 mb-3">
-                        <label for="service_form_duration">Durée
-                            <span class="text-danger">*</span>
+                        <label for="service_form_duration" class="form-label">Durée
+                            <span class="text-danger"> *</span>
                         </label>
                         {{ form_widget(serviceForm.duration) }}
                         <div class="text-danger">{{ form_errors(serviceForm.duration) }}</div>
 
                     </div>
-                    <div class="text-center">
+                    <div class="text-center my-4">
                         <input formnovalidate type="submit" value="Ajouter" class="btn btn-form text-white w-25">
                     </div>
                 </div>

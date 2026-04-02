@@ -15,6 +15,12 @@ ul {
 }
 
 .btn-form {
-  background-color: $color-text-gray;
+  background-color: $color-text-gray ;
   border: none;
+
+   &:hover {
+    background-color: darken($color-text-gray, 10%);
+    color: $color-white;
+  }
 }
+
