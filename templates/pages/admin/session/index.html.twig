@@ -43,6 +43,7 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 		<table id="myTable" class="table table-hover table-bordered align-middle">
 			<thead class="table-danger">
 				<tr>
+					<th class="text-center">Id</th>
 					<th class="text-center">Session</th>
 					<th class="text-center">Date de début</th>
 					<th class="text-center">Date de fin</th>
@@ -56,6 +57,7 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 			<tbody>
 				{% for session in sessions %}
 					<tr>
+						<td class="text-center">{{ session.id }}</td>
 						<td class="text-center">{{ session.service.name }}</td>
 						<td class="text-center">{{ session.startTime|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm") }}</td>
 						<td class="text-center">{{ session.endTime|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm") }}</td>
