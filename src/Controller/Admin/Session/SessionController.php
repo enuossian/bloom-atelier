@@ -78,6 +78,12 @@ final class SessionController extends AbstractController
     #[Route('/session/{id<\d+>}/edit', name: 'app_admin_session_edit', methods: ['GET', 'POST'])]
     public function edit(Session $session, Request $request): Response
     {
+        if ($session->getStartTime() < new \DateTimeImmutable()) {
+            $this->addFlash('warning', 'Vous ne pouvez pas modifier cette session car elle a déjà commencé.');
+
+            return $this->redirectToRoute('app_admin_session_index');
+        }
+
         $form = $this->createForm(SessionFormType::class, $session, ['edit_mode' => true]);
         $form->handleRequest($request);
 
@@ -104,7 +110,7 @@ final class SessionController extends AbstractController
         if ($this->isCsrfTokenValid("session-delete-{$session->getId()}", $request->request->get('csrf_token'))) {
             // vérifie que la session n'est pas liée à une réservation avant de la supprimer
             if (!$session->getBookItems()->isEmpty()) {
-                $this->addFlash('danger', 'Vous ne pouvez pas supprimer cette session car elle est liée à une ou plusieurs réservations.');
+                $this->addFlash('warning', 'Vous ne pouvez pas supprimer cette session car elle est liée à une ou plusieurs réservations.');
 
                 return $this->redirectToRoute('app_admin_session_index');
             }

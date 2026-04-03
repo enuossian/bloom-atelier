@@ -18,4 +18,14 @@ enum SessionStatus: string
             SessionStatus::Completed => 'Terminée',
         };
     }
+
+    public function badge(): string
+    {
+        return match ($this) {
+            SessionStatus::Available => 'success',
+            SessionStatus::Full => 'warning',
+            SessionStatus::Cancelled => 'danger',
+            SessionStatus::Completed => 'secondary',
+        };
+    }
 }
