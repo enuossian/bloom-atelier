@@ -107,11 +107,11 @@
 		</div>
 
 		<div class="col-12">
-			<div class="card border rounded-0 p-4 container-bg mb-5">
+			<div class="card border rounded-0 p-4 container-bg">
 				<h2 class="cormorant-garamond pink fs-4 fw-light mb-4">Participants</h2>
 
 				{% if session.bookItems is not empty %}
-					<table class="table fw-light align-middle">
+					<table class="table table-hover fw-light align-middle">
 						<thead class="table-danger">
 							<tr>
 								<th class="fw-light text-uppercase small">Utilisateur</th>
@@ -130,15 +130,25 @@
 									<td>{{ bookItem.booking.user.email }}</td>
 									<td>{{ bookItem.booking.reference }}</td>
 									<td>
-										<a href="{{path('app_admin_booking_show', {'id': bookItem.booking.id})}}" class="btn btn-sm btn-brown rounded-0">voir</a>
+										<a href="{{path('app_admin_booking_show', {'id': bookItem.booking.id})}}" class="btn btn-sm btn-clear rounded-0">voir</a>
 									</td>
 								</tr>
 							{% endfor %}
 						</tbody>
 					</table>
 				{% else %}
-					<p class="text-secondary fw-light">Aucun participant pour le moment.</p>
+					<p class="text-secondary">Aucun participant pour le moment.</p>
 				{% endif %}
+			</div>
+		</div>
+        <div class="col-12 mb-5">
+			<div class="card border rounded-0 p-4 container-bg h-100">
+				<h2 class="cormorant-garamond pink fs-4 fw-light mb-4">Notes internes</h2>
+                {% if session.notes %}
+                    <p>{{ session.notes }}</p>
+                {% else %}
+                    <p class="text-secondary">Aucune note pour le moment.</p>
+                {% endif %}
 			</div>
 		</div>
 	</div>

@@ -84,11 +84,13 @@ final class SessionController extends AbstractController
             return $this->redirectToRoute('app_admin_session_index');
         }
 
-        $form = $this->createForm(SessionFormType::class, $session, ['edit_mode' => true]);
+        // on passe le mode édition et le nombre de participants actuels au formulaire
+        $form = $this->createForm(SessionFormType::class, $session, ['edit_mode' => true, 'current_participants' => $session->getPaidCount()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $session->setUpdatedAt(new \DateTimeImmutable());
+            $session->updateStatus();
 
             $this->entityManager->persist($session);
             $this->entityManager->flush();
