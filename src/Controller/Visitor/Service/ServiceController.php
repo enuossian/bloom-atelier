@@ -36,6 +36,11 @@ final class ServiceController extends AbstractController
     #[Route('/service/{id<\d+>}/{slug}', name: 'app_visitor_service_show', methods: ['GET', 'POST'])]
     public function showService(Service $service, Request $request): Response
     {
+        // Vérifier que le service est actif, sinon afficher une page 404
+        if (!$service->isActive()) {
+            throw $this->createNotFoundException('Service non trouvé');
+        }
+
         $sessions = $this->sessionRepository->findAvailableByService($service);
 
         $comment = new Comment();

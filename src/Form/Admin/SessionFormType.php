@@ -12,13 +12,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class SessionFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('reference')
             ->add('service', EntityType::class, [
                 'class' => Service::class,
                 'choice_label' => 'name',
@@ -31,6 +31,7 @@ class SessionFormType extends AbstractType
             ])
             ->add('startTime', DateTimeType::class, [
                 'widget' => 'single_text',
+                'disabled' => $options['edit_mode'],
                 'empty_data' => null,
                 'attr' => [
                     'class' => 'form-control',
@@ -38,6 +39,7 @@ class SessionFormType extends AbstractType
             ])
             ->add('endTime', DateTimeType::class, [
                 'widget' => 'single_text',
+                'disabled' => $options['edit_mode'],
                 'empty_data' => null,
                 'attr' => [
                     'class' => 'form-control',
@@ -51,21 +53,21 @@ class SessionFormType extends AbstractType
             ->add('maxParticipants', IntegerType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'min' => $options['current_participants'],
+                ],
+                'constraints' => [
+                    new GreaterThanOrEqual(
+                        value: $options['current_participants'],
+                        message: 'Vous ne pouvez pas descendre en dessous du nombre actuel de participants.',
+                    ),
                 ],
             ])
-            // ->add('status')
             ->add('notes', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'rows' => 5,
                 ],
             ])
-            // ->add('createdAt', null, [
-            //    'widget' => 'single_text',
-            // ])
-            // ->add('updatedAt', null, [
-            //    'widget' => 'single_text',
-            // ])
         ;
     }
 
@@ -73,7 +75,10 @@ class SessionFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Session::class,
+            // mode édition à false par defaut, on le passe à true dans le controller pour la modification
             'edit_mode' => false,
+            // nombre de participants actuels, on initialise à 0 par défaut
+            'current_participants' => 0,
         ]);
     }
 }

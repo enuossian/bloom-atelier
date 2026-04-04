@@ -233,6 +233,18 @@ class Session
         }
     }
 
+    public function getPaidCount(): int
+    {
+        $paidCount = 0;
+        foreach ($this->bookItems as $bookItem) {
+            if (BookingStatus::Paid === $bookItem->getBooking()->getStatus()) {
+                ++$paidCount;
+            }
+        }
+
+        return $paidCount;
+    }
+
     public function updateStatus(): void
     {
         // Session annulée, on ne touche pas au statut
@@ -247,16 +259,8 @@ class Session
             return;
         }
 
-        // Compter les places prises (bookings payés)
-        $paidCount = 0;
-        foreach ($this->bookItems as $bookItem) {
-            if (BookingStatus::Paid === $bookItem->getBooking()->getStatus()) {
-                ++$paidCount;
-            }
-        }
-
-        // Mettre à jour le statut selon les places restantes
-        if ($paidCount >= $this->maxParticipants) {
+        // Compter les places prises (bookings payés) et mettre à jour le statut selon les places restantes
+        if ($this->getPaidCount() >= $this->maxParticipants) {
             $this->status = SessionStatus::Full;
         } else {
             $this->status = SessionStatus::Available;

@@ -31,7 +31,7 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 {% endblock %}
 
 {% block main %}
-	<h1 class="display-6 text-center mb-3">Liste des services</h1>
+	<h1 class="display-6 text-center mb-3 cormorant-garamond">Liste des services</h1>
 
 	{% include 'components/_alert.html.twig' %}
 
@@ -44,18 +44,20 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 		<table id="myTable" class="table table-hover table-bordered align-middle">
 			<thead class="table-danger">
 				<tr>
+					<th class="text-center">Id</th>
 					<th class="text-center">Image</th>
 					<th class="text-center">Service</th>
 					<th class="text-center">Prix</th>
 					<th class="text-center">Durée</th>
 					<th class="text-center">Statut</th>
-					<th class="text-center">Créé le</th>
+					<th class="text-center">Dates</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for service in services %}
 					<tr>
+						<td class="text-center">{{ service.id }}</td>
 						<td class="text-center">
 							<div class="d-flex justify-content-center align-items-center">
 								{% if service.image %}
@@ -84,12 +86,19 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 								</form>
 							</div>
 						</td>
-						<td class="text-center">{{ service.createdAt|format_date() }}</td>
+						<td class="text-center">
+							<div class="d-flex flex-column align-items-center gap-1">
+								<span>Créé le {{ service.createdAt|format_date(pattern: "dd/MM/yyyy 'à' HH'h'mm") }}</span>
+								{% if service.updatedAt != service.createdAt %}
+									<span>Mis à jour le {{ service.updatedAt|format_date(pattern: "dd/MM/yyyy 'à' HH'h'mm") }}</span>
+								{% endif %}
+							</div>
+						</td>
 						<td class="align-middle">
 							<div class="d-flex justify-content-center align-items-center gap-1">
 								<a href="{{ path('app_visitor_service_show', {'id': service.id, 'slug': service.slug})}}" target="_blank" class="btn btn-sm btn-outline-dark">Voir</a>
 								<a href="{{ path('app_admin_service_edit', {'id': service.id}) }}" class="btn btn-sm btn-secondary">Modifier</a>
-								<form action="{{ path('app_admin_service_delete', {'id': service.id})}}" method="post">
+								<form action="{{ path('app_admin_service_delete', {'id': service.id})}}" method="POST">
 									<input type="hidden" name="csrf_token" value="{{csrf_token('delete-service-'~service.id)}}">
 									<input type="submit" value="Supprimer" class="btn btn-sm btn-danger" onclick="return confirm('Confirmez-vous la suppression de ce service ?')">
 								</form>

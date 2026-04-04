@@ -1,88 +1,99 @@
 {% extends 'themes/base_admin.html.twig' %}
 
-{% block title %}Modification du service {{ service.id }} : {{ service.name }}
+{% block title %}Modification du service
+	{{ service.id }}
+	:
+	{{ service.name }}
 {% endblock %}
 
-{% block description %}Modifier le service {{ service.id }} : {{ service.name }}
+{% block description %}Modifier le service
+	{{ service.id }}
+	:
+	{{ service.name }}
 {% endblock %}
 
 {# Tiny_mce #}
 {% block tiny_mce %}
-    <script src="https://cdn.tiny.cloud/1/69xzl36nni7vxdxavmfn6y5p650szgrx9xbla8n8lkds7qoa/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+	<script src="https://cdn.tiny.cloud/1/69xzl36nni7vxdxavmfn6y5p650szgrx9xbla8n8lkds7qoa/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
 
-<script>
-    tinymce.init({
-        selector: 'textarea#service_form_description'
-    });
-</script>
+	<script>
+		tinymce.init({selector: 'textarea#service_form_description'});
+	</script>
 {% endblock %}
 
 {% block main %}
-    <h1 class="display-6 text-center mb-5">Modifier le service {{ service.id }} : {{ service.name }}</h1>
-    <div class="container mb-5">
-        <div class="row">
-            <div class="col-md-10 mx-auto container-bg shadow p-4">
-                
-                {{ form_start(serviceForm) }}
-                <div class="mb-3">
-                    <label for="service_form_name" class="form-label">Nom du service<span class="text-danger"> *</span>
-                    </label>
-                    {{ form_widget(serviceForm.name) }}
-                    <div class="text-danger">{{ form_errors(serviceForm.name) }}</div>
-                </div>
-                <div class="mb-3">
-                    <label for="service_form_shortDescription" class="form-label">Courte description<span class="text-danger"> *</span>
-                    </label>
-                    {{ form_widget(serviceForm.shortDescription) }}
-                    <div class="text-danger">{{ form_errors(serviceForm.shortDescription) }}</div>
-                </div>
-                <div class="mb-3">
-                    <label for="service_form_description" class="form-label">Description<span class="text-danger"> *</span>
-                    </label>
-                    {{ form_widget(serviceForm.description) }}
-                    <div class="text-danger">{{ form_errors(serviceForm.description) }}</div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-6 text-center">
-                        {% if service.image %}
-                            <img src="{{ vich_uploader_asset(service, 'imageFile') | imagine_filter('admin_service_thumb')}}" alt="{{ service.name }}" class="img-fluid">
-                        {% else %}
-                            <img src="{{ asset('/images/static/no-image.jpg') | imagine_filter('admin_service_thumb') }}" />
-                        {% endif %}
-                    </div>
-                    <div class="col-md-6">
-                        <label for="service_form_imageFile_file" class="form-label">Image
-                        </label>
-                        {{ form_widget(serviceForm.imageFile) }}
-                        <div class="text-danger">{{ form_errors(serviceForm.imageFile) }}</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 mb-3">
-                        <label for="service_form_price" class="form-label">Prix
-                            <span class="text-danger"> *</span>
-                        </label>
+	<h1 class="display-6 text-center mb-5 cormorant-garamond">Modifier le service</h1>
+	<div class="container mb-5">
+		<div class="d-flex justify-content-end align-items-center my-5">
+			<a href="{{ path('app_admin_service_index') }}" class="btn btn-brown rounded-0 px-4 py-2">← Retour</a>
+		</div>
+		<div class="row">
+			<div class="col-md-10 mx-auto container-bg shadow p-4">
+
+				{{ form_start(serviceForm) }}
+				<div class="mb-3">
+					<label for="service_form_name" class="form-label">Nom du service<span class="text-danger">
+							*</span>
+					</label>
+					{{ form_widget(serviceForm.name) }}
+					<div class="text-danger">{{ form_errors(serviceForm.name) }}</div>
+				</div>
+				<div class="mb-3">
+					<label for="service_form_shortDescription" class="form-label">Courte description<span class="text-danger">
+							*</span>
+					</label>
+					{{ form_widget(serviceForm.shortDescription) }}
+					<div class="text-danger">{{ form_errors(serviceForm.shortDescription) }}</div>
+				</div>
+				<div class="mb-3">
+					<label for="service_form_description" class="form-label">Description<span class="text-danger">
+							*</span>
+					</label>
+					{{ form_widget(serviceForm.description) }}
+					<div class="text-danger">{{ form_errors(serviceForm.description) }}</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-md-6 text-center">
+						{% if service.image %}
+							<img src="{{ vich_uploader_asset(service, 'imageFile') | imagine_filter('admin_service_thumb')}}" alt="{{ service.name }}" class="img-fluid">
+						{% else %}
+							<img src="{{ asset('/images/static/no-image.jpg') | imagine_filter('admin_service_thumb') }}"/>
+						{% endif %}
+					</div>
+					<div class="col-md-6">
+						<label for="service_form_imageFile_file" class="form-label">Image
+						</label>
+						{{ form_widget(serviceForm.imageFile) }}
+						<div class="text-danger">{{ form_errors(serviceForm.imageFile) }}</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6 mb-3">
+						<label for="service_form_price" class="form-label">Prix
+							<span class="text-danger">
+								*</span>
+						</label>
 						<div class="input-group">
-                        	{{ form_widget(serviceForm.price) }}
+							{{ form_widget(serviceForm.price) }}
 							<span class="input-group-text">€</span>
 						</div>
-                        <div class="text-danger">{{ form_errors(serviceForm.price) }}</div>
+						<div class="text-danger">{{ form_errors(serviceForm.price) }}</div>
 
-                    </div>
-                    <div class="col-lg-6 mb-3">
-                        <label for="service_form_duration" class="form-label">Durée
-                            <span class="text-danger">*</span>
-                        </label>
-                        {{ form_widget(serviceForm.duration) }}
-                        <div class="text-danger">{{ form_errors(serviceForm.duration) }}</div>
+					</div>
+					<div class="col-lg-6 mb-3">
+						<label for="service_form_duration" class="form-label">Durée
+							<span class="text-danger">*</span>
+						</label>
+						{{ form_widget(serviceForm.duration) }}
+						<div class="text-danger">{{ form_errors(serviceForm.duration) }}</div>
 
-                    </div>
-                    <div class="text-center my-4">
-                        <input formnovalidate type="submit" value="Mettre à jour ce service" class="btn btn-form text-white w-25">
-                    </div>
-                </div>
-                {{ form_end(serviceForm) }}
-            </div>
-        </div>
-    </div>
+					</div>
+					<div class="text-center my-4">
+						<input formnovalidate type="submit" value="Modifier" class="btn btn-form text-white w-25">
+					</div>
+				</div>
+				{{ form_end(serviceForm) }}
+			</div>
+		</div>
+	</div>
 {% endblock %}
