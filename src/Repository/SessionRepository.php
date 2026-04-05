@@ -22,7 +22,6 @@ class SessionRepository extends ServiceEntityRepository
 
     /**
      * @return Session[] returns an array of Session objects
-     *                   retourne les sessions disponibles pour un service donné, c'est-à-dire celles qui sont à l'état "Disponible" et dont la date de début est dans le futur
      */
     public function findAvailableByService(Service $service): array
     {

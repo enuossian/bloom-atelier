@@ -5,7 +5,8 @@
 	— Bloom Atelier
 {% endblock %}
 
-{% block description %}Consultez les informations détaillées du service "{{ service.name }}".
+{% block description %}Consultez les informations détaillées du service
+	{{ service.name }}
 {% endblock %}
 
 {% block keywords %}service, détail,
@@ -23,129 +24,179 @@
 		<a href="{{path('app_visitor_service_index')}}" class="text-decoration-none">← Voir tous nos services</a>
 	</div>
 
-	<div class="position-relative overflow-hidden">
-		{% if service.image %}
-			<img src="{{ vich_uploader_asset(service, 'imageFile') }}" class="w-100 d-block object-fit-cover" style="height: 60vh; filter: brightness(0.90);" alt="{{ service.name }}">
-		{% else %}
-			<div class="w-100 bg-secondary d-block" style="height: 60vh;"></div>
-		{% endif %}
+	<header>
+		<div class="container my-5">
+			<div class="row align-items-center g-5">
 
-		<div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-white text-center px-3" style="background: linear-gradient(to top, rgba(0,0,0,0.75), transparent 60%);">
-			<h1 class="display-2 fw-bold mb-3">{{ service.name }}</h1>
-		</div>
-	</div>
+				<div class="col-md-6 order-md-2">
+					{% if service.image %}
+						<img src="{{ vich_uploader_asset(service, 'imageFile') }}" class="w-100 object-fit-cover rounded-0 shadow-sm" style="height: 60vh;" alt="{{ service.name }}">
+					{% else %}
+						<img src="{{ asset('images/static/hero-img.jpg') }}" class="w-100 object-fit-cover rounded-0 shadow-sm" style="height: 60vh;" alt="Image par défaut du service {{ service.name }}">
+					{% endif %}
+				</div>
 
-	<section class="py-5">
-		<div class="container" style="max-width: 960px;">
-			<p class="text-warning text-uppercase fw-semibold mb-1">À propos</p>
-			<h2 class="fw-bold mb-4">Un accompagnement sur-mesure</h2>
+				{# Contenu #}
+				<div class="col-md-6 order-md-1 d-flex flex-column justify-content-center">
 
-			<div class="row g-0 border rounded mt-5 overflow-hidden">
-				<div class="col-12 col-md-4 text-center p-4 border-end">
-					<div class="fs-2 mb-2">
-						<i class="fa-solid fa-clock"></i>
+					<h1 class="display-4 pink fw-light cormorant-garamond mb-4">
+						{{ service.name }}
+					</h1>
+
+					<div class="fw-light text-muted mb-4">
+						{{ service.shortDescription }}
 					</div>
-					<span class="fs-3 fw-bold d-block">{{ service.displayDuration }}</span>
-					<span class="text-muted small text-uppercase fw-medium">Durée</span>
-				</div>
-				<div class="col-12 col-md-4 text-center p-4 border-end">
-					<div class="fs-2 mb-2">
-						<i class="fa-solid fa-user-group"></i>
+
+					<div class="d-flex gap-5 mb-5">
+
+						<div>
+							<span class="d-block cormorant-garamond fs-2">
+								{{ service.price }}€
+							</span>
+							<small class="text-muted text-uppercase">Prix</small>
+						</div>
+
+						<div>
+							<span class="d-block cormorant-garamond fs-2">
+								{{ service.displayDuration }}
+							</span>
+							<small class="text-muted text-uppercase">Durée</small>
+						</div>
+
 					</div>
-					<span class="fs-3 fw-bold d-block">1 à 3</span>
-					<span class="text-muted small text-uppercase fw-medium">Participants max</span>
+
+					<a href="{{ path('app_visitor_service_show', {'id': service.id, 'slug': service.slug}) }}#upcomingSessions" class="btn btn-brown px-5 py-3 rounded-0 align-self-start">
+						Voir les sessions disponibles
+					</a>
+
 				</div>
-				<div class="col-12 col-md-4 text-center p-4">
-					<div class="fs-2 mb-2">
-						<i class="fa-solid fa-credit-card"></i>
-					</div>
-					<span class="fs-3 fw-bold d-block">{{ service.price }}
-						€</span>
-					<span class="text-muted small text-uppercase fw-medium">Par séance</span>
-				</div>
+
 			</div>
-			<div class="text-center mt-4 p-4">
-				<p class="text-secondary lh-lg">{{ service.description|raw }}</p>
+		</div>
+	</header>
+
+	<section class="bg-white py-5 my-5">
+		<div class="container">
+			<div class="mb-5">
+				<h2 class="display-6 fw-normal cormorant-garamond mb-5">
+					Déroulement de la
+					<span class="display-6 fw-normal cormorant-garamond pink">session</span>
+				</h2>
+				<div>{{ service.description|raw }}</div>
 			</div>
 
 		</div>
 	</section>
 
-	<hr class="mx-4">
-
-	<section class="py-5">
-		<div class="container" style="max-width: 860px;">
-			<h2 class="fw-bold mb-4">Sessions disponibles</h2>
+	<section class="py-5 my-5" id="upcomingSessions">
+		<div class="container">
+			<h2 class="display-6 fw-normal cormorant-garamond mb-5">
+				Sessions
+				<span class="display-6 fw-normal cormorant-garamond pink">disponibles</span>
+			</h2>
 
 			{% for session in sessions %}
 				<div class="d-flex align-items-center justify-content-between gap-3 bg-white border rounded p-4 mb-2">
 					<div>
-						<p class="fw-semibold mb-1">{{ session.startTime|format_date() }}
-							—
-							{{ session.startTime|date('H\\hi') }}
-							→
-							{{ session.endTime|date('H\\hi') }}</p>
-						<p class="text-muted small mb-0">{{ session.location ?? 'Lieu non précisé' }}</p>
+						<p class="fw-semibold mb-1">{{ session.startTime|format_date(pattern: "dd/MM/yyyy 'de' HH'h'mm") }}
+							{{ session.endTime|format_date(pattern: "'à' HH'h'mm") }}
+						</p>
+						<p class="text-muted small mb-0">{{ session.maxParticipants - session.paidCount }}
+							place(s) disponible(s) sur
+							{{ session.maxParticipants }}</p>
+						<p class="text-muted small mb-0">{{ session.location ?? 'Lieu à définir' }}</p>
 					</div>
 					<form action="{{ path('app_user_booking_create', {'id': session.id}) }}" method="POST">
 						<input type="hidden" name="csrf_token" value="{{ csrf_token('booking-create' ~ session.id) }}">
-						<input type="submit" value="Réserver" class="btn btn-dark btn-sm flex-shrink-0">
+						<input type="submit" value="Réserver" class="btn btn-brown rounded-0 px-4 py-2">
 					</form>
 				</div>
 			{% else %}
-				<div class="alert alert-secondary">Aucune session disponible pour le moment.</div>
+				<div class="alert alert-light">Aucune session disponible pour le moment.</div>
 			{% endfor %}
 		</div>
 	</section>
 
-	<hr>
+	<section class="bg-brown text-light py-5">
+		{% if comments is not empty %}
+			<div class="container">
+
+				<div class="mb-5">
+					<h2 class="display-6 fw-light cormorant-garamond">
+						Vos
+						<span class="pink cormorant-garamond display-6 fw-light ">témoignages</span>
+					</h2>
+				</div>
+
+				<div class="row g-4">
+					{% for comment in comments %}
+						<div class="col-12 col-md-4">
+							<div class="border border-light border-opacity-25 p-4 h-100 d-flex flex-column gap-3 bg-light-brown">
+
+								<div class="pink">
+									{{ comment.displayStars|raw }}
+								</div>
+
+								<p class="cormorant-garamond fst-italic fw-light fs-5 flex-grow-1 text-brown-light">
+									«
+									{{ comment.content }}
+									»
+								</p>
+
+								<div class="border-top border-light border-opacity-25 pt-3">
+									<strong class="d-block small">
+										{{ comment.user.firstName }}
+										{{ comment.user.lastName|first }}.
+									</strong>
+									<small>
+										{{ comment.createdAt|format_date(pattern: "dd/MM/yyyy") }}
+									</small>
+								</div>
+
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endif %}
+	</section>
 
 	<section>
-		{% if service.comments is not empty %}
-			<h3 class="fw-bold mb-4">Avis des clients</h3>
-		{% endif %}
-		<div class="container my-4" style="max-width: 860px;">
-			{% for comment in service.comments %}
-				{% if comment.isVisible %}
-					<div class="mb-4 p-3 border rounded bg-light">
-						<span class="">
-							{{ comment.displayStars|raw }}
-							{{ comment.rating }}/5</span>
-						<small class="text-muted">{{ comment.createdAt|format_date }}</small>
-						<p>{{ comment.user.firstName }}
-							{{ comment.user.lastName }}</p>
-						<p>{{ comment.content }}</p>
-					</div>
-				{% endif %}
-			{% endfor %}
-		</div>
-		<div class="container my-5" style="max-width: 860px;">
-			<h3 class="fw-bold mb-4">Donnez votre avis</h3>
-			{% if app.user %}
+		<div class="container my-5">
+			<h2 class="display-6 fw-normal cormorant-garamond mb-5">
+				Donnez votre
+				<span class="display-6 fw-normal cormorant-garamond pink">avis</span>
+			</h2>
+			{% if not app.user %}
+				<div class="alert alert-light d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+					<p class="mb-0">Connectez-vous pour partager votre avis sur ce service.</p>
+					<a href="{{ path('app_login') }}" class="btn btn-brown rounded-0 px-4 py-2">Se connecter</a>
+				</div>
+			{% elseif not hasBookedService %}
+				<div class="alert alert-light">
+					<p class="mb-0">Seules les personnes ayant réservé ce service peuvent laisser un avis.</p>
+				</div>
+			{% else %}
 				<div id="comment-container">
 					{{ form_start(commentForm, {'action': path('app_visitor_service_show', {'id': service.id, 'slug': service.slug})~'#comment-container'}) }}
 					<div class="mb-3">
-						<label for="comment_form_rating">Note</label>
+						<label for="comment_form_rating" class="form-label">Note</label>
 						{{ form_widget(commentForm.rating) }}
 						<div class="text-danger">{{ form_errors(commentForm.rating) }}</div>
 					</div>
-					<div class="mb-3">
-						<label for="comment_form_content">Commentaire</label>
+					<div>
+						<label for="comment_form_content" class="form-label">Commentaire</label>
 						{{ form_widget(commentForm.content) }}
 						<div class="text-danger">{{ form_errors(commentForm.content) }}</div>
 					</div>
-					<div>
-						<input formnovalidate type="submit" value="Publier mon avis" class="btn btn-dark shadow">
+					<div class="mt-4 text-end">
+						<input formnovalidate type="submit" value="Publier mon avis" class="btn btn-brown rounded-0 px-4 py-2">
 					</div>
 					{{ form_end(commentForm) }}
 				</div>
-			{% else %}
-				<p>Veuillez vous connecter pour commenter ce service :
-					<a href="{{ path('app_login') }}" class="btn btn-lg btn-dark">Me connecter</a>
-				</p>
 			{% endif %}
 		</div>
-		<hr>
 	</section>
+
 
 {% endblock %}
