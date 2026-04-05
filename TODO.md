@@ -56,5 +56,9 @@
 6. Commande permettant de charger les fixtures
     - `php bin/console doctrine:fixtures:load`
 
+7. Commande permettant de récupérer les modifs faites sur main par erreur
+    - Switcher sur la branche qui recevra les modifications
+    - `git merge main`
+
 
 <!-- End -->

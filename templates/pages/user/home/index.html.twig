@@ -11,7 +11,7 @@
 			Bonjour
 			{{ app.user.firstName }},
 		</h1>
-		<p class="text-muted fw-light mb-5">Voici votre espace personnel</p>
+		<p class="text-muted fw-light mb-4">Voici votre espace personnel</p>
 
 		<div class="row g-3 mb-5">
 			<div class="col-12 col-md-6">
@@ -33,6 +33,7 @@
 			{% if upcomingSessions is not empty %}
 				{% for session in upcomingSessions %}
 					<div class="card border rounded-0 p-4 mb-2 container-bg d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
+						<div>
 							<p class="fw-normal mb-1">{{ session.service.name }}</p>
 							<p class="text-muted small mb-0">
 								Session du
@@ -41,6 +42,7 @@
 								{{ session.endTime|format_datetime(pattern="HH'h'mm") }}
 							</p>
 							<p class="text-muted small mb-0">{{ session.location ? session.location : 'Lieu non précisé' }}</p>
+						</div>
 					</div>
 				{% endfor %}
 			{% else %}

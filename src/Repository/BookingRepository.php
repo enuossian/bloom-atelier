@@ -3,6 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Booking;
+use App\Entity\Service;
+use App\Entity\User;
+use App\Enum\BookingStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +19,19 @@ class BookingRepository extends ServiceEntityRepository
         parent::__construct($registry, Booking::class);
     }
 
-    //    /**
-    //     * @return Booking[] Returns an array of Booking objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('b')
-    //            ->andWhere('b.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('b.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Booking
-    //    {
-    //        return $this->createQueryBuilder('b')
-    //            ->andWhere('b.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function hasUserBookedService(User $user, Service $service): bool
+    {
+        return (bool) $this->createQueryBuilder('b')
+            ->join('b.bookItems', 'bi')
+            ->join('bi.session', 's')
+            ->where('b.user = :user')
+            ->andWhere('b.status = :status')
+            ->andWhere('s.service = :service')
+            ->setParameter('user', $user)
+            ->setParameter('status', BookingStatus::Paid)
+            ->setParameter('service', $service)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

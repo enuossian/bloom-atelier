@@ -6,6 +6,8 @@ use App\Entity\Comment;
 use App\Entity\Service;
 use App\Entity\User;
 use App\Form\CommentFormType;
+use App\Repository\BookingRepository;
+use App\Repository\CommentRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,6 +22,8 @@ final class ServiceController extends AbstractController
         private readonly ServiceRepository $serviceRepository,
         private readonly SessionRepository $sessionRepository,
         private readonly EntityManagerInterface $entityManager,
+        private readonly CommentRepository $commentRepository,
+        private readonly BookingRepository $bookingRepository,
     ) {
     }
 
@@ -41,42 +45,49 @@ final class ServiceController extends AbstractController
             throw $this->createNotFoundException('Service non trouvé');
         }
 
+        // Récupère les sessions disponibles pour un service donné, c'est-à-dire celles qui sont à l'état "Disponible" et dont la date de début est dans le futur
         $sessions = $this->sessionRepository->findAvailableByService($service);
 
-        $comment = new Comment();
-        $form = $this->createForm(CommentFormType::class, $comment);
-        $form->handleRequest($request);
+        // Récupérer les 3 derniers commentaires visibles pour ce service
+        $comments = $this->commentRepository->findBy(['service' => $service, 'isVisible' => true], ['createdAt' => 'DESC'], 3);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // rediriger l'utilisateur non connecté vers la page de connexion
-            if (!$this->isGranted('ROLE_USER')) {
-                return $this->redirectToRoute('app_login');
+        /**
+         * @var User|null $user
+         */
+        $user = $this->getUser();
+
+        $hasBookedService = $user && $this->bookingRepository->hasUserBookedService($user, $service);
+
+        // Si l'utilisateur a réservé le service, créer le formulaire de commentaire
+        $form = null;
+        if ($hasBookedService) {
+            $comment = new Comment();
+            $form = $this->createForm(CommentFormType::class, $comment);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $comment->setService($service);
+                $comment->setUser($user);
+                $comment->setCreatedAt(new \DateTimeImmutable());
+
+                $this->entityManager->persist($comment);
+                $this->entityManager->flush();
+
+                $this->addFlash('success', 'Merci pour votre commentaire ! Il sera visible après validation par notre équipe.');
+
+                return $this->redirectToRoute('app_visitor_service_show', [
+                    'id' => $service->getId(),
+                    'slug' => $service->getSlug(),
+                ]);
             }
-
-            /**
-             * @var User
-             */
-            $user = $this->getUser();
-
-            $comment->setService($service);
-            $comment->setUser($user);
-            $comment->setCreatedAt(new \DateTimeImmutable());
-
-            $this->entityManager->persist($comment);
-            $this->entityManager->flush();
-
-            $this->addFlash('success', 'Merci pour votre commentaire ! Il sera visible après validation par nos équipes.');
-
-            return $this->redirectToRoute('app_visitor_service_show', [
-                'id' => $service->getId(),
-                'slug' => $service->getSlug(),
-            ]);
         }
 
         return $this->render('pages/visitor/service/show.html.twig', [
             'service' => $service,
             'sessions' => $sessions,
             'commentForm' => $form,
+            'comments' => $comments,
+            'hasBookedService' => $hasBookedService,
         ]);
     }
 }
