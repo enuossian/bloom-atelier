@@ -33,38 +33,38 @@
         <table id="myTable" class="table table-striped table-hover table-bordered">
             <thead class="table-danger">
                 <tr>
-                    <th class="fw-bold">Id</th>
-                    <th class="fw-bold">Prénom</th>
-                    <th class="fw-bold">Nom</th>
-                    <th class="fw-bold">Email</th>
-                    <th class="fw-bold">Statut</th>
-                    <th class="fw-bold">Rôles</th>
-                    <th class="fw-bold">Créé le</th>
-                    <th class="fw-bold">Modifié le</th>
-                    <th class="fw-bold">Options</th>
+                    <th class="text-center">Id</th>
+                    <th class="text-center">Prénom</th>
+                    <th class="text-center">Nom</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Statut</th>
+                    <th class="text-center">Rôles</th>
+                    <th class="text-center">Créé le</th>
+                    <th class="text-center">Modifié le</th>
+                    <th class="text-center">Options</th>
                 </tr>
             </thead>
             <tbody> 
                 {% for user in users %}
                     <tr>
-                        <td>{{ user.id }}</td>
-                        <td>{{ user.firstName }}</td>
-                        <td>{{ user.lastName }}</td>
-                        <td>{{ user.email }}</td>                       
-                        <td> 
+                        <td class="text-center">{{ user.id }}</td>
+                        <td class="text-center">{{ user.firstName }}</td>
+                        <td class="text-center">{{ user.lastName }}</td>
+                        <td class="text-center">{{ user.email }}</td>                       
+                        <td class="text-center"> 
                             {% if user.verifiedAt %}
                                 Compte vérifié le {{ user.verifiedAt|format_date() }}
                             {% else %}
                                 Compte non vérifié
                             {% endif %}
                         </td>
-                        <td>
+                        <td class="text-center">
                             {% for role in user.roles %}
                                 <span class="badge text-bg-secondary">{{ role }}</span>
                             {% endfor %}
                         </td>                       
-                        <td>{{ user.createdAt|format_date() }}</td>
-                        <td>{{ user.updatedAt|format_date() }}</td>
+                        <td class="text-center">{{ user.createdAt|format_date() }}</td>
+                        <td class="text-center">{{ user.updatedAt|format_date() }}</td>
                         <td class="align-middle">
                              <div class="d-flex justify-content-center align-items-center gap-1">
                                 {% if 'ROLE_SUPER_ADMIN' not in user.roles %}
