@@ -1,167 +1,108 @@
 {% extends 'themes/base_admin.html.twig' %}
 
 {% block title %}
-    Détails de la réservation {{ booking.reference }}
+	Détails de la réservation
+	{{ booking.reference }}
 {% endblock %}
 
 {% block description %}
-    Consultez les informations détaillées de la réservation {{ booking.reference }}
+	Consultez les informations détaillées de la réservation
+	{{ booking.reference }}
 {% endblock %}
 
 {% block keywords %}
-    Réservation, Détail, Admin
+	Réservation, Détail, Admin
 {% endblock %}
 
 {% block main %}
 
-<div class="container my-4">
+	<h1 class="display-6 text-center cormorant-garamond">Réservation
+		{{ booking.reference }}</h1>
+	<div class="container">
+		<div class="d-flex justify-content-end align-items-center my-5">
+			<a href="{{ path('app_admin_booking_index') }}" class="btn btn-brown rounded-0 px-4 py-2">← Retour</a>
+		</div>
+	</div>
+	<div class="row g-3 mb-5">
+		<div class="col-4">
+			<div class="card border rounded-0 p-4 container-bg text-center">
+				<p class="pink small text-uppercase fw-light mb-1">Statut</p>
+				<span class="cormorant-garamond fs-4">{{ booking.status.label() }}
+				</span>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="card border rounded-0 p-4 container-bg text-center">
+				<p class="pink small text-uppercase fw-light mb-1">Total</p>
+				<span class="cormorant-garamond fs-4">{{ booking.totalAmount }}
+					€</span>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="card border rounded-0 p-4 container-bg text-center">
+				<p class="pink small text-uppercase fw-light mb-1">Sessions</p>
+				<span class="cormorant-garamond fs-4">{{ booking.bookItems|length }}</span>
+			</div>
+		</div>
+	</div>
 
-    {# Header avec actions #}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h1 class="display-6 mb-1">Réservation</h1>
-            <small class="text-muted">Réf. {{ booking.reference }} · ID #{{ booking.id }}</small>
-        </div>
-        <div class="d-flex gap-2">
-            <a href="{{ path('app_admin_booking_index') }}" class="btn btn-outline-secondary btn-sm">← Retour</a>
-        </div>
-    </div>
+	<div
+		class="row g-4">
 
-    <div class="row g-4 align-items-stretch">
+		{# Détails de la session #}
+		{% if booking.bookItems|length > 0 %}
 
-        {# Colonne gauche #}
-        <div class="col-lg-8">
+			<div class="col-12">
+				<div class="card border rounded-0 p-4 container-bg h-100">
+					<h2 class="cormorant-garamond pink fs-4 fw-light mb-4">Sessions réservées</h2>
+					<table class="table table-hover mb-0 align-middle">
+						<thead class="table-danger">
+							<tr>
+								<th>Service</th>
+								<th>Date</th>
+								<th>Prix</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for item in booking.bookItems %}
+								<tr>
+									<td>{{ item.session.service.name }}</td>
+									<td>{{ item.session.startTime|format_datetime(pattern: "dd/MM/yyyy 'de' HH'h'mm 'à'") }}
+										{{ item.session.endTime|format_datetime(pattern: "HH'h'mm") }}</td>
+									<td>{{ item.price }}
+										€</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		{% endif %}
 
-            {# Carte infos principales #}
-            <div class="card shadow-sm mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0">Informations de la réservation</h6>
-                    <span class="badge fs-6 
-                        bg-{{ 
-                            booking.status.value == 'pending' ? 'warning' :
-                            (booking.status.value == 'paid' ? 'success' : 'danger')
-                        }}">
-                        {{ booking.status.label() }}
-                    </span>
-                </div>
+		<div class="col-12">
+			<div class="card border rounded-0 p-4 container-bg">
+				<h2 class="cormorant-garamond pink fs-4 fw-light mb-4">Client</h2>
 
-                <div class="card-body">
+				{% if booking.user %}
+					<div class="row g-3">
+						<div class="col-12 col-md-4">
+							<p class="small text-uppercase pink fw-light mb-1">Nom Prénom</p>
+							<span>{{ booking.user.lastName }} {{ booking.user.firstName }}</span>
+						</div>
+						<div class="col-12 col-md-4">
+							<p class="small text-uppercase pink fw-light mb-1">Email</p>
+							<span>{{ booking.user.email }}</span>
+						</div>
+						<div class="col-12 col-md-4">
+							<p class="small text-uppercase pink fw-light mb-1">Inscrit le</p>
+							<span>{{ booking.user.createdAt|format_datetime(pattern: "dd/MM/yyyy") }}</span>
+						</div>
+					</div>
+				{% else %}
+					<p class="text-muted fw-light">Utilisateur supprimé.</p>
+				{% endif %}
+			</div>
+		</div>
 
-                    <div class="row text-center mb-4">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <div class="p-3 bg-light rounded border">
-                                <small class="text-muted d-block mb-1">Montant total</small>
-                                <strong class="fs-5">{{ booking.totalAmount }} €</strong>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="p-3 bg-light rounded border">
-                                <small class="text-muted d-block mb-1">Confirmation envoyée</small>
-                                <strong class="fs-5">
-                                    {{ booking.confirmationSent ? 'Oui' : 'Non' }}
-                                </strong>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            {# Sessions réservées #}
-{% if booking.bookItems|length > 0 %}
-    <div class="card shadow-sm mb-4">
-        <div class="card-header">
-            <h6 class="mb-0">Sessions réservées</h6>
-        </div>
-        <div class="card-body p-0">
-
-            <div class="table-responsive">
-                <table class="table table-hover mb-0 align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Service</th>
-                            <th>Date</th>
-                            <th>Durée</th>
-                            <th class="text-end">Prix</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in booking.bookItems %}
-                            <tr>
-                                <td>
-                                    <strong>{{ item.session.service.name }}</strong>
-                                </td>
-                                <td>
-                                    {{ item.session.startTime|format_datetime() }}
-                                </td>
-                                <td>
-                                    {{ item.session.service.displayDuration }}
-                                </td>
-                                <td class="text-end">
-                                    {{ item.price }} €
-                                </td>
-                            </tr>
-                        {% endfor %}
-
-                        <tr class="table-light fw-bold">
-                            <td colspan="3" class="text-end">Total</td>
-                            <td class="text-end">
-                                {{ booking.totalAmount }} €
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-    </div>
-{% endif %}
-
-            {# Métadonnées #}
-            <div class="card shadow-sm">
-                <div class="card-body small text-muted d-flex justify-content-between">
-                    <div>
-                        <strong>Créée le</strong><br>
-                        {{ booking.createdAt|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm") }}
-                    </div>
-                    <div>
-                        <strong>Modifiée le</strong><br>
-                        {% if booking.updatedAt %}
-                            {{ booking.updatedAt|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm") }}
-                        {% else %}
-                            Jamais modifiée
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        {# Colonne droite - Utilisateur associé #}
-        <div class="col-lg-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-header">
-                    <h6 class="mb-0">Client</h6>
-                </div>
-                <div class="card-body">
-                    <strong class="d-block mb-1">
-                        {{ booking.user.firstName }} {{ booking.user.lastName }}
-                    </strong>
-                    <hr>
-                    <span>Email</span>
-                    <strong class="text-muted d-block mb-2">
-                        {{ booking.user.email }}
-                    </strong>
-                    <div class="text-center">
-                        <a href="" class="btn btn-sm btn-dark">Voir le profil</a>
-                    </div>                    
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-</div>
-
+	</div>
 {% endblock %}

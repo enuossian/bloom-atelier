@@ -27,7 +27,8 @@
 {% endblock %}
 
 {% block main %}
-    <h1 class="text-center my-3 display-5">Liste des réservations</h1>
+    <h1 class="display-6 text-center mb-3 cormorant-garamond">Liste des réservations</h1>
+    
 
     {% include 'components/_alert.html.twig' %}
 
@@ -35,33 +36,35 @@
         <table id="myTable" class="table table-striped table-hover table-bordered">
             <thead class="table-danger">
                 <tr>
-                    <th class="fw-bold">Référence</th>
-                    <th class="fw-bold">Client</th>
-                    <th class="fw-bold">Montant total</th>
-                    <th class="fw-bold">Statut</th>
-                    <th class="fw-bold">Confirmation</th>
-                    <th class="fw-bold">Créé le</th>
-                    <th class="fw-bold">Options</th>
+                    <th class="fw-bold text-center">Id</th>
+                    <th class="fw-bold text-center">Référence</th>
+                    <th class="fw-bold text-center">Client</th>
+                    <th class="fw-bold text-center">Montant total</th>
+                    <th class="fw-bold text-center">Statut</th>
+                    <th class="fw-bold text-center">Confirmation</th>
+                    <th class="fw-bold text-center">Créé le</th>
+                    <th class="fw-bold text-center">Options</th>
                 </tr>
             </thead>
             <tbody> 
                 {% for booking in bookings %}
                 <tr>
-                    <td>{{booking.reference}}</td>
-                    <td>
+                    <td class="text-center">{{booking.id}}</td>
+                    <td class="text-center">{{booking.reference}}</td>
+                    <td class="text-center">
                         {{ booking.user ? booking.user.firstName ~ ' ' ~ booking.user.lastName : 'Client supprimé' }}
                     </td>
-                    <td>{{booking.totalAmount}} €</td>
-                    <td>
+                    <td class="text-center">{{booking.totalAmount}} €</td>
+                    <td class="text-center">
                         <span class="badge bg-secondary">{{ booking.status.label() }}</span>
                     </td>
-                    <td>
+                    <td class="text-center">
                         {{ booking.confirmationSent ? 'Envoyée' : 'Non envoyée' }}
                     </td>
-                    <td>{{booking.createdAt|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm")}}</td>
+                    <td class="text-center">{{booking.createdAt|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm")}}</td>
                     <td class="align-middle">
                         <div class="d-flex justify-content-center align-items-center">
-                            <a href="{{path('app_admin_booking_show', {'id': booking.id})}}" class="btn btn-sm btn-dark">voir</a>
+                            <a href="{{path('app_admin_booking_show', {'id': booking.id})}}" class="btn btn-sm btn-outline-dark">voir</a>
                         </div>
                     </td>
                 </tr>
