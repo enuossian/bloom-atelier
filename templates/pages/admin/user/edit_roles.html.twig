@@ -27,19 +27,23 @@ $('#edit_user_roles_form_roles').select2();
 {% endblock %}
 
 {% block main %}
-	<div class="container mt-5">
-		<h1 class="text-center my-4 display-5">Modifier les rôles de 'utilisateur
-			{{ user.id }}
-			:
-			{{ user.firstName }}{{ user.lastName }}</h1>
+	<h1 class="display-6 text-center mb-3 cormorant-garamond">Modifier les rôles de l'utilisateur
+		{{ user.id }}
+		:
+		{{ user.firstName }}
+		{{ user.lastName }}</h1>
 
+	<div class="container mt-5">
+		<div class="d-flex justify-content-end align-items-center my-5">
+			<a href="{{ path('app_admin_user_index') }}" class="btn btn-brown rounded-0 px-4 py-2">← Retour</a>
+		</div>
 		<div class="row">
 			<div class="col-md-10 col-lg-6 mx-auto p-4 shadow">
 				{{ form_start(userRolesForm) }}
 				<div class="mb-3">
 					<label for="edit_user_roles_form_roles">Choisissez les rôles</label>
 					{{ form_widget(userRolesForm.roles) }}
-                    <div class="text-danger">{{ form_errors(userRolesForm.roles) }}</div>
+					<div class="text-danger">{{ form_errors(userRolesForm.roles) }}</div>
 				</div>
 				<div>
 					<input formnovalidate type="submit" value="Modifier" class="btn btn-dark w-100">

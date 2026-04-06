@@ -25,7 +25,7 @@
 {% endblock %}
 
 {% block main %}
-    <h1 class="text-center my-3 display-5">Liste des utilisateurs</h1>
+    <h1 class="display-6 text-center mb-3 cormorant-garamond">Liste des utilisateurs</h1>
 
 	{% include 'components/_alert.html.twig' %}
 
@@ -33,6 +33,7 @@
         <table id="myTable" class="table table-striped table-hover table-bordered">
             <thead class="table-danger">
                 <tr>
+                    <th class="fw-bold">Id</th>
                     <th class="fw-bold">Prénom</th>
                     <th class="fw-bold">Nom</th>
                     <th class="fw-bold">Email</th>
@@ -46,6 +47,7 @@
             <tbody> 
                 {% for user in users %}
                     <tr>
+                        <td>{{ user.id }}</td>
                         <td>{{ user.firstName }}</td>
                         <td>{{ user.lastName }}</td>
                         <td>{{ user.email }}</td>                       
@@ -66,7 +68,7 @@
                         <td class="align-middle">
                              <div class="d-flex justify-content-center align-items-center gap-1">
                                 {% if 'ROLE_SUPER_ADMIN' not in user.roles %}
-                                    <a href="{{path('app_admin_user_edit_roles', {'id':user.id})}}" class="btn btn-sm btn-dark">Modifier</a>                                   
+                                    <a href="{{path('app_admin_user_edit_roles', {'id':user.id})}}" class="btn btn-sm btn-secondary">Modifier</a>                                   
                                     <form action="{{path('app_admin_user_delete', {'id':user.id})}}" method="post">
                                         <input type="hidden" name="csrf_token" value="{{csrf_token('delete-user-'~user.id)}}">
                                         <input type="submit" value="Supprimer" class="btn btn-sm btn-danger" onclick="return confirm('Confirmez-vous la suppression de ce compte ?')">
