@@ -71,17 +71,17 @@
 						{% if app.user %}
 							{% if is_granted('ROLE_ADMIN') %}
 								<li class="nav-item">
-									<a class="nav-link " href="{{path('app_admin_home')}}">Espace admin</a>
+									<a class="btn btn-login btn-clear px-3 rounded-0" href="{{path('app_admin_home')}}">Espace admin</a>
 								</li>
 							{% endif %}
 							{% if is_granted('ROLE_USER') %}
 								<li class="nav-item">
-									<a class="nav-link" href="{{path('app_user_home')}}">Espace privé</a>
+									<a class="btn btn-login btn-clear px-3 rounded-0" href="{{path('app_user_home')}}">Espace privé</a>
 								</li>
 							{% endif %}
 
 							<li class="nav-item">
-								<a class="nav-link " href="{{path('app_logout')}}">DÉCONNEXION</a>
+								<a class="btn btn-brown px-3 rounded-0" href="{{path('app_logout')}}">DÉCONNEXION</a>
 							</li>
 						{% else %}
 							<li class="nav-item">
