@@ -84,7 +84,7 @@ final class ServiceController extends AbstractController
         if ($this->isCsrfTokenValid("delete-service-{$service->getId()}", $request->request->get('csrf_token'))) {
             foreach ($service->getSessions() as $session) {
                 if (!$session->getBookItems()->isEmpty()) {
-                    $this->addFlash('danger', 'Vous ne pouvez pas supprimer ce service car il possède des sessions déjà réservées.');
+                    $this->addFlash('danger', 'Vous ne pouvez pas supprimer ce service car il possède des réservations.');
 
                     return $this->redirectToRoute('app_admin_service_index');
                 }

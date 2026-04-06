@@ -32,7 +32,7 @@
 					{% if service.image %}
 						<img src="{{ vich_uploader_asset(service, 'imageFile') }}" class="w-100 object-fit-cover rounded-0 shadow-sm" style="height: 60vh;" alt="{{ service.name }}">
 					{% else %}
-						<img src="{{ asset('images/static/hero-img.jpg') }}" class="w-100 object-fit-cover rounded-0 shadow-sm" style="height: 60vh;" alt="Image par défaut du service {{ service.name }}">
+						<img src="{{ asset('images/static/maq.jpg') }}" class="w-100 object-fit-cover rounded-0 shadow-sm" style="height: 60vh;" alt="Image par défaut du service {{ service.name }}">
 					{% endif %}
 				</div>
 
@@ -117,8 +117,8 @@
 		</div>
 	</section>
 
-	<section class="bg-brown text-light py-5">
-		{% if comments is not empty %}
+	{% if comments is not empty %}
+		<section class="bg-brown text-light py-5">
 			<div class="container">
 
 				<div class="mb-5">
@@ -158,8 +158,8 @@
 					{% endfor %}
 				</div>
 			</div>
-		{% endif %}
-	</section>
+		</section>
+	{% endif %}
 
 	<section>
 		<div class="container my-5">
