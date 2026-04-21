@@ -78,7 +78,7 @@ final class ServiceController extends AbstractController
         ]);
     }
 
-    #[Route('/service/{id<\d+>}/delete', name: 'app_admin_service_delete', methods: ['GET', 'POST'])]
+    #[Route('/service/{id<\d+>}/delete', name: 'app_admin_service_delete', methods: ['POST'])]
     public function delete(Service $service, Request $request): Response
     {
         if ($this->isCsrfTokenValid("delete-service-{$service->getId()}", $request->request->get('csrf_token'))) {
