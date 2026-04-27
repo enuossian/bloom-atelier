@@ -12,7 +12,7 @@
 {% block main %}
 	<h1 class="display-6 text-center mb-5 cormorant-garamond">Nouvelle session</h1>
 	<div class="d-flex justify-content-end align-items-center my-5">
-		<a href="{{ path('app_admin_session_index') }}" class="btn btn-brown rounded-0 px-4 py-2">← Retour</a>
+		<a href="{{ path('app_admin_session_index') }}" class="btn btn-brown px-4 py-2">← Retour</a>
 	</div>
 	<div class="container mb-5">
 		<div class="row">
@@ -59,7 +59,7 @@
 					<div class="text-danger">{{ form_errors(sessionForm.notes) }}</div>
 				</div>
 				<div class="text-center my-4">
-					<input formnovalidate type="submit" value="Ajouter" class="btn btn-form text-white w-25">
+					<input formnovalidate type="submit" value="Ajouter" class="btn btn-brown px-4 py-2 w-25">
 				</div>
 				{{ form_end(sessionForm) }}
 			</div>

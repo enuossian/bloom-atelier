@@ -12,47 +12,49 @@
 
 
 	<div class="container py-5" style="max-width: 900px;">
+		<h1 class="fs-1 text-center mb-3 cormorant-garamond">Mon panier</h1>
 		{% include 'components/_alert.html.twig' %}
-		<h2 class="fw-bold mb-4">Mon panier</h2>
 
 		{% if booking and booking.bookItems|length > 0 %}
 			{% for bookItem in booking.bookItems %}
-				<div class="d-flex align-items-center justify-content-between gap-3 bg-white border rounded p-5 mb-2">
+				<div class="d-flex align-items-center justify-content-between gap-3 bg-white rounded p-4 mb-2 shadow">
 					<div>
-						<p class="fw-semibold mb-1 fs-5">{{ bookItem.session.service.name }}</p>
-						<p class="small">
-							{{ bookItem.session.startTime|date('d M Y') }}
+						<p class="fw-medium">{{ bookItem.session.service.name }}</p>
+						<p class="text-muted small mb-0">
+							{{ bookItem.session.startTime|format_datetime(pattern: "dd/MM/yyyy") }}
 							—
-							{{ bookItem.session.startTime|date('H\\hi') }}
+							{{ bookItem.session.startTime|format_datetime(pattern: "HH'h'mm") }}
 							→
-							{{ bookItem.session.endTime|date('H\\hi') }}
+							{{ bookItem.session.endTime|format_datetime(pattern: "HH'h'mm") }}
 						</p>
+						<p class="small d-flex align-items-center gap-3">{{ bookItem.price }}
+							€</p>
+						<p class="text-muted small mb-0">{{ bookItem.session.location ?? 'Lieu non précisé' }}</p>
 					</div>
 					<div class="d-flex align-items-center gap-3">
-						<span class="fw-bold">{{ bookItem.price }}
-							€</span>
 						<form action="{{ path('app_user_booking_remove_item', {'id': bookItem.id}) }}" method="POST">
 							<input type="hidden" name="csrf_token" value="{{ csrf_token('booking-remove-' ~ bookItem.id) }}">
-							<button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+							<button type="submit" class="btn btn-danger btn-sm">
+								<i class="fa-solid fa-trash"></i>
+							</button>
 						</form>
 					</div>
 				</div>
 			{% endfor %}
 
-			<div class="d-flex justify-content-between align-items-center mt-4 p-4 bg-white border rounded">
-				<span class="fw-bold fs-5">Total</span>
-				<span class="fw-bold fs-5">{{ booking.totalAmount }}
-					€</span>
+			<div class="d-flex justify-content-between align-items-center mt-4 p-4 bg-white rounded shadow">
+				<span class="fw-medium fs-5">Total</span>
+				<span class="fw-medium fs-6">{{ booking.totalAmount }}€</span>
 			</div>
 
 			<div class="d-flex justify-content-end mt-3">
 				<form action="{{ path('app_user_booking_checkout') }}" method="POST">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token('booking-checkout') }}">
-					<button type="submit" class="btn btn-dark btn-lg px-4">Payer</button>
+					<button type="submit" class="btn btn-brown px-4 my-3">Payer</button>
 				</form>
 			</div>
 		{% else %}
-			<div class="alert alert-secondary">Votre panier est vide.</div>
+			<div class="alert alert-dark text-center">Votre panier est vide.</div>
 		{% endif %}
 	</div>
 {% endblock %}

@@ -66,6 +66,14 @@ class Service
     #[ORM\Column(length: 255, nullable: true, unique: true)]
     private ?string $image = null;
 
+    #[Assert\NotBlank(message: 'Le courte description est obligatoire.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'La courte description doit contenir au maximum {{ limit }} caractères.',
+    )]
+    #[ORM\Column(length: 255)]
+    private ?string $shortDescription = null;
+
     #[Assert\NotBlank(message: 'La description est obligatoire.')]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
@@ -90,14 +98,6 @@ class Service
      */
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'service', orphanRemoval: true)]
     private Collection $comments;
-
-    #[Assert\NotBlank(message: 'Le courte description est obligatoire.')]
-    #[Assert\Length(
-        max: 255,
-        maxMessage: 'La courte description doit contenir au maximum {{ limit }} caractères.',
-    )]
-    #[ORM\Column(length: 255)]
-    private ?string $shortDescription = null;
 
     public function __construct()
     {
@@ -198,6 +198,18 @@ class Service
     public function setImage(?string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+    
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    public function setShortDescription(?string $shortDescription): static
+    {
+        $this->shortDescription = $shortDescription;
 
         return $this;
     }
@@ -306,18 +318,6 @@ class Service
                 $comment->setService(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getShortDescription(): ?string
-    {
-        return $this->shortDescription;
-    }
-
-    public function setShortDescription(string $shortDescription): static
-    {
-        $this->shortDescription = $shortDescription;
 
         return $this;
     }
