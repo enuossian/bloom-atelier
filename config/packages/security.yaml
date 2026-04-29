@@ -34,7 +34,7 @@ security:
             # configure the maximum login attempts
             login_throttling:
                 max_attempts: 3          # per minute ...
-                interval: '5 minutes' # ... or in a custom period
+                interval: '2 minutes' # ... or in a custom period
 
             # Activate different ways to authenticate:
             # https://symfony.com/doc/current/security.html#the-firewall
