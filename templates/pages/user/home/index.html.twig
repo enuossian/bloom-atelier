@@ -65,10 +65,11 @@
 							</p>
 							<p class="text-muted small mb-0">{{ session.location ? session.location : 'Lieu non précisé' }}</p>
 						</div>
-						<div>
-							<a href="{{ path('app_visitor_service_show', {'id': session.service.id, 'slug': session.service.slug}) }}#comment-container" class="btn btn-sm btn-brown border-0">Laisser un avis</a>
-						</div>
-
+						{% if session.service.isActive %}
+							<div>
+								<a href="{{ path('app_visitor_service_show', {'id': session.service.id, 'slug': session.service.slug}) }}#comment-container" class="btn btn-sm btn-brown border-0">Laisser un avis</a>
+							</div>
+						{% endif %}
 					</div>
 				{% endfor %}
 			{% else %}
