@@ -80,7 +80,7 @@ final class UserController extends AbstractController
             }
 
             // message avant la suppression en bdd pour disposer des données de l'utilisateur
-            $this->addFlash('success', "L'utilisateur {$user->getFirstName()} {$user->getLastName()} été supprimé avec succès.");
+            $this->addFlash('success', "L'utilisateur {$user->getFirstName()} {$user->getLastName()} a été supprimé avec succès.");
 
             $this->entityManager->remove($user);
             $this->entityManager->flush();
