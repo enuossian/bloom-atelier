@@ -32,24 +32,36 @@ final class ServiceController extends AbstractController
 
     #[Route('/service/create', name: 'app_admin_service_create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
-    {
+
+    {   // On crée une nouvelle instance de Service
         $service = new Service();
 
+        // On crée le formulaire en lui passant l'instance de Service
         $form = $this->createForm(ServiceFormType::class, $service);
+
+        // On traite la requête du formulaire
         $form->handleRequest($request);
 
+        // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // On définit les dates de création et de mise à jour du service
             $service->setCreatedAt(new \DateTimeImmutable());
             $service->setUpdatedAt(new \DateTimeImmutable());
 
+            // On sauvegarde le service en base de données
             $this->entityManager->persist($service);
+            // On flush pour exécuter la requête d'insertion en base de données
             $this->entityManager->flush();
 
+            // On génère un message flash de succès
             $this->addFlash('success', 'Le service a été ajouté avec succès.');
 
+            // On redirige l'admin vers la page d'index des services
             return $this->redirectToRoute('app_admin_service_index');
         }
 
+        // Si formulaire non soumis ou non valide, on affiche la page de création du service avec le formulaire
         return $this->render('pages/admin/service/create.html.twig', [
             'serviceForm' => $form,
         ]);
