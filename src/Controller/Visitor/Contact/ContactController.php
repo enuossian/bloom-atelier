@@ -46,9 +46,9 @@ final class ContactController extends AbstractController
             $this->entityManager->flush();
 
             $this->sendEmailService->sendEmail([
-                'sender_email' => 'sarah.thomas@bloomatelier.com',
-                'sender_full_name' => 'Sarah Thomas',
-                'recipient_email' => 'sarah.thomas@bloomatelier.com',
+                'sender_email' => 'hello@bloomatelier.com',
+                'sender_full_name' => 'Hawa Diallo',
+                'recipient_email' => 'hello@bloomatelier.com',
                 'subject' => 'Un nouveau message reçu sur votre site',
                 'html_template' => 'emails/contact_form_email.html.twig',
                 'context' => [
@@ -61,7 +61,7 @@ final class ContactController extends AbstractController
             return $this->redirectToRoute('app_visitor_contact_index');
         }
 
-        $setting = $this->settingRepository->findAll()[0];
+        $setting = $this->settingRepository->findOneBy([]);
 
         return $this->render('pages/visitor/contact/index.html.twig', [
             'setting' => $setting,

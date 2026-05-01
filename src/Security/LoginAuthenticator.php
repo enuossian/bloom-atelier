@@ -59,7 +59,8 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($this->urlGenerator->generate('app_admin_home'));
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('visitor_home_index'));
+        // redirige l'utilisateur connecté vers son espace personnel
+        return new RedirectResponse($this->urlGenerator->generate('app_user_home'));
     }
 
     protected function getLoginUrl(Request $request): string

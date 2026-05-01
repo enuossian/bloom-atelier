@@ -8,15 +8,15 @@
 <div class="container py-5" style="max-width: 700px;">
     {% include 'components/_alert.html.twig' %}
 
-    <h2 class="fw-bold mb-1">Réservation confirmée</h2>
+    <h2 class="fs-1 mb-3 cormorant-garamond">Réservation confirmée</h2>
     <p class="text-muted mb-4">Référence : <strong>{{ booking.reference }}</strong></p>
 
     {% for bookItem in booking.bookItems %}
-        <div class="d-flex align-items-center justify-content-between gap-3 bg-white border rounded p-4 mb-2">
+        <div class="d-flex align-items-center justify-content-between gap-3 bg-white rounded p-4 mb-2 shadow">
             <div>
                 <p class="fw-semibold mb-1">{{ bookItem.session.service.name }}</p>
                 <p class="text-muted small mb-0">
-                    {{ bookItem.session.startTime|date('d M Y') }} — {{ bookItem.session.startTime|date('H\\hi') }} → {{ bookItem.session.endTime|date('H\\hi') }}
+                    {{ bookItem.session.startTime|format_datetime(pattern: "dd/MM/yyyy") }} — {{ bookItem.session.startTime|format_datetime(pattern: "HH'h'mm") }} → {{ bookItem.session.endTime|format_datetime(pattern: "HH'h'mm") }}
                 </p>
                 <p class="text-muted small mb-0">{{ bookItem.session.location ?? 'Lieu non précisé' }}</p>
             </div>
@@ -24,9 +24,9 @@
         </div>
     {% endfor %}
 
-    <div class="d-flex justify-content-between align-items-center mt-4 p-4 bg-white border rounded">
-        <span class="fw-bold fs-5">Total payé</span>
-        <span class="fw-bold fs-5">{{ booking.totalAmount }} €</span>
+    <div class="d-flex justify-content-between align-items-center mt-4 p-4 bg-white rounded shadow">
+        <span class="fw-medium fs-5">Total payé</span>
+		<span class="fw-medium fs-6">{{ booking.totalAmount }}€</span>
     </div>
 </div>
 {% endblock %}

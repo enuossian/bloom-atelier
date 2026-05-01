@@ -73,7 +73,7 @@ final class UserController extends AbstractController
             foreach ($user->getBookings() as $booking) {
                 $booking->setUser(null);
             }
-
+            
             // supprimer les informations de l'utilisateur connecté sauvegardées en session et sécuriser au niveau de symfony
             if ($this->getUser() == $user) {
                 $this->tokenStorage->setToken(null);

@@ -20,15 +20,14 @@
 {% block main %}
 	<h1 class="display-6 text-center mb-5 cormorant-garamond">Nouveau service</h1>
 	<div class="d-flex justify-content-end align-items-center my-5">
-		<a href="{{ path('app_admin_service_index') }}" class="btn btn-brown rounded-0 px-4 py-2">← Retour</a>
+		<a href="{{ path('app_admin_service_index') }}" class="btn btn-brown px-4 py-2">← Retour</a>
 	</div>
 	<div class="container mb-5">
 		<div class="row">
 			<div class="col-md-10 mx-auto container-bg shadow p-4">
 				{{ form_start(serviceForm) }}
 				<div class="mb-3">
-					<label for="service_form_name" class="form-label">Nom du service<span class="text-danger">
-							*</span>
+					<label for="service_form_name" class="form-label">Nom du service<span class="text-danger">*</span>
 					</label>
 					{{ form_widget(serviceForm.name) }}
 					<div class="text-danger">{{ form_errors(serviceForm.name) }}</div>
@@ -66,7 +65,7 @@
 
 					</div>
 					<div class="col-lg-6 mb-3">
-						<label for="service_form_duration" class="form-label">Durée
+						<label for="service_form_duration" class="form-label">Durée en minutes
 							<span class="text-danger">
 								*</span>
 						</label>
@@ -75,7 +74,7 @@
 
 					</div>
 					<div class="text-center my-4">
-						<input formnovalidate type="submit" value="Ajouter" class="btn btn-form text-white w-25">
+						<input formnovalidate type="submit" value="Ajouter" class="btn btn-brown px-4 py-2 w-25">
 					</div>
 				</div>
 				{{ form_end(serviceForm) }}

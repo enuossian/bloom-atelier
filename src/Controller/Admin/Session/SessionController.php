@@ -51,8 +51,7 @@ final class SessionController extends AbstractController
             $session->setCreatedAt(new \DateTimeImmutable());
             $session->setUpdatedAt(new \DateTimeImmutable());
 
-            // à corriger !!!
-            $session->setReference(bin2hex(random_bytes(8)));
+            $session->setReference('SESS-'.strtoupper(bin2hex(random_bytes(6))));
 
             $this->entityManager->persist($session);
             $this->entityManager->flush();

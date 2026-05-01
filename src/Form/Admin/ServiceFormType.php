@@ -38,6 +38,7 @@ class ServiceFormType extends AbstractType
                 'attr' => [
                     // 'placeholder' => 'Ex: 180',
                     'class' => 'form-control',
+                    // 1 heure minimum, 5 heures maximum, par tranche de 30 minutes
                     'min' => 60,
                     'max' => 300,
                     'step' => 30,

@@ -37,7 +37,7 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 
 
 	<div class="d-flex justify-content-end align-items-center my-3">
-		<a href="{{path('app_admin_service_create')}}" class="btn btn-brown rounded-0 px-4 py-2">Ajouter un service</a>
+		<a href="{{path('app_admin_service_create')}}" class="btn btn-brown px-4 py-2">Ajouter un service</a>
 	</div>
 
 	<div class="table-responsive">
@@ -100,7 +100,13 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 								<a href="{{ path('app_admin_service_edit', {'id': service.id}) }}" class="btn btn-sm btn-secondary">Modifier</a>
 								<form action="{{ path('app_admin_service_delete', {'id': service.id})}}" method="POST">
 									<input type="hidden" name="csrf_token" value="{{csrf_token('delete-service-'~service.id)}}">
-									<input type="submit" value="Supprimer" class="btn btn-sm btn-danger" onclick="return confirm('Confirmez-vous la suppression de ce service ?')">
+
+										{% if service.sessions is empty %}
+											<input type="submit" value="Supprimer" class="btn btn-sm btn-danger" onclick="return confirm('Confirmez-vous la suppression de ce service ?')">
+										{% else %}
+											<input type="submit" value="Supprimer" class="btn btn-sm btn-danger" onclick="return confirm('Confirmez-vous la suppression de ce service ? En supprimant ce service, vous supprimerez aussi les sessions associées.')">
+										{% endif %}
+
 								</form>
 							</div>
 						</td>

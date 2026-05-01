@@ -50,7 +50,7 @@ class RegistrationController extends AbstractController
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('bloom-atelier@live.fr', 'Sarah Thomas'))
+                    ->from(new Address('hello@bloomatelier.com', 'Hawa Diallo'))
                     ->to((string) $user->getEmail())
                     ->subject('Vérification de votre compte sur Bloom Atelier')
                     ->htmlTemplate('emails/confirmation_email.html.twig')
