@@ -18,9 +18,9 @@
 
 {% block main %}
 
-	{% include 'components/_alert.html.twig' %}
 
 	<div class="container my-4">
+		{% include 'components/_alert.html.twig' %}
 		<a href="{{path('app_visitor_service_index')}}" class="text-decoration-none">← Voir tous nos services</a>
 	</div>
 
@@ -178,7 +178,7 @@
 				</div>
 			{% else %}
 				<div id="comment-container">
-					{{ form_start(commentForm, {'action': path('app_visitor_service_show', {'id': service.id, 'slug': service.slug})~'#comment-container'}) }}
+					{{ form_start(commentForm, {'action': path('app_visitor_service_show', {'id': service.id, 'slug': service.slug})}) }}
 					<div class="mb-3">
 						<label for="comment_form_rating" class="form-label">Note</label>
 						{{ form_widget(commentForm.rating) }}
