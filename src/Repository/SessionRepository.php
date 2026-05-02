@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Service;
 use App\Entity\Session;
-use App\Entity\User;
-use App\Enum\BookingStatus;
 use App\Enum\SessionStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -33,46 +31,6 @@ class SessionRepository extends ServiceEntityRepository
             ->setParameter('status', SessionStatus::Available)
             ->setParameter('now', new \DateTimeImmutable())
             ->orderBy('s.startTime', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @return Session[] Returns an array of Session objects
-     */
-    public function findUpcomingSessionsByUser(User $user): array
-    {
-        return $this->createQueryBuilder('s')
-            ->innerJoin('s.bookItems', 'bi')
-            ->join('bi.booking', 'b')
-            ->addSelect('bi', 'b')
-            ->andWhere('b.user = :user')
-            ->andWhere('b.status = :bookingStatus')
-            ->andWhere('s.startTime > :now')
-            ->setParameter('user', $user)
-            ->setParameter('bookingStatus', BookingStatus::Paid)
-            ->setParameter('now', new \DateTimeImmutable())
-            ->orderBy('s.startTime', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @return Session[] Returns an array of Session objects
-     */
-    public function findPastSessionsByUser(User $user): array
-    {
-        return $this->createQueryBuilder('s')
-            ->innerJoin('s.bookItems', 'bi')
-            ->join('bi.booking', 'b')
-            ->addSelect('bi', 'b')
-            ->andWhere('b.user = :user')
-            ->andWhere('b.status = :bookingStatus')
-            ->andWhere('s.startTime <= :now')
-            ->setParameter('user', $user)
-            ->setParameter('bookingStatus', BookingStatus::Paid)
-            ->setParameter('now', new \DateTimeImmutable())
-            ->orderBy('s.startTime', 'DESC')
             ->getQuery()
             ->getResult();
     }

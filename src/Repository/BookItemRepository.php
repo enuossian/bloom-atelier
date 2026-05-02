@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\BookItem;
+use App\Entity\User;
+use App\Enum\BookingStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +18,43 @@ class BookItemRepository extends ServiceEntityRepository
         parent::__construct($registry, BookItem::class);
     }
 
-    //    /**
-    //     * @return BookItem[] Returns an array of BookItem objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('b')
-    //            ->andWhere('b.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('b.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @return BookItem[] Returns an array of BookItem objects
+     */
+    public function findUpcomingBookItemsByUser(User $user): array
+    {
+        return $this->createQueryBuilder('bookItem')
+            ->innerJoin('bookItem.session', 's')
+            ->innerJoin('bookItem.booking', 'b')
+            ->addSelect('s', 'b')
+            ->andWhere('b.user = :user')
+            ->andWhere('b.status = :bookingStatus')
+            ->andWhere('s.startTime > :now')
+            ->setParameter('user', $user)
+            ->setParameter('bookingStatus', BookingStatus::Paid)
+            ->setParameter('now', new \DateTimeImmutable())
+            ->orderBy('s.startTime', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    public function findOneBySomeField($value): ?BookItem
-    //    {
-    //        return $this->createQueryBuilder('b')
-    //            ->andWhere('b.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * @return BookItem[] Returns an array of BookItem objects
+     */
+    public function findPastBookItemsByUser(User $user): array
+    {
+        return $this->createQueryBuilder('bookItem')
+            ->innerJoin('bookItem.session', 's')
+            ->innerJoin('bookItem.booking', 'b')
+            ->addSelect('s', 'b')
+            ->andWhere('b.user = :user')
+            ->andWhere('b.status = :bookingStatus')
+            ->andWhere('s.startTime <= :now')
+            ->setParameter('user', $user)
+            ->setParameter('bookingStatus', BookingStatus::Paid)
+            ->setParameter('now', new \DateTimeImmutable())
+            ->orderBy('s.startTime', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }
