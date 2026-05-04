@@ -49,7 +49,7 @@ final class ServiceController extends AbstractController
             $service->setCreatedAt(new \DateTimeImmutable());
             $service->setUpdatedAt(new \DateTimeImmutable());
 
-            // On sauvegarde le service en base de données
+            // On prépare l'entité pour l'enregistrement en base de données
             $this->entityManager->persist($service);
             // On flush pour exécuter la requête d'insertion en base de données
             $this->entityManager->flush();

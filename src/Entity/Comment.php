@@ -125,10 +125,11 @@ class Comment
 
     public function getDisplayStars(): string
     {
-        $fullStar = '<i class="fas fa-star" style="color: gold;"></i>';
-        $emptyStar = '<i class="far fa-star" style="color: gold;"></i>';
+        $fullStar = '<i class="fas fa-star"></i>';
+        $emptyStar = '<i class="far fa-star"></i>';
         $stars = '';
 
+        // Po
         for ($i = 1; $i <= 5; ++$i) {
             $stars .= $i <= $this->rating ? $fullStar : $emptyStar;
         }

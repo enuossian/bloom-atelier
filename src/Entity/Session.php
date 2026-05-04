@@ -202,6 +202,7 @@ class Session
         return $this;
     }
 
+    // Validation personnalisée pour vérifier que la durée de la session correspond à la durée du service
     #[Assert\Callback]
     public function validateDuration(ExecutionContextInterface $context): void
     {
@@ -233,6 +234,7 @@ class Session
         }
     }
 
+    // Compte le nombre de bookings payés pour cette session
     public function getPaidCount(): int
     {
         $paidCount = 0;
@@ -245,13 +247,9 @@ class Session
         return $paidCount;
     }
 
+    // Met à jour le statut de la session en fonction de la date et du nombre de places restantes
     public function updateStatus(): void
     {
-        // Session annulée, on ne touche pas au statut
-        if (SessionStatus::Cancelled === $this->status) {
-            return;
-        }
-
         // Session passée
         if ($this->endTime < new \DateTimeImmutable()) {
             $this->status = SessionStatus::Completed;

@@ -38,6 +38,7 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 					<th class="text-center">Prénom</th>
 					<th class="text-center">Nom</th>
 					<th class="text-center">Email</th>
+					<th class="text-center">Statut</th>
 					<th class="text-center">Téléphone</th>
 					<th class="text-center">Message</th>
 					<th class="text-center">Créé le</th>
@@ -50,6 +51,9 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 						<td class="text-center">{{ contact.firstName }}</td>
 						<td class="text-center">{{ contact.lastName }}</td>
 						<td class="text-center">{{ contact.email }}</td>
+						<td class="text-center">
+							<span class="badge bg-warning">{{ contact.user ? 'Inscris' : 'Visiteur' }}</span>
+						</td>
 						<td class="text-center">{{ contact.phone ? contact.phone : 'Non renseigné' }}</td>
 						<td class="text-center">
 							<a href="#" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-{{contact.id}}">Lire</a>

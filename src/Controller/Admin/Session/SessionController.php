@@ -19,13 +19,19 @@ final class SessionController extends AbstractController
         private readonly ServiceRepository $serviceRepository,
         private readonly SessionRepository $sessionRepository,
         private readonly EntityManagerInterface $entityManager,
-    ) {
-    }
+    ) {}
 
     #[Route('/session', name: 'app_admin_session_index', methods: ['GET'])]
     public function index(): Response
     {
         $sessions = $this->sessionRepository->findAll();
+
+        // met à jour le statut de chaque session avant de les afficher
+        foreach ($sessions as $session) {
+            $session->updateStatus();
+        }
+
+        $this->entityManager->flush();
 
         return $this->render('pages/admin/session/index.html.twig', [
             'sessions' => $sessions,
@@ -51,7 +57,7 @@ final class SessionController extends AbstractController
             $session->setCreatedAt(new \DateTimeImmutable());
             $session->setUpdatedAt(new \DateTimeImmutable());
 
-            $session->setReference('SESS-'.strtoupper(bin2hex(random_bytes(6))));
+            $session->setReference('SESS-' . strtoupper(bin2hex(random_bytes(6))));
 
             $this->entityManager->persist($session);
             $this->entityManager->flush();
@@ -78,7 +84,7 @@ final class SessionController extends AbstractController
     public function edit(Session $session, Request $request): Response
     {
         if ($session->getStartTime() < new \DateTimeImmutable()) {
-            $this->addFlash('warning', 'Vous ne pouvez pas modifier cette session car elle a déjà commencé.');
+            $this->addFlash('warning', 'Vous ne pouvez plus modifier cette session.');
 
             return $this->redirectToRoute('app_admin_session_index');
         }

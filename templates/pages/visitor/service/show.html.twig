@@ -96,7 +96,7 @@
 			</h2>
 
 			{% for session in sessions %}
-				<div class="d-flex align-items-center justify-content-between gap-3 bg-white border rounded p-4 mb-2">
+				<div class="d-flex align-items-center justify-content-between gap-3 bg-white shadow rounded p-4 mb-2">
 					<div>
 						<p class="fw-semibold mb-1">{{ session.startTime|format_date(pattern: "dd/MM/yyyy 'de' HH'h'mm") }}
 							{{ session.endTime|format_date(pattern: "'à' HH'h'mm") }}

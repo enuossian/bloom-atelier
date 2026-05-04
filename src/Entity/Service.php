@@ -54,6 +54,7 @@ class Service
     #[ORM\Column]
     private ?int $duration = null;
 
+    // Propriété non sauvegardée en bdd
     #[Assert\File(
         maxSize: '4M',
         extensions: ['png', 'jpg', 'jpeg', 'webp'],

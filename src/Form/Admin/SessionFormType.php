@@ -75,7 +75,7 @@ class SessionFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Session::class,
-            // mode édition à false par defaut, on le passe à true dans le controller pour la modification
+            // mode édition à false par defaut car création, on le passe à true dans le controller pour la modification
             'edit_mode' => false,
             // nombre de participants actuels, on initialise à 0 par défaut
             'current_participants' => 0,
