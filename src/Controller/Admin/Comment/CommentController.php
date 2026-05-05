@@ -50,7 +50,7 @@ final class CommentController extends AbstractController
             return $this->redirectToRoute('app_admin_comment_index');
         }
 
-        // Si le commentaire est inactif
+        // Si le commentaire est masqué
         if (!$comment->isVisible()) {
             // On le rend visible
             $comment->setIsVisible(true);

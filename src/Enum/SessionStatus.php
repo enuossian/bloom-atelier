@@ -17,6 +17,7 @@ enum SessionStatus: string
         };
     }
 
+    // badge couleur pour Bootstrap 5
     public function badge(): string
     {
         return match ($this) {

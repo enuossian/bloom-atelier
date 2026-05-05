@@ -129,7 +129,7 @@ class Comment
         $emptyStar = '<i class="far fa-star"></i>';
         $stars = '';
 
-        // Po
+        // Tant que $i est inférieur ou égal à la note, on ajoute une étoile pleine, sinon une étoile vide
         for ($i = 1; $i <= 5; ++$i) {
             $stars .= $i <= $this->rating ? $fullStar : $emptyStar;
         }

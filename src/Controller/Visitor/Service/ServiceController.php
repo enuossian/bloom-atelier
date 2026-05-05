@@ -24,8 +24,7 @@ final class ServiceController extends AbstractController
         private readonly EntityManagerInterface $entityManager,
         private readonly CommentRepository $commentRepository,
         private readonly BookingRepository $bookingRepository,
-    ) {
-    }
+    ) {}
 
     #[Route('/services', name: 'app_visitor_service_index', methods: ['GET'])]
     public function index(): Response
@@ -56,30 +55,38 @@ final class ServiceController extends AbstractController
          */
         $user = $this->getUser();
 
-        $hasBookedService = $user && $this->bookingRepository->hasUserBookedService($user, $service);
 
         // Si l'utilisateur a réservé le service, créer le formulaire de commentaire
-        $form = null;
+
+        $comment = new Comment();
+        $form = $this->createForm(CommentFormType::class, $comment);
+
+        $hasBookedService = $user && $this->bookingRepository->hasUserBookedService($user, $service);
+
         if ($hasBookedService) {
-            $comment = new Comment();
-            $form = $this->createForm(CommentFormType::class, $comment);
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $comment->setService($service);
-                $comment->setUser($user);
-                $comment->setCreatedAt(new \DateTimeImmutable());
+            if ($form->isSubmitted()) {
 
-                $this->entityManager->persist($comment);
-                $this->entityManager->flush();
+                if ($form->isValid()) {
 
-                $this->addFlash('success', 'Merci pour votre commentaire ! Il sera visible après validation par notre équipe.');
+                    $comment->setService($service);
+                    $comment->setUser($user);
+                    $comment->setCreatedAt(new \DateTimeImmutable());
 
-                return $this->redirectToRoute('app_visitor_service_show', [
-                    'id' => $service->getId(),
-                    'slug' => $service->getSlug(),
-                ]);
-            }
+                    $this->entityManager->persist($comment);
+                    $this->entityManager->flush();
+
+                    $this->addFlash('success', 'Merci pour votre commentaire ! Il sera visible après validation par notre équipe.');
+
+                    return $this->redirectToRoute('app_visitor_service_show', [
+                        'id' => $service->getId(),
+                        'slug' => $service->getSlug(),
+                    ]);
+                } else {
+                    $this->addFlash('danger', 'Le formulaire contient des erreurs. Veuillez les corriger et réessayer.');
+                }
+            } 
         }
 
         return $this->render('pages/visitor/service/show.html.twig', [
