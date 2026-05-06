@@ -282,7 +282,7 @@ final class BookingController extends AbstractController
         ]);
     }
 
-    #[Route('/booking/cancel', name: 'app_user_booking_cancel', methods: ['GET','POST'])]
+    #[Route('/booking/cancel', name: 'app_user_booking_cancel', methods: ['GET', 'POST'])]
     public function cancel(): Response
     {
         $this->addFlash('warning', 'Le paiement a été annulé.');

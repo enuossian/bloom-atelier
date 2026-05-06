@@ -24,7 +24,8 @@ final class ServiceController extends AbstractController
         private readonly EntityManagerInterface $entityManager,
         private readonly CommentRepository $commentRepository,
         private readonly BookingRepository $bookingRepository,
-    ) {}
+    ) {
+    }
 
     #[Route('/services', name: 'app_visitor_service_index', methods: ['GET'])]
     public function index(): Response
@@ -55,7 +56,6 @@ final class ServiceController extends AbstractController
          */
         $user = $this->getUser();
 
-
         // Si l'utilisateur a réservé le service, créer le formulaire de commentaire
 
         $comment = new Comment();
@@ -67,9 +67,7 @@ final class ServiceController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted()) {
-
                 if ($form->isValid()) {
-
                     $comment->setService($service);
                     $comment->setUser($user);
                     $comment->setCreatedAt(new \DateTimeImmutable());
@@ -83,10 +81,9 @@ final class ServiceController extends AbstractController
                         'id' => $service->getId(),
                         'slug' => $service->getSlug(),
                     ]);
-                } else {
-                    $this->addFlash('danger', 'Le formulaire contient des erreurs. Veuillez les corriger et réessayer.');
                 }
-            } 
+                $this->addFlash('danger', 'Le formulaire contient des erreurs. Veuillez les corriger et réessayer.');
+            }
         }
 
         return $this->render('pages/visitor/service/show.html.twig', [

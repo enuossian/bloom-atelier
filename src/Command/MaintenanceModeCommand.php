@@ -45,9 +45,9 @@ class MaintenanceModeCommand extends Command
         } elseif ('off' == $mode) {
             if (file_exists($maintenanceFile)) {
                 unlink($maintenanceFile);
-                $io->success('The maintenance mode is desactivated');
+                $io->success('The maintenance mode is deactivated');
             } else {
-                $io->warning('The maintenance mode is already desactivated');
+                $io->warning('The maintenance mode is already deactivated');
             }
         } else {
             $io->error("The maintenance mode value must be 'on' or 'off'");

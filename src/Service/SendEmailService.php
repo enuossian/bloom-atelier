@@ -25,7 +25,7 @@ class SendEmailService
             ->from(new Address($data['sender_email'], $data['sender_full_name']))
             ->to($data['recipient_email'])
             ->subject($data['subject'])
-            ->htmlTemplate('emails/contact_form_email.html')
+            ->htmlTemplate('emails/contact_form_email.html.twig')
             ->context($data['context'])
         ;
 

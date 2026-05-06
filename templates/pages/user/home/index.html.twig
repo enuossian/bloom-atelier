@@ -1,4 +1,4 @@
-{% extends 'themes/base_visitor.html.twig' %}
+{% extends 'themes/base_user.html.twig' %}
 
 {% block title %}Mon espace
 {% endblock %}
@@ -41,7 +41,7 @@
 								à
 								{{ bookItem.session.endTime|format_datetime(pattern="HH'h'mm") }}
 							</p>
-							<p class="text-muted small mb-0">{{ bookItem.session.location ? bookItem.session.location : 'Lieu non précisé' }}</p>
+							<p class="text-muted small mb-0">{{ bookItem.session.location ? bookItem.session.location : 'Lieu à convenir' }}</p>
 						</div>
 					</div>
 				{% endfor %}
@@ -64,9 +64,12 @@
 								{{ bookItem.session.endTime|format_datetime(pattern="HH'h'mm") }}
 							</p>
 							<p class="text-muted small mb-0">{{ bookItem.session.location ? bookItem.session.location : 'Lieu non précisé' }}</p>
-							<p class="text-muted small mb-0"> {{ bookItem.price }} €</p>
-							
+							<p class="text-muted small mb-0">
+								{{ bookItem.price }}
+								€</p>
 						</div>
+
+						{# Laisser un avis si le service est actif #}
 						{% if bookItem.session.service.isActive %}
 							<div>
 								<a href="{{ path('app_visitor_service_show', {'id': bookItem.session.service.id, 'slug': bookItem.session.service.slug}) }}#comment-container" class="btn btn-sm btn-brown border-0">Laisser un avis</a>
@@ -78,18 +81,19 @@
 				<p class="text-muted fw-light">Aucune session passée.</p>
 			{% endif %}
 		</section>
+
 		<section class="card border rounded-0 p-4 container-bg mt-5">
-    <div class="text-center">
-        <p class="fw-normal mb-2">Un changement d'avis ?</p>
-        <p class="text-muted mb-1">
-            Contactez notre support pour toute modification ou annulation de session.
-        </p>
-        <p class="text-muted mb-3">
-            Attention : les sessions qui débutent dans moins de 24h ne peuvent pas être modifiées ou annulées.
-        </p>
-        <a href="{{ path('app_visitor_contact_index') }}" class="btn btn-clear">Contacter le support</a>
-    </div>
-</section>
+			<div class="text-center">
+				<p class="fw-normal mb-2">Besoin d'aide ?</p>
+				<p class="text-muted mb-1">
+					Notre équipe est disponible pour répondre à vos questions concernant vos sessions.
+				</p>
+				<p class="text-muted mb-3">
+					Pour toute demande, contactez notre support.
+				</p>
+				<a href="{{ path('app_visitor_contact_index') }}" class="btn btn-clear">Contacter le support</a>
+			</div>
+		</section>
 
 	</div>
 {% endblock %}

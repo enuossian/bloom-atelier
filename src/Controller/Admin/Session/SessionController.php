@@ -19,7 +19,8 @@ final class SessionController extends AbstractController
         private readonly ServiceRepository $serviceRepository,
         private readonly SessionRepository $sessionRepository,
         private readonly EntityManagerInterface $entityManager,
-    ) {}
+    ) {
+    }
 
     #[Route('/session', name: 'app_admin_session_index', methods: ['GET'])]
     public function index(): Response
@@ -57,7 +58,7 @@ final class SessionController extends AbstractController
             $session->setCreatedAt(new \DateTimeImmutable());
             $session->setUpdatedAt(new \DateTimeImmutable());
 
-            $session->setReference('SESS-' . strtoupper(bin2hex(random_bytes(6))));
+            $session->setReference('SESS-'.strtoupper(bin2hex(random_bytes(6))));
 
             $this->entityManager->persist($session);
             $this->entityManager->flush();
@@ -75,7 +76,7 @@ final class SessionController extends AbstractController
     #[Route('/session/{id<\d+>}/show', name: 'app_admin_session_show', methods: ['GET'])]
     public function show(Session $session): Response
     {
-        return $this->render('/pages/admin/session/show.html.twig', [
+        return $this->render('pages/admin/session/show.html.twig', [
             'session' => $session,
         ]);
     }
@@ -105,7 +106,7 @@ final class SessionController extends AbstractController
             return $this->redirectToRoute('app_admin_session_index');
         }
 
-        return $this->render('/pages/admin/session/edit.html.twig', [
+        return $this->render('pages/admin/session/edit.html.twig', [
             'session' => $session,
             'sessionForm' => $form,
         ]);

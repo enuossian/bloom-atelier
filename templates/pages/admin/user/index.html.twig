@@ -39,7 +39,7 @@
                     <th class="text-center">Email</th>
                     <th class="text-center">Statut</th>
                     <th class="text-center">Rôles</th>
-                    <th class="text-center">Créé le</th>
+                    <th class="text-center">Inscrit le</th>
                     <th class="text-center">Modifié le</th>
                     <th class="text-center">Options</th>
                 </tr>
@@ -51,16 +51,16 @@
                         <td class="text-center">{{ user.firstName }}</td>
                         <td class="text-center">{{ user.lastName }}</td>
                         <td class="text-center">{{ user.email }}</td>                       
-                        <td class="text-center"> 
-                            {% if user.verifiedAt %}
-                                Compte vérifié le {{ user.verifiedAt|format_date() }}
+                        <td class="text-center">
+                            {% if user.isVerified %}
+                                Vérifié le {{user.verifiedAt|format_date()}}
                             {% else %}
-                                Compte non vérifié
-                            {% endif %}
+                                Non vérifié
+                            {% endif %}    
                         </td>
                         <td class="text-center">
                             {% for role in user.roles %}
-                                <span class="badge text-bg-secondary">{{ role }}</span>
+                                <span class="badge text-bg-dark">{{ role }}</span>
                             {% endfor %}
                         </td>                       
                         <td class="text-center">{{ user.createdAt|format_date() }}</td>

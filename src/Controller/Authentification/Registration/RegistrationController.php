@@ -69,7 +69,7 @@ class RegistrationController extends AbstractController
     #[Route('/inscription/en-attente-de-verification-du-compte', name: 'app_waiting_for_email_verif')]
     public function waitingForEmailVerif(): Response
     {
-        return $this->render('pages/authentication/registration/waiting_for_email_verif.twig');
+        return $this->render('pages/authentication/registration/waiting_for_email_verif.html.twig');
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]

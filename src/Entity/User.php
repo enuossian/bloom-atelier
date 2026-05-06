@@ -95,12 +95,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $bookings;
 
     /**
-     * @var Collection<int, Setting>
-     */
-    #[ORM\OneToMany(targetEntity: Setting::class, mappedBy: 'user')]
-    private Collection $settings;
-
-    /**
      * @var Collection<int, Contact>
      */
     #[ORM\OneToMany(targetEntity: Contact::class, mappedBy: 'user')]
@@ -115,7 +109,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
-        $this->settings = new ArrayCollection();
         $this->contacts = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -291,36 +284,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($booking->getUser() === $this) {
                 $booking->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Setting>
-     */
-    public function getSettings(): Collection
-    {
-        return $this->settings;
-    }
-
-    public function addSetting(Setting $setting): static
-    {
-        if (!$this->settings->contains($setting)) {
-            $this->settings->add($setting);
-            $setting->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSetting(Setting $setting): static
-    {
-        if ($this->settings->removeElement($setting)) {
-            // set the owning side to null (unless already changed)
-            if ($setting->getUser() === $this) {
-                $setting->setUser(null);
             }
         }
 

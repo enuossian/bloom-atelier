@@ -85,15 +85,19 @@
 
 				{% if booking.user %}
 					<div class="row g-3">
-						<div class="col-12 col-md-4">
-							<p class="small text-uppercase pink fw-light mb-1">Nom Prénom</p>
-							<span>{{ booking.user.lastName }} {{ booking.user.firstName }}</span>
+						<div class="col-12 col-md-3">
+							<p class="small text-uppercase pink fw-light mb-1">Nom</p>
+							<span>{{ booking.user.lastName }}</span>
 						</div>
-						<div class="col-12 col-md-4">
+						<div class="col-12 col-md-3">
+							<p class="small text-uppercase pink fw-light mb-1">Prénom</p>
+							<span>{{ booking.user.firstName }}</span>
+						</div>
+						<div class="col-12 col-md-3">
 							<p class="small text-uppercase pink fw-light mb-1">Email</p>
 							<span>{{ booking.user.email }}</span>
 						</div>
-						<div class="col-12 col-md-4">
+						<div class="col-12 col-md-3">
 							<p class="small text-uppercase pink fw-light mb-1">Inscrit le</p>
 							<span>{{ booking.user.createdAt|format_datetime(pattern: "dd/MM/yyyy") }}</span>
 						</div>

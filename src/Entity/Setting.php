@@ -14,9 +14,6 @@ class Setting
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'settings')]
-    private ?User $user = null;
-
     #[Assert\NotBlank(message: "L'email est obligatoire.")]
     #[Assert\Length(
         max: 180,
@@ -49,18 +46,6 @@ class Setting
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     public function getEmail(): ?string

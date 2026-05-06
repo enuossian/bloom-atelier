@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 #[Route('/admin')]
 final class UserController extends AbstractController
@@ -70,6 +69,7 @@ final class UserController extends AbstractController
         // empêcher la suppression d'un utilisateur possédant des réservations
         if (!$user->getBookings()->isEmpty()) {
             $this->addFlash('danger', "Impossible de supprimer l'utilisateur {$user->getFirstName()} {$user->getLastName()} car il possède des réservations.");
+
             return $this->redirectToRoute('app_admin_user_index');
         }
 
@@ -77,6 +77,7 @@ final class UserController extends AbstractController
             // message avant la suppression en bdd pour disposer des données de l'utilisateur
             $this->addFlash('success', "L'utilisateur {$user->getFirstName()} {$user->getLastName()} a été supprimé avec succès.");
 
+            // si l'utilisateur connecté est celui qui est supprimé, on le déconnecte avant de supprimer son compte en bdd
             if ($this->getUser() == $user) {
                 $this->container->get('security.token_storage')->setToken(null);
             }
