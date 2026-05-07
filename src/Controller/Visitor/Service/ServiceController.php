@@ -27,7 +27,7 @@ final class ServiceController extends AbstractController
     ) {
     }
 
-    #[Route('/services', name: 'app_visitor_service_index', methods: ['GET'])]
+    #[Route('/service', name: 'app_visitor_service_index', methods: ['GET'])]
     public function index(): Response
     {
         $services = $this->serviceRepository->findBy(['isActive' => true]);
@@ -61,6 +61,7 @@ final class ServiceController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
 
+        // 1er User pour vérifier si l'utilisateur est connecté, 2ème User pour vérifier s'il a réservé le service
         $hasBookedService = $user && $this->bookingRepository->hasUserBookedService($user, $service);
 
         if ($hasBookedService) {

@@ -35,7 +35,7 @@ final class ContactController extends AbstractController
              * @var User
              */
             $user = $this->getUser();
-            
+
             if (null != $user) {
                 $contact->setUser($user);
             }

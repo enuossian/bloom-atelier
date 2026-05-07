@@ -1,0 +1,16 @@
+<h2>Confirmation de votre réservation</h2>
+
+<p>Bonjour {{ booking.firstName }},</p>
+
+<p>Nous avons bien reçu votre réservation.</p>
+
+<p><strong>Détails :</strong></p>
+
+<ul>
+    <li>Date : {{ booking.date|date('d/m/Y') }}</li>
+    <li>Service : {{ booking.serviceName }}</li>
+</ul>
+
+<p>Nous vous contacterons rapidement pour finaliser les détails.</p>
+
+<p>Merci pour votre confiance.</p>

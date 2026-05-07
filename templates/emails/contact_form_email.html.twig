@@ -1,16 +1,37 @@
-<h2>Bonjour Hawa Diallo</h2>
+<div style="font-family: Arial, sans-serif; background:#faf7f5; padding:20px;">
 
-<p>Vous avez reçu un message de <strong>{{contact.firstName}} {{contact.firstName}}</strong>.</p>
+  <div style="max-width:600px; margin:auto; background:#ffffff; padding:20px; border-radius:8px;">
 
-<p>Voici ses coordonnées : </p>
-<ul>
-    <li><strong>Email</strong> : {{ contact.email }}</li>
-    <li><strong>Téléphone</strong> : {{ contact.phone ? contact.phone : 'Non renseigné'}}</li>
-</ul>
+    <h2 style="margin-top:0; font-family: Georgia, serif; font-weight:600; color:#c48b8b; text-align:center;">
+      Bloom Atelier
+    </h2>
 
-<p>Voici le message : </p>
-<div>
-    {{ contact.message|nl2br }}
+    <p style="color:#4a4a4a; line-height:1.6;">
+      Bonjour Hawa Diallo,
+    </p>
+
+    <p style="color:#4a4a4a; line-height:1.6;">
+      Vous avez reçu un message de
+      <strong>{{ contact.firstName }} {{ contact.lastName }}</strong>.
+    </p>
+
+    <p style="color:#4a4a4a; line-height:1.6; margin-top:15px;">
+      Voici ses coordonnées :
+    </p>
+
+    <ul style="color:#4a4a4a; line-height:1.6; padding-left:20px;">
+      <li><strong>Email</strong> : {{ contact.email }}</li>
+      <li><strong>Téléphone</strong> : {{ contact.phone ? contact.phone : 'Non renseigné' }}</li>
+    </ul>
+
+    <p style="color:#4a4a4a; line-height:1.6; margin-top:15px;">
+      Voici le message :
+    </p>
+
+    <p style="color:#4a4a4a; line-height:1.6; white-space:pre-line;">
+      {{ contact.message }}
+    </p>
+
+  </div>
+
 </div>
-
-<p>Ciao ciao</p>

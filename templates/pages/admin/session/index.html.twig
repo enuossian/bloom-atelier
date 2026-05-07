@@ -68,7 +68,7 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 								{{ session.status.label() }}
 							</span>
 						</td>
-						<td class="text-center">
+						<td class="text-center" data-order="{{ session.createdAt|date('Y-m-d H:i:s') }}">
 							<div class="d-flex flex-column align-items-center gap-1">
 								<span>Créé le {{ session.createdAt|format_date(pattern: "dd/MM/yyyy 'à' HH'h'mm") }}</span>
 								{% if session.updatedAt != session.createdAt %}

@@ -86,7 +86,7 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 								</form>
 							</div>
 						</td>
-						<td class="text-center">
+						<td class="text-center" data-order="{{ service.createdAt|date('Y-m-d H:i:s') }}">
 							<div class="d-flex flex-column align-items-center gap-1">
 								<span>Créé le {{ service.createdAt|format_date(pattern: "dd/MM/yyyy 'à' HH'h'mm") }}</span>
 								{% if service.updatedAt != service.createdAt %}
