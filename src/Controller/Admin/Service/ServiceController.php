@@ -32,7 +32,6 @@ final class ServiceController extends AbstractController
 
     #[Route('/service/create', name: 'app_admin_service_create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
-
     {   // On crée une nouvelle instance de Service
         $service = new Service();
 
@@ -44,12 +43,11 @@ final class ServiceController extends AbstractController
 
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
-
             // On définit les dates de création et de mise à jour du service
             $service->setCreatedAt(new \DateTimeImmutable());
             $service->setUpdatedAt(new \DateTimeImmutable());
 
-            // On sauvegarde le service en base de données
+            // On prépare l'entité pour l'enregistrement en base de données
             $this->entityManager->persist($service);
             // On flush pour exécuter la requête d'insertion en base de données
             $this->entityManager->flush();

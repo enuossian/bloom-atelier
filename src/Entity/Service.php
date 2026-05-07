@@ -54,6 +54,7 @@ class Service
     #[ORM\Column]
     private ?int $duration = null;
 
+    // Propriété non sauvegardée en bdd
     #[Assert\File(
         maxSize: '4M',
         extensions: ['png', 'jpg', 'jpeg', 'webp'],
@@ -66,7 +67,7 @@ class Service
     #[ORM\Column(length: 255, nullable: true, unique: true)]
     private ?string $image = null;
 
-    #[Assert\NotBlank(message: 'Le courte description est obligatoire.')]
+    #[Assert\NotBlank(message: 'La courte description est obligatoire.')]
     #[Assert\Length(
         max: 255,
         maxMessage: 'La courte description doit contenir au maximum {{ limit }} caractères.',
@@ -201,7 +202,7 @@ class Service
 
         return $this;
     }
-    
+
     public function getShortDescription(): ?string
     {
         return $this->shortDescription;

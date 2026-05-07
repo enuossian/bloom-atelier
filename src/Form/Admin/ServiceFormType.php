@@ -25,7 +25,7 @@ class ServiceFormType extends AbstractType
                 ],
             ])
             ->add('price', MoneyType::class, [
-                // la valeur par défaut est float mais Doctrine utilise string pour le type decimal
+                // la valeur par défaut est float mais Doctrine recommande string pour le type decimal
                 'input' => 'string',
                 'attr' => [
                     'class' => 'form-control',
@@ -34,7 +34,6 @@ class ServiceFormType extends AbstractType
                 'currency' => false,
             ])
             ->add('duration', IntegerType::class, [
-                'required' => true,
                 'attr' => [
                     // 'placeholder' => 'Ex: 180',
                     'class' => 'form-control',

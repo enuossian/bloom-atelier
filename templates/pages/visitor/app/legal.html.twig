@@ -2,13 +2,151 @@
 
 {% block title %}Mentions légales - Bloom Atelier{% endblock %}
 
-{% block description %}Mentions légales{% endblock %}
+{% block description %}Mentions légales du site Bloom Atelier{% endblock %}
 
-{% block keywords %}Mentions légales{% endblock %}
+{% block keywords %}mentions légales, Bloom Atelier{% endblock %}
 
 {% block main %}
 
-<div>
-    <h1 class="text-center my-3 display-5">Mentions légales</h1>
+<div class="container py-5">
+
+    <h1 class="text-center display-5 mb-5 cormorant-garamond">
+        Mentions légales
+    </h1>
+
+    <div class="mx-auto" style="max-width: 900px;">
+
+        <section class="mb-5">
+            <h2 class="fw-semibold mb-3 cormorant-garamond">1. Présentation du site</h2>
+
+            <p>
+                Conformément aux articles 6-III et 19 de la loi n°2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique,
+                il est porté à la connaissance des utilisateurs les informations suivantes :
+            </p>
+
+            <p>Nom du site : Bloom Atelier</p>
+            <p>Forme juridique : Auto-entrepreneur</p>
+            <p>Dénomination : Bloom Atelier</p>
+            <p>Adresse : 12 rue fictive, 75000 Paris</p>
+            <p>Téléphone : 06 00 00 00 00</p>
+            <p>Email : contact@bloomatelier.com</p>
+
+            <p>Créateur du site : Hawa Diallo</p>
+            <p>Responsable de publication : Hawa Diallo</p>
+            <p>Contact : contact@bloomatelier.com</p>
+
+            <p>Hébergement : OVH (ou autre hébergeur fictif)</p>
+        </section>
+
+        <section class="mb-5">
+            <h2 class="fw-semibold mb-3 cormorant-garamond">2. Conditions générales d’utilisation</h2>
+
+            <p>
+                L’utilisation du site implique l’acceptation pleine et entière des présentes conditions.
+                Ces conditions peuvent être modifiées à tout moment.
+            </p>
+
+            <p>
+                Le site est accessible 24h/24 et 7j/7, sauf interruption pour maintenance ou cas de force majeure.
+            </p>
+
+            <p>
+                Bloom Atelier ne peut être tenu responsable d’une interruption du service ou de dommages liés à son utilisation.
+            </p>
+        </section>
+
+        <section class="mb-5">
+            <h2 class="fw-semibold mb-3 cormorant-garamond">3. Description des services</h2>
+
+            <p>
+                Le site a pour objet de présenter les prestations de coaching beauté, maquillage et conseils en image proposées par Bloom Atelier.
+            </p>
+
+            <p>
+                Les informations sont données à titre indicatif et peuvent évoluer sans préavis.
+            </p>
+        </section>
+
+        <section class="mb-5">
+            <h2 class="fw-semibold mb-3 cormorant-garamond">4. Responsabilité</h2>
+
+            <p>
+                Bloom Atelier ne saurait être tenu responsable des erreurs ou omissions dans les informations publiées.
+            </p>
+
+            <p>
+                L’utilisateur est responsable de son matériel et de sa connexion internet.
+            </p>
+
+            <p>
+                Tout contenu inapproprié publié via les espaces interactifs pourra être supprimé sans préavis.
+            </p>
+        </section>
+
+        <section class="mb-5">
+            <h2 class="fw-semibold mb-3 cormorant-garamond">5. Propriété intellectuelle</h2>
+
+            <p>
+                Tous les contenus présents sur le site (textes, images, logos, éléments graphiques) sont protégés par le droit d’auteur.
+            </p>
+
+            <p>
+                Toute reproduction ou utilisation sans autorisation est interdite.
+            </p>
+        </section>
+
+        <section class="mb-5">
+            <h2 class="fw-semibold mb-3 cormorant-garamond">6. Liens hypertextes et cookies</h2>
+
+            <p>
+                Le site peut contenir des liens vers d’autres sites. Bloom Atelier ne peut être responsable de leur contenu.
+            </p>
+
+            <p>
+                Des cookies peuvent être utilisés pour améliorer la navigation et mesurer l’audience.
+                L’utilisateur peut configurer son navigateur pour les refuser.
+            </p>
+
+            <p>
+                Pour plus d’informations : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a>
+            </p>
+        </section>
+
+        <section class="mb-5">
+            <h2 class="fw-semibold mb-3 cormorant-garamond">7. Droit applicable</h2>
+
+            <p>
+                Le site et son utilisation sont soumis au droit français.
+            </p>
+
+            <p>
+                Tout litige relève des juridictions françaises compétentes.
+            </p>
+        </section>
+
+        <section class="mb-5">
+            <h2 class="fw-semibold mb-3 cormorant-garamond">8. Données personnelles</h2>
+
+            <p>
+                Les données personnelles collectées sont utilisées uniquement dans le cadre des services proposés par Bloom Atelier.
+            </p>
+
+            <p>
+                Conformément au RGPD, l’utilisateur dispose d’un droit d’accès, de rectification et de suppression de ses données.
+            </p>
+
+            <p>
+                Aucune donnée n’est vendue ou transmise à des tiers sans consentement.
+            </p>
+        </section>
+
+        <div class="text-center mt-5">
+            <a href="{{ path('visitor_home_index') }}" class="btn btn-dark rounded-pill px-4 py-2">
+                Retour à l'accueil
+            </a>
+        </div>
+
+    </div>
 </div>
+
 {% endblock %}

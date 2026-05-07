@@ -125,10 +125,11 @@ class Comment
 
     public function getDisplayStars(): string
     {
-        $fullStar = '<i class="fas fa-star" style="color: gold;"></i>';
-        $emptyStar = '<i class="far fa-star" style="color: gold;"></i>';
+        $fullStar = '<i class="fas fa-star"></i>';
+        $emptyStar = '<i class="far fa-star"></i>';
         $stars = '';
 
+        // Tant que $i est inférieur ou égal à la note, on ajoute une étoile pleine, sinon une étoile vide
         for ($i = 1; $i <= 5; ++$i) {
             $stars .= $i <= $this->rating ? $fullStar : $emptyStar;
         }

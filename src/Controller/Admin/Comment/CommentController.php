@@ -45,12 +45,12 @@ final class CommentController extends AbstractController
     #[Route('/comment/{id<\d+>}/visible', name: 'app_admin_comment_visible', methods: ['POST'])]
     public function visible(Comment $comment, Request $request): Response
     {
-        // si le token n'est pas valide on redirige vers admin service index
+        // si le token n'est pas valide on redirige vers admin comment index
         if (!$this->isCsrfTokenValid("visible-comment-{$comment->getId()}", $request->request->get('csrf_token'))) {
             return $this->redirectToRoute('app_admin_comment_index');
         }
 
-        // Si le commentaire est inactif
+        // Si le commentaire est masqué
         if (!$comment->isVisible()) {
             // On le rend visible
             $comment->setIsVisible(true);

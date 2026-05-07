@@ -5,7 +5,7 @@
 	— Bloom Atelier
 {% endblock %}
 
-{% block description %}Consultez les informations détaillées du service
+{% block description %}Consultez les informations détaillées du service et réservez votre session
 	{{ service.name }}
 {% endblock %}
 
@@ -18,9 +18,9 @@
 
 {% block main %}
 
-	{% include 'components/_alert.html.twig' %}
 
 	<div class="container my-4">
+		{% include 'components/_alert.html.twig' %}
 		<a href="{{path('app_visitor_service_index')}}" class="text-decoration-none">← Voir tous nos services</a>
 	</div>
 
@@ -28,11 +28,13 @@
 		<div class="container my-5">
 			<div class="row align-items-center g-5">
 
+				{# Image #}
+
 				<div class="col-md-6 order-md-2">
 					{% if service.image %}
 						<img src="{{ vich_uploader_asset(service, 'imageFile') }}" class="w-100 object-fit-cover rounded-0 shadow-sm" style="height: 60vh;" alt="{{ service.name }}">
 					{% else %}
-						<img src="{{ asset('images/static/maq.jpg') }}" class="w-100 object-fit-cover rounded-0 shadow-sm" style="height: 60vh;" alt="Image par défaut du service {{ service.name }}">
+						<img src="{{ asset('images/static/service-default.jpg') }}" class="w-100 object-fit-cover rounded-0 shadow-sm" style="height: 60vh;" alt="Image par défaut du service {{ service.name }}">
 					{% endif %}
 				</div>
 
@@ -68,27 +70,28 @@
 					<a href="{{ path('app_visitor_service_show', {'id': service.id, 'slug': service.slug}) }}#upcomingSessions" class="btn btn-brown px-5 py-3 rounded-0 align-self-start">
 						Voir les sessions disponibles
 					</a>
-
 				</div>
-
 			</div>
 		</div>
 	</header>
+
+	{# Description #}
 
 	<section class="bg-white py-5 my-5">
 		<div class="container">
 			<div class="mb-5">
 				<h2 class="display-6 fw-normal cormorant-garamond mb-5">
 					Déroulement de la
-					<span class="display-6 fw-normal cormorant-garamond pink">session</span>
+					<span class="display-6 fw-normal cormorant-garamond pink">prestation</span>
 				</h2>
 				<div>{{ service.description|raw }}</div>
 			</div>
-
 		</div>
 	</section>
 
-	<section class="py-5 my-5" id="upcomingSessions">
+	{# Sessions disponibles #}
+
+	<section class="py-5" id="upcomingSessions">
 		<div class="container">
 			<h2 class="display-6 fw-normal cormorant-garamond mb-5">
 				Sessions
@@ -96,7 +99,7 @@
 			</h2>
 
 			{% for session in sessions %}
-				<div class="d-flex align-items-center justify-content-between gap-3 bg-white border rounded p-4 mb-2">
+				<div class="d-flex align-items-center justify-content-between gap-3 bg-white shadow rounded p-4 mb-2">
 					<div>
 						<p class="fw-semibold mb-1">{{ session.startTime|format_date(pattern: "dd/MM/yyyy 'de' HH'h'mm") }}
 							{{ session.endTime|format_date(pattern: "'à' HH'h'mm") }}
@@ -116,6 +119,8 @@
 			{% endfor %}
 		</div>
 	</section>
+
+	{# Avis clients sur ce service #}
 
 	{% if comments is not empty %}
 		<section class="bg-brown text-light py-5">
@@ -161,6 +166,9 @@
 		</section>
 	{% endif %}
 
+	{# Formulaire de commentaire pour utilisateurs (connectés) ayant réservé le service #}
+
+
 	<section>
 		<div class="container my-5">
 			<h2 class="display-6 fw-normal cormorant-garamond mb-5">
@@ -178,7 +186,7 @@
 				</div>
 			{% else %}
 				<div id="comment-container">
-					{{ form_start(commentForm, {'action': path('app_visitor_service_show', {'id': service.id, 'slug': service.slug})~'#comment-container'}) }}
+					{{ form_start(commentForm) }}
 					<div class="mb-3">
 						<label for="comment_form_rating" class="form-label">Note</label>
 						{{ form_widget(commentForm.rating) }}

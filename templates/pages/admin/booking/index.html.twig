@@ -61,7 +61,7 @@
                     <td class="text-center">
                         {{ booking.confirmationSent ? 'Envoyée' : 'Non envoyée' }}
                     </td>
-                    <td class="text-center">{{booking.createdAt|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm")}}</td>
+                    <td class="text-center" data-order="{{ booking.createdAt|date('Y-m-d H:i:s') }}">{{booking.createdAt|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm")}}</td>
                     <td class="align-middle">
                         <div class="d-flex justify-content-center align-items-center">
                             <a href="{{path('app_admin_booking_show', {'id': booking.id})}}" class="btn btn-sm btn-outline-dark">voir</a>

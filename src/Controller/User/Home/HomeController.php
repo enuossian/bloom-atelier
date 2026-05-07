@@ -2,7 +2,7 @@
 
 namespace App\Controller\User\Home;
 
-use App\Repository\SessionRepository;
+use App\Repository\BookItemRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class HomeController extends AbstractController
 {
     public function __construct(
-        private readonly SessionRepository $sessionRepository,
+        private readonly BookItemRepository $bookItemRepository,
     ) {
     }
 
@@ -22,17 +22,17 @@ final class HomeController extends AbstractController
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
 
-        // récupérer les sessions fututres de l'utilisateur
-        $upcomingSessions = $this->sessionRepository->findUpcomingSessionsByUser($user);
+        // récupérer les bookItems futurs de l'utilisateur
+        $upcomingBookItems = $this->bookItemRepository->findUpcomingBookItemsByUser($user);
 
-        // récupérer les sessions passées de l'utilisateur
-        $passedSessions = $this->sessionRepository->findPastSessionsByUser($user);
+        // récupérer les bookItems passés de l'utilisateur
+        $passedBookItems = $this->bookItemRepository->findPastBookItemsByUser($user);
 
         return $this->render('pages/user/home/index.html.twig', [
-            'passedSessions' => $passedSessions,
-            'upcomingSessions' => $upcomingSessions,
-            'passedSessionsCounted' => count($passedSessions),
-            'upcomingSessionsCounted' => count($upcomingSessions),
+            'upcomingBookItems' => $upcomingBookItems,
+            'passedBookItems' => $passedBookItems,
+            'upcomingBookItemsCounted' => count($upcomingBookItems),
+            'passedBookItemsCounted' => count($passedBookItems),
         ]);
     }
 }

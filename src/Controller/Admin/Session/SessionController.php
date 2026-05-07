@@ -27,6 +27,13 @@ final class SessionController extends AbstractController
     {
         $sessions = $this->sessionRepository->findAll();
 
+        // met à jour le statut de chaque session avant de les afficher
+        foreach ($sessions as $session) {
+            $session->updateStatus();
+        }
+
+        $this->entityManager->flush();
+
         return $this->render('pages/admin/session/index.html.twig', [
             'sessions' => $sessions,
         ]);
@@ -69,7 +76,7 @@ final class SessionController extends AbstractController
     #[Route('/session/{id<\d+>}/show', name: 'app_admin_session_show', methods: ['GET'])]
     public function show(Session $session): Response
     {
-        return $this->render('/pages/admin/session/show.html.twig', [
+        return $this->render('pages/admin/session/show.html.twig', [
             'session' => $session,
         ]);
     }
@@ -78,7 +85,7 @@ final class SessionController extends AbstractController
     public function edit(Session $session, Request $request): Response
     {
         if ($session->getStartTime() < new \DateTimeImmutable()) {
-            $this->addFlash('warning', 'Vous ne pouvez pas modifier cette session car elle a déjà commencé.');
+            $this->addFlash('warning', 'Vous ne pouvez plus modifier cette session.');
 
             return $this->redirectToRoute('app_admin_session_index');
         }
@@ -99,7 +106,7 @@ final class SessionController extends AbstractController
             return $this->redirectToRoute('app_admin_session_index');
         }
 
-        return $this->render('/pages/admin/session/edit.html.twig', [
+        return $this->render('pages/admin/session/edit.html.twig', [
             'session' => $session,
             'sessionForm' => $form,
         ]);

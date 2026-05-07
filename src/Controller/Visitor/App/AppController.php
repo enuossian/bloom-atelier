@@ -48,4 +48,10 @@ final class AppController extends AbstractController
     {
         return $this->render('pages/visitor/app/legal.html.twig');
     }
+
+    #[Route('/politique-de-confidentialite', name: 'visitor_home_privacy')]
+    public function privacy(): Response
+    {
+        return $this->render('pages/visitor/app/privacy.html.twig');
+    }
 }

@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 #[Route('/admin')]
 final class UserController extends AbstractController
@@ -18,7 +17,6 @@ final class UserController extends AbstractController
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly EntityManagerInterface $entityManager,
-        private readonly TokenStorageInterface $tokenStorage,
     ) {
     }
 
@@ -36,7 +34,7 @@ final class UserController extends AbstractController
     public function editRoles(User $user, Request $request): Response
     {
         // éviter de passer par l'url pour modifier le rôle super admin
-        if (in_array('ROLE_SUPER_ADMIN', $user->getRoles())) {
+        if (in_array('ROLE_SUPER_ADMIN', $user->getRoles(), true)) {
             return $this->redirectToRoute('app_admin_user_index');
         }
 
@@ -64,23 +62,25 @@ final class UserController extends AbstractController
     public function delete(User $user, Request $request): Response
     {
         // sécurité supplémentaire empechant de passer par l'url afin de supprimer le super admin
-        if (in_array('ROLE_SUPER_ADMIN', $user->getRoles())) {
+        if (in_array('ROLE_SUPER_ADMIN', $user->getRoles(), true)) {
+            return $this->redirectToRoute('app_admin_user_index');
+        }
+
+        // empêcher la suppression d'un utilisateur possédant des réservations
+        if (!$user->getBookings()->isEmpty()) {
+            $this->addFlash('danger', "Impossible de supprimer l'utilisateur {$user->getFirstName()} {$user->getLastName()} car il possède des réservations.");
+
             return $this->redirectToRoute('app_admin_user_index');
         }
 
         if ($this->isCsrfTokenValid("delete-user-{$user->getId()}", $request->request->get('csrf_token'))) {
-            // détache les réservations de l'utilisateur avant de le supprimer pour un question d'historique
-            foreach ($user->getBookings() as $booking) {
-                $booking->setUser(null);
-            }
-            
-            // supprimer les informations de l'utilisateur connecté sauvegardées en session et sécuriser au niveau de symfony
-            if ($this->getUser() == $user) {
-                $this->tokenStorage->setToken(null);
-            }
-
             // message avant la suppression en bdd pour disposer des données de l'utilisateur
             $this->addFlash('success', "L'utilisateur {$user->getFirstName()} {$user->getLastName()} a été supprimé avec succès.");
+
+            // si l'utilisateur connecté est celui qui est supprimé, on le déconnecte avant de supprimer son compte en bdd
+            if ($this->getUser() == $user) {
+                $this->container->get('security.token_storage')->setToken(null);
+            }
 
             $this->entityManager->remove($user);
             $this->entityManager->flush();

@@ -27,7 +27,7 @@ final class ServiceController extends AbstractController
     ) {
     }
 
-    #[Route('/services', name: 'app_visitor_service_index', methods: ['GET'])]
+    #[Route('/service', name: 'app_visitor_service_index', methods: ['GET'])]
     public function index(): Response
     {
         $services = $this->serviceRepository->findBy(['isActive' => true]);
@@ -56,29 +56,34 @@ final class ServiceController extends AbstractController
          */
         $user = $this->getUser();
 
+        // Si l'utilisateur a réservé le service, créer le formulaire de commentaire
+
+        $comment = new Comment();
+        $form = $this->createForm(CommentFormType::class, $comment);
+
+        // 1er User pour vérifier si l'utilisateur est connecté, 2ème User pour vérifier s'il a réservé le service
         $hasBookedService = $user && $this->bookingRepository->hasUserBookedService($user, $service);
 
-        // Si l'utilisateur a réservé le service, créer le formulaire de commentaire
-        $form = null;
         if ($hasBookedService) {
-            $comment = new Comment();
-            $form = $this->createForm(CommentFormType::class, $comment);
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $comment->setService($service);
-                $comment->setUser($user);
-                $comment->setCreatedAt(new \DateTimeImmutable());
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $comment->setService($service);
+                    $comment->setUser($user);
+                    $comment->setCreatedAt(new \DateTimeImmutable());
 
-                $this->entityManager->persist($comment);
-                $this->entityManager->flush();
+                    $this->entityManager->persist($comment);
+                    $this->entityManager->flush();
 
-                $this->addFlash('success', 'Merci pour votre commentaire ! Il sera visible après validation par notre équipe.');
+                    $this->addFlash('success', 'Merci pour votre commentaire ! Il sera visible après validation par notre équipe.');
 
-                return $this->redirectToRoute('app_visitor_service_show', [
-                    'id' => $service->getId(),
-                    'slug' => $service->getSlug(),
-                ]);
+                    return $this->redirectToRoute('app_visitor_service_show', [
+                        'id' => $service->getId(),
+                        'slug' => $service->getSlug(),
+                    ]);
+                }
+                $this->addFlash('danger', 'Le formulaire contient des erreurs. Veuillez les corriger et réessayer.');
             }
         }
 

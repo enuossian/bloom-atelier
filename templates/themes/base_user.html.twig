@@ -3,77 +3,93 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>{% block title %}{% endblock %} - Bloom Atelier</title>
-		
+		<title>
+			{% block title %}{% endblock %}
+			- Bloom Atelier</title>
+
 
 		{# SEO #}
+		<meta name="robots" content="index, follow">
 		<meta name="description" content="{% block description %}{% endblock %}">
 		<meta name="keywords" content="{% block keywords %}{% endblock %}">
 		<meta name="author" content="Hawa Diallo">
-		<meta name="publisher" content="Enuossian">
+		<meta
+		name="publisher" content="Enuossian">
 
 
 		{# Google Font #}
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
 		{# Favicon #}
 
 
 		{# WebpackEncore CSS #}
-		{% block stylesheets %}
-			{{ encore_entry_link_tags('app') }}
+			{% block stylesheets %}
+		{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 
 		{# WebpackEncore JS #}
-		{% block javascripts %}
-			{{ encore_entry_script_tags('app') }}
+			{% block javascripts %}
+		{{ encore_entry_script_tags('app') }}
 		{% endblock %}
+
+		{# Font Awesome #}
+			{% block font_awesome %}
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> {% endblock %}
+
 	</head>
-		<body class="home-body">
+	<body class="home-body">
+
+		{% set clientPathInfo = app.request.pathInfo %}
+
 		{# Navbar #}
 
-			<nav class="navbar navbar-expand-lg bg-dark navbar-dark"> 
-				<div class="container-fluid">
-				<a class="navbar-brand" href="{{path('visitor_home_index')}}">Bloom Atelier</a>
+		<nav class="navbar navbar-expand-lg shadow py-4">
+			<div class="container-fluid">
+				<a class="navbar-brand fw-bold" href="{{path('visitor_home_index')}}">BLOOM ATELIER</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{path('app_user_home')}}">Tableau de bord</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{path('app_user_profile_index')}}">Mon profil</a>
-                        </li>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{path('app_admin_home')}}">Espace admin</a>
-                            </li>
-                        {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{path('visitor_home_index')}}">Retour au site</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
-                        </li>
-                    </ul>
-                </div>
+					<ul class="navbar-nav ms-auto gap-3">
+						<li class="nav-item">
+							<a class="btn btn-login btn-clear px-3 rounded-0" href="{{path('app_user_home')}}">Tableau de bord</a>
+						</li>
+						<li class="nav-item">
+							<a class="btn btn-login btn-clear px-3 rounded-0" href="{{path('app_user_profile_index')}}">Mon profil</a>
+						</li>
+						<li class="nav-item">
+							<a class="btn btn-login btn-clear px-3 rounded-0" href="{{path('visitor_home_index')}}">Retour au site</a>
+						</li>
+						{% if is_granted('ROLE_ADMIN') %}
+								<li class="nav-item">
+									<a class="btn btn-login btn-clear px-3 rounded-0" href="{{path('app_admin_home')}}">Espace admin</a>
+								</li>
+							{% endif %}
+						<li class="nav-item">
+							<a class="btn btn-brown px-3 rounded-0" href="{{path('app_logout')}}">DÉCONNEXION</a>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</nav>
 
 		{# Main #}
-        <main>
+		<main>
 			{% block main %}{% endblock %}
-        </main>
+		</main>
 
 		{# Footer #}
-        <footer class="text-center">
-            <p>Enuossian</p>
-			<a href="{{path('visitor_home_cgv')}}">CGV</a>
-			<a href="{{path('visitor_home_mentions')}}">Mentions légales</a>
-        </footer>
+		<footer class="text-center footer py-4">
+			<p class="text-brown-light">© 2026 BLOOM ATELIER</p>
+			<div class="text-light"></div>
+			<div class="d-flex gap-3 justify-content-center align-items-center">
+				<a href="{{path('visitor_home_cgv')}}" class="text-brown-light">CGV</a>
+				<a href="{{path('visitor_home_mentions')}}" class="text-brown-light">Mentions légales</a>
+				<a href="{{path('visitor_home_mentions')}}" class="text-brown-light">Politique de confidentialité</a>
+			</div>
+		</footer>
 	</body>
 </html>

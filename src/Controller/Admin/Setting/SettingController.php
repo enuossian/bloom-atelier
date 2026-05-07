@@ -3,7 +3,6 @@
 namespace App\Controller\Admin\Setting;
 
 use App\Entity\Setting;
-use App\Entity\User;
 use App\Form\Admin\SettingFormType;
 use App\Repository\SettingRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,11 +38,6 @@ final class SettingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var User
-             */
-            $admin = $this->getUser();
-            $setting->setUser($admin);
             $setting->setUpdatedAt(new \DateTimeImmutable());
 
             $this->entityManager->persist($setting);
