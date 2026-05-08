@@ -23,13 +23,12 @@
 						<p class="text-muted small mb-0">
 							{{ bookItem.session.startTime|format_datetime(pattern: "dd/MM/yyyy") }}
 							—
-							{{ bookItem.session.startTime|format_datetime(pattern: "HH'h'mm") }}
-							→
-							{{ bookItem.session.endTime|format_datetime(pattern: "HH'h'mm") }}
+							{{ bookItem.session.startTime|format_datetime(pattern: "'de' HH'h'mm") }}
+							{{ bookItem.session.endTime|format_datetime(pattern: "'à' HH'h'mm") }}
 						</p>
 						<p class="small d-flex align-items-center gap-3">{{ bookItem.price }}
 							€</p>
-						<p class="text-muted small mb-0">{{ bookItem.session.location ?? 'Lieu non précisé' }}</p>
+						<p class="text-muted small mb-0">{{ bookItem.session.location ?? 'Lieu à convenir' }}</p>
 					</div>
 					<div class="d-flex align-items-center gap-3">
 						<form action="{{ path('app_user_booking_remove_item', {'id': bookItem.id}) }}" method="POST">

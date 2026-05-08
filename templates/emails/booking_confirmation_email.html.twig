@@ -1,16 +1,66 @@
-<h2>Confirmation de votre réservation</h2>
+<div style="font-family: Arial, sans-serif; background:#faf7f5; padding:20px; color:#4a4a4a;">
 
-<p>Bonjour {{ booking.firstName }},</p>
+<div style="max-width:600px; margin:auto; background:#ffffff; padding:30px; border-radius:8px;">
 
-<p>Nous avons bien reçu votre réservation.</p>
+	<h2 style="margin-top:0; font-family: Georgia, serif; font-weight:600; color:#c48b8b; text-align:center;">
+		Confirmation de votre réservation
+	</h2>
 
-<p><strong>Détails :</strong></p>
+	<p style="line-height:1.6; font-size:15px;">
+		Bonjour {{ booking.user.firstName }},
+	</p>
 
-<ul>
-    <li>Date : {{ booking.date|date('d/m/Y') }}</li>
-    <li>Service : {{ booking.serviceName }}</li>
-</ul>
+	<p style="line-height:1.6; font-size:15px;">
+		Nous avons bien reçu votre réservation.
+	</p>
 
-<p>Nous vous contacterons rapidement pour finaliser les détails.</p>
+	<p style="line-height:1.6; font-size:15px;">
+		<strong>Référence :</strong>
+		{{ booking.reference }}
+	</p>
 
-<p>Merci pour votre confiance.</p>
+	<h3 style="margin-top:30px; font-size:15px; font-weight:700;">
+		Session(s) réservée(s)
+	</h3>
+
+	{% for item in booking.bookItems %}
+		<div style="padding:15px 0; border-bottom:1px solid #eeeeee;">
+
+			<p style="margin:0 0 8px 0; font-size:15px; font-weight:600;">
+				{{ item.session.service.name }}
+			</p>
+
+			<p style="margin:0; line-height:1.6; font-size:15px;">
+				{{ item.session.startTime|format_datetime(pattern: "dd/MM/yyyy") }}
+				—
+				{{ item.session.startTime|format_datetime(pattern: " 'de' HH'h'mm") }}
+				{{ item.session.endTime|format_datetime(pattern: " 'à' HH'h'mm") }}
+			</p>
+
+			<p style="margin:8px 0 0 0; line-height:1.6; font-size:15px;">
+				{{ item.session.location ?? 'Lieu à convenir' }}
+			</p>
+
+			<p style="margin:10px 0 0 0; font-size:15px; font-weight:600;">
+				{{ item.price }} €
+			</p>
+
+		</div>
+	{% endfor %}
+
+	<div style="margin-top:25px; padding-top:20px; border-top:2px solid #eeeeee;">
+
+		<p style="margin:0; font-size:15px; font-weight:700;">
+			Montant total payé :
+			{{ booking.totalAmount }} €
+		</p>
+
+	</div>
+
+	<p style="margin-top:30px; line-height:1.6; font-size:15px;">
+		Merci pour votre confiance et à bientôt.
+	</p>
+
+</div>
+
+</div>

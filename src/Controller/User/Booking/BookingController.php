@@ -8,6 +8,7 @@ use App\Entity\Session;
 use App\Enum\BookingStatus;
 use App\Enum\SessionStatus;
 use App\Repository\BookingRepository;
+use App\Service\SendEmailService;
 use App\Service\StripeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +24,7 @@ final class BookingController extends AbstractController
         private readonly BookingRepository $bookingRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly StripeService $stripeService,
+        private readonly SendEmailService $sendEmailService,
     ) {
     }
 
@@ -247,6 +249,22 @@ final class BookingController extends AbstractController
             // Mettre à jour le statut de chaque session réservée
             foreach ($booking->getBookItems() as $item) {
                 $item->getSession()->updateStatus();
+            }
+
+            // Envoyer l'email uniquement s'il n'a pas encore été envoyé
+            if (!$booking->isConfirmationSent()) {
+                $this->sendEmailService->sendEmail([
+                    'sender_email' => 'hello@bloomatelier.site',
+                    'sender_full_name' => 'Hawa Diallo',
+                    'recipient_email' => $booking->getUser()->getEmail(),
+                    'subject' => 'Confirmation de votre réservation',
+                    'html_template' => 'emails/booking_confirmation_email.html.twig',
+                    'context' => [
+                        'booking' => $booking,
+                    ],
+                ]);
+
+                $booking->setConfirmationSent(true);
             }
 
             $this->entityManager->flush();

@@ -7,17 +7,13 @@
     </h2>
 
     <p style="color:#4a4a4a; line-height:1.6;">
-      Bonjour,
+      Bonjour, veuillez confirmer votre adresse e-mail !
     </p>
 
     <p style="color:#4a4a4a; line-height:1.6;">
-      Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien suivant :
-    </p>
-
-    <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
-
-    <p style="color:#4a4a4a; line-height:1.6; margin-top:15px;">
-      Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+      Merci de confirmer votre adresse e-mail en cliquant sur le lien suivant : <br><br>
+    <a href="{{ signedUrl|raw }}">Confirmer mon adresse e-mail</a>.
+    Ce lien expirera dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
     </p>
 
   </div>
