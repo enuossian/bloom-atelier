@@ -23,7 +23,7 @@ class SettingFixtures extends Fixture
     {
         $setting = new Setting();
 
-        $setting->setEmail('hello@bloomatelier.com');
+        $setting->setEmail('hello@bloomatelier.site');
         $setting->setPhone('06 07 08 09 10');
         $setting->setCreatedAt(new \DateTimeImmutable());
         $setting->setUpdatedAt(new \DateTimeImmutable());

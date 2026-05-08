@@ -62,7 +62,7 @@ final class ServiceController extends AbstractController
         $form = $this->createForm(CommentFormType::class, $comment);
 
         // 1er User pour vérifier si l'utilisateur est connecté, 2ème User pour vérifier s'il a réservé le service
-        $hasBookedService = $user && $this->bookingRepository->hasUserBookedService($user, $service);
+        $hasBookedService = $user && $this->bookingRepository->hasUserPurchasedService($user, $service);
 
         if ($hasBookedService) {
             $form->handleRequest($request);

@@ -170,7 +170,11 @@ class Booking
 
     public function removeBookItem(BookItem $bookItem): static
     {
-        $this->bookItems->removeElement($bookItem);
+        if ($this->bookItems->removeElement($bookItem)) {
+            if ($bookItem->getBooking() === $this) {
+                $bookItem->setBooking(null);
+            }
+        }
 
         return $this;
     }

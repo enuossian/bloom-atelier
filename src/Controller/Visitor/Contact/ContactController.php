@@ -46,9 +46,9 @@ final class ContactController extends AbstractController
             $this->entityManager->flush();
 
             $this->sendEmailService->sendEmail([
-                'sender_email' => 'hello@bloomatelier.com',
+                'sender_email' => 'hello@bloomatelier.site',
                 'sender_full_name' => 'Hawa Diallo',
-                'recipient_email' => 'hello@bloomatelier.com',
+                'recipient_email' => 'hello@bloomatelier.site',
                 'subject' => 'Un nouveau message reçu sur votre site',
                 'html_template' => 'emails/contact_form_email.html.twig',
                 'context' => [
