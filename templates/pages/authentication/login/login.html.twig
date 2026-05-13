@@ -28,9 +28,9 @@
 		{% endblock %}
 	</head>
 
-	<body>
+	<body class="custom-auth-bg">
 
-		<main class="min-vh-100 d-flex align-items-center justify-content-center" style="background: radial-gradient(ellipse 70% 60% at 50% 40%, #e8788a 0%, #f09aaa 20%, #f7c0cc 45%, #fbe0e8 70%, #fef4f0 100%);">
+		<main class="min-vh-100 d-flex align-items-center justify-content-center">
 
 
 			<div class="container position-relative">
@@ -54,12 +54,12 @@
 								{% include 'components/_alert.html.twig' %}				
 
 								<div class="mb-3">
-									<label for="inputEmail">Adresse email</label>
+									<label for="inputEmail" class="form-label">Adresse email</label>
 									<input type="email" name="email" id="inputEmail" class="form-control" value="{{ last_username }}" required autofocus>
 								</div>
 
 								<div class="mb-4">
-									<label for="inputPassword">Mot de passe</label>
+									<label for="inputPassword" class="form-label">Mot de passe</label>
 									<input type="password" name="password" id="inputPassword" class="form-control" required>
 								</div>
 

@@ -21,11 +21,12 @@
 			<div class="col-md-8 col-lg-5 mx-auto shadow bg-white p-4">
 				{{ form_start(requestForm) }}
 				<div class="mb-3">
-					<label for="reset_password_request_form_email">Email</label>
+					<label for="reset_password_request_form_email" class="form-label">Email</label>
 					{{ form_widget(requestForm.email, {'attr': {
                     'class': 'form-control', 
                     'autofocus': 'autofocus'
                     }}) }}
+					<div class="text-danger">{{ form_errors(requestForm.email) }}</div>
 					<small>Entrez votre adresse email et nous vous enverrons le lien de réinitialisation de votre de mot passe.</small>
 				</div>
 				<div class="text-center">

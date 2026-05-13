@@ -19,6 +19,15 @@ $color-border: #b5a49a;
 $color-input-border: #cabcaa;
 $color-focus: #E8DDD0;
 
+$gradient-pink: radial-gradient(
+    ellipse 70% 60% at 50% 40%,
+    #e8788a 0%,
+    #f09aaa 20%,
+    #f7c0cc 45%,
+    #fbe0e8 70%,
+    #fef4f0 100%
+);
+
 // fonts
 $font-body: "Poppins", sans-serif;
 $font-display: "Cormorant Garamond", serif;

@@ -19,14 +19,19 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+		{# Webpack Encore #}
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
 	</head>
 
-	<body>
+	<body class="custom-auth-bg">
 
-		<main class="min-vh-100 d-flex align-items-center justify-content-center" style="background: radial-gradient(ellipse 70% 60% at 50% 40%, #e8788a 0%, #f09aaa 20%, #f7c0cc 45%, #fbe0e8 70%, #fef4f0 100%);">
+		<main class="min-vh-100 d-flex align-items-center justify-content-center">
 
 		
 
@@ -49,7 +54,7 @@
 
 							<div class="row mb-3">
 								<div class="col-md-6">
-									<label for="registration_form_firstName">
+									<label for="registration_form_firstName" class="form-label">
 										Prénom
 										<span class="text-danger">*</span>
 									</label>
@@ -58,7 +63,7 @@
 								</div>
 
 								<div class="col-md-6">
-									<label for="registration_form_lastName">
+									<label for="registration_form_lastName" class="form-label">
 										Nom
 										<span class="text-danger">*</span>
 									</label>
@@ -68,7 +73,8 @@
 							</div>
 
 							<div class="mb-3">
-								<label for="registration_form_email">Email
+								<label for="registration_form_email" class="form-label">
+									Email
 									<span class="text-danger">*</span>
 								</label>
 								{{ form_widget(registrationForm.email, {attr: {class: 'form-control'}}) }}
@@ -76,7 +82,8 @@
 							</div>
 
 							<div class="mb-3">
-								<label for="registration_form_password_first">Mot de passe
+								<label for="registration_form_password_first" class="form-label">
+									Mot de passe
 									<span class="text-danger">*</span>
 								</label>
 								{{ form_widget(registrationForm.password.first, {attr: {class: 'form-control'}}) }}
@@ -84,7 +91,8 @@
 							</div>
 
 							<div class="mb-3">
-								<label for="registration_form_password_second">Confirmation du mot de passe
+								<label for="registration_form_password_second" class="form-label">
+									Confirmation du mot de passe
 									<span class="text-danger">*</span>
 								</label>
 								{{ form_widget(registrationForm.password.second, {attr: {class: 'form-control'}}) }}
@@ -93,7 +101,7 @@
 
 							<div class="mb-4">
 								{{ form_widget(registrationForm.agreeTerms, {attr: {class: 'form-check-input'}}) }}
-								<label for="registration_form_agreeTerms">
+								<label for="registration_form_agreeTerms" class="form-label">
 									J’accepte les
 									<a href="{{ path('visitor_home_cgv') }}" target="_blank">
 										conditions générales d’utilisation

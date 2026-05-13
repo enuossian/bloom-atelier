@@ -38,7 +38,7 @@ class RegistrationController extends AbstractController
             /** @var string $password */
             $password = $form->get('password')->getData();
 
-            // encode the plain password
+            // encode the password
             $user->setPassword($userPasswordHasher->hashPassword($user, $password));
             $user->setRoles(['ROLE_USER']);
             $user->setCreatedAt(new \DateTimeImmutable());
