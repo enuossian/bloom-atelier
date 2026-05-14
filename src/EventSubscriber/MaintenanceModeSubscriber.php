@@ -20,15 +20,21 @@ class MaintenanceModeSubscriber implements EventSubscriberInterface
     {
         $maintenanceFile = $this->projectDir.'/var/maintenance.lock';
 
+        // Si le fichier de maintenance n'existe pas, on ne fait rien
         if (!file_exists($maintenanceFile)) {
             return;
         }
 
+        // Sinon, on affiche la page de maintenance
         $template = $this->twig->render('pages/maintenance_mode/index.html.twig');
 
+        // On crée une réponse avec la page de maintenance et le code HTTP 503 Service Unavailable
         $response = new Response($template, Response::HTTP_SERVICE_UNAVAILABLE);
 
+        // On définit la réponse dans l'événement
         $event->setResponse($response);
+
+        // On arrête la propagation de l'événement
         $event->stopPropagation();
     }
 

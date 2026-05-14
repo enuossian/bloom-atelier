@@ -42,7 +42,7 @@ class Booking
     /**
      * @var Collection<int, BookItem>
      */
-    #[ORM\OneToMany(targetEntity: BookItem::class, mappedBy: 'booking', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: BookItem::class, mappedBy: 'booking', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $bookItems;
 
     public function __construct()

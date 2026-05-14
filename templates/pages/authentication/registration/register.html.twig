@@ -15,18 +15,24 @@
 		<meta name="author" content="Hawa Diallo">
 		<meta name="publisher" content="Enuossian">
 
+		{# Google Font #}
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
+		{# Webpack Encore #}
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
 	</head>
 
-	<body>
+	<body class="custom-auth-bg">
 
-		<main class="min-vh-100 d-flex align-items-center justify-content-center" style="background: radial-gradient(ellipse 70% 60% at 50% 40%, #e8788a 0%, #f09aaa 20%, #f7c0cc 45%, #fbe0e8 70%, #fef4f0 100%);">
+		<main class="min-vh-100 d-flex align-items-center justify-content-center">
 
 		
 
@@ -36,8 +42,8 @@
 
 						<div class="bg-white p-4 p-md-5 rounded-4 shadow">
 
-							<h1 class="text-center fw-bold my-4 cormorant-garamond">Bloom Atelier</h1>
-							<h2 class="text-center fw-light fs-3 my-4">Inscrivez-vous</h2>
+							<h1 class="text-center fw-bold fs-2 my-4 cormorant-garamond text-uppercase">Bloom Atelier</h1>
+							<h2 class="text-center fw-light fs-4 my-4">Inscrivez-vous</h2>
 
 							{% for flash_error in app.flashes('verify_email_error') %}
 								<div class="alert alert-danger text-center">
@@ -49,7 +55,7 @@
 
 							<div class="row mb-3">
 								<div class="col-md-6">
-									<label for="registration_form_firstName">
+									<label for="registration_form_firstName" class="form-label">
 										Prénom
 										<span class="text-danger">*</span>
 									</label>
@@ -58,7 +64,7 @@
 								</div>
 
 								<div class="col-md-6">
-									<label for="registration_form_lastName">
+									<label for="registration_form_lastName" class="form-label">
 										Nom
 										<span class="text-danger">*</span>
 									</label>
@@ -68,7 +74,8 @@
 							</div>
 
 							<div class="mb-3">
-								<label for="registration_form_email">Email
+								<label for="registration_form_email" class="form-label">
+									Email
 									<span class="text-danger">*</span>
 								</label>
 								{{ form_widget(registrationForm.email, {attr: {class: 'form-control'}}) }}
@@ -76,7 +83,8 @@
 							</div>
 
 							<div class="mb-3">
-								<label for="registration_form_password_first">Mot de passe
+								<label for="registration_form_password_first" class="form-label">
+									Mot de passe
 									<span class="text-danger">*</span>
 								</label>
 								{{ form_widget(registrationForm.password.first, {attr: {class: 'form-control'}}) }}
@@ -84,7 +92,8 @@
 							</div>
 
 							<div class="mb-3">
-								<label for="registration_form_password_second">Confirmation du mot de passe
+								<label for="registration_form_password_second" class="form-label">
+									Confirmation du mot de passe
 									<span class="text-danger">*</span>
 								</label>
 								{{ form_widget(registrationForm.password.second, {attr: {class: 'form-control'}}) }}
@@ -93,7 +102,7 @@
 
 							<div class="mb-4">
 								{{ form_widget(registrationForm.agreeTerms, {attr: {class: 'form-check-input'}}) }}
-								<label for="registration_form_agreeTerms">
+								<label for="registration_form_agreeTerms" class="form-label">
 									J’accepte les
 									<a href="{{ path('visitor_home_cgv') }}" target="_blank">
 										conditions générales d’utilisation

@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 class MaintenanceModeCommand extends Command
 {
     public function __construct(
+        // Le chemin racine du projet est injecté via l'autowiring
         #[Autowire('%kernel.project_dir%')] private readonly string $projectDir,
     ) {
         parent::__construct();

@@ -23,7 +23,7 @@ enum SessionStatus: string
         return match ($this) {
             SessionStatus::Available => 'success',
             SessionStatus::Full => 'warning',
-            SessionStatus::Completed => 'secondary',
+            SessionStatus::Completed => 'dark',
         };
     }
 }
