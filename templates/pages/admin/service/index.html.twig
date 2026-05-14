@@ -76,7 +76,7 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 								{% if service.isActive %}
 									<p class="badge text-bg-primary">Actif</p>
 								{% else %}
-									<p class="badge text-bg-secondary">Inactif</p>
+									<p class="badge text-bg-dark">Inactif</p>
 								{% endif %}
 								<form action="{{ path('app_admin_service_active', {'id': service.id})}}" method="post">
 									<div class="form-check form-switch">

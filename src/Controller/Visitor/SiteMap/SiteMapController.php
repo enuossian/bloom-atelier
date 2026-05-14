@@ -36,6 +36,8 @@ final class SiteMapController extends AbstractController
             $urls[] = [
                 'loc' => $this->generateUrl('app_visitor_service_show', ['id' => $service->getId(), 'slug' => $service->getSlug()]),
                 'lastmod' => $service->getUpdatedAt()->format('Y-m-d'),
+                'priority' => '0.9',
+                'changefreq' => 'weekly',
             ];
         }
 

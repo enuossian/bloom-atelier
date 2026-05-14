@@ -5,4 +5,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /user/
 
-Sitemap: https://bloom-atelier/sitemap.xml
+Sitemap: https://bloom-atelier.site/sitemap.xml

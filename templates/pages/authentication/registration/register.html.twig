@@ -15,9 +15,10 @@
 		<meta name="author" content="Hawa Diallo">
 		<meta name="publisher" content="Enuossian">
 
+		{# Google Font #}
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
 		{# Webpack Encore #}
 		{% block stylesheets %}
@@ -41,8 +42,8 @@
 
 						<div class="bg-white p-4 p-md-5 rounded-4 shadow">
 
-							<h1 class="text-center fw-bold my-4 cormorant-garamond">Bloom Atelier</h1>
-							<h2 class="text-center fw-light fs-3 my-4">Inscrivez-vous</h2>
+							<h1 class="text-center fw-bold fs-2 my-4 cormorant-garamond text-uppercase">Bloom Atelier</h1>
+							<h2 class="text-center fw-light fs-4 my-4">Inscrivez-vous</h2>
 
 							{% for flash_error in app.flashes('verify_email_error') %}
 								<div class="alert alert-danger text-center">

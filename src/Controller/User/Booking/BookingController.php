@@ -139,6 +139,7 @@ final class BookingController extends AbstractController
 
             // Supprimer le Booking s'il est vide pour éviter des paniers orphelins en BDD
             if ($booking->getBookItems()->isEmpty()) {
+                $this->entityManager->flush(); // Nécessaire pour que le BookItem soit supprimé avant de supprimer le Booking
                 $this->entityManager->remove($booking);
             } else {
                 // Recalculer le montant total et mettre à jour la date de modification
