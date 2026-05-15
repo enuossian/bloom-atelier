@@ -18,7 +18,7 @@
     - ```npm run build```
 
 4. Créer un fichier .env.local et configurer les variables d'environnement :
-    - ```DATABASE_URL="mysql://root:root@127.0.0.1:3306/bloom_atelier"```
+    - ```DATABASE_URL="mysql://user:password@127.0.0.1:3306/db_name```
     - ```MAILER_DSN=your_mailer_dsn```
     - ```STRIPE_SECRET_KEY=your_stripe_secret_key```
 
