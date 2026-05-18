@@ -23,7 +23,6 @@ parameters:
         - '#Property App\\Entity\\Booking::\$id \(int\|null\) is never assigned int so it can be removed from the property type.#'
         - '#Property App\\Entity\\Booking::\$status \(App\\Enum\\BookingStatus\|null\) is never assigned null so it can be removed from the property type\.#'
         - '#Property App\\Entity\\BookItem::\$id \(int\|null\) is never assigned int so it can be removed from the property type.#'
-        - '#Property App\\Entity\\Booking::\$confirmationSent \(bool\|null\) is never assigned null so it can be removed from the property type.#'
         - '#Property App\\Entity\\Setting::\$id \(int\|null\) is never assigned int so it can be removed from the property type.#'
         - '#Property App\\Entity\\Contact::\$id \(int\|null\) is never assigned int so it can be removed from the property type.#'
         - '#Property App\\Entity\\Comment::\$id \(int\|null\) is never assigned int so it can be removed from the property type.#'        
