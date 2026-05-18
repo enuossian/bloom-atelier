@@ -26,8 +26,8 @@ class Booking
     #[ORM\Column(enumType: BookingStatus::class)]
     private ?BookingStatus $status = BookingStatus::Pending;
 
-    #[ORM\Column]
-    private ?bool $confirmationSent = false;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $confirmationSent = false;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;

@@ -36,7 +36,6 @@
         <table id="myTable" class="table table-hover table-bordered">
             <thead class="table-danger">
                 <tr>
-                    <th class="fw-bold text-center">Id</th>
                     <th class="fw-bold text-center">Référence</th>
                     <th class="fw-bold text-center">Client</th>
                     <th class="fw-bold text-center">Montant total</th>
@@ -49,7 +48,6 @@
             <tbody> 
                 {% for booking in bookings %}
                 <tr>
-                    <td class="text-center">{{booking.id}}</td>
                     <td class="text-center">{{booking.reference}}</td>
                     <td class="text-center">
                         {{ booking.user ? booking.user.firstName ~ ' ' ~ booking.user.lastName : 'Client supprimé' }}
@@ -59,7 +57,7 @@
                         <span class="badge text-bg-dark">{{ booking.status.label() }}</span>
                     </td>
                     <td class="text-center">
-                        {{ booking.confirmationSent ? 'Envoyée' : 'Non envoyée' }}
+                        {{ booking.isConfirmationSent() == true ? 'Envoyée' : 'Non envoyée' }}
                     </td>
                     <td class="text-center" data-order="{{ booking.createdAt|date('Y-m-d H:i:s') }}">{{booking.createdAt|format_datetime(pattern: "dd/MM/yyyy 'à' HH'h'mm")}}</td>
                     <td class="align-middle">

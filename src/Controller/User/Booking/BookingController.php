@@ -125,32 +125,34 @@ final class BookingController extends AbstractController
     public function removeItem(BookItem $bookItem, Request $request): Response
     {
         // Vérifier le token CSRF
-        if ($this->isCsrfTokenValid("booking-remove-{$bookItem->getId()}", $request->request->get('csrf_token'))) {
-            $booking = $bookItem->getBooking();
-
-            // Vérifier que le panier appartient à l'utilisateur connecté
-            if ($booking->getUser() !== $this->getUser()) {
-                throw $this->createAccessDeniedException();
-            }
-
-            // Supprimer le BookItem (orphanRemoval=true le supprime automatiquement en BDD)
-            // removeBookItem() dissocie également le BookItem de son Booking via setBooking(null)
-            $booking->removeBookItem($bookItem);
-
-            // Supprimer le Booking s'il est vide pour éviter des paniers orphelins en BDD
-            if ($booking->getBookItems()->isEmpty()) {
-                $this->entityManager->flush(); // Nécessaire pour que le BookItem soit supprimé avant de supprimer le Booking
-                $this->entityManager->remove($booking);
-            } else {
-                // Recalculer le montant total et mettre à jour la date de modification
-                $booking->setTotalAmount($booking->calculateTotalAmount());
-                $booking->setUpdatedAt(new \DateTimeImmutable());
-            }
-
-            $this->entityManager->flush();
-
-            $this->addFlash('success', 'La session a été supprimée du panier.');
+        if (!$this->isCsrfTokenValid("booking-remove-{$bookItem->getId()}", $request->request->get('csrf_token'))) {
+            return $this->redirectToRoute('app_user_booking_index');
         }
+
+        $booking = $bookItem->getBooking();
+
+        // Vérifier que le panier appartient à l'utilisateur connecté
+        if ($booking->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        // Supprimer le BookItem (orphanRemoval=true le supprime automatiquement en BDD)
+        // removeBookItem() dissocie également le BookItem de son Booking via setBooking(null)
+        $booking->removeBookItem($bookItem);
+
+        // Supprimer le Booking s'il est vide pour éviter des paniers orphelins en BDD
+        if ($booking->getBookItems()->isEmpty()) {
+            $this->entityManager->flush(); // Nécessaire pour que le BookItem soit supprimé avant de supprimer le Booking
+            $this->entityManager->remove($booking);
+        } else {
+            // Recalculer le montant total et mettre à jour la date de modification
+            $booking->setTotalAmount($booking->calculateTotalAmount());
+            $booking->setUpdatedAt(new \DateTimeImmutable());
+        }
+
+        $this->entityManager->flush();
+
+        $this->addFlash('success', 'La session a été supprimée du panier.');
 
         return $this->redirectToRoute('app_user_booking_index');
     }

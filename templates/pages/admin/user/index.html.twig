@@ -33,7 +33,6 @@
         <table id="myTable" class="table table-hover table-bordered">
             <thead class="table-danger">
                 <tr>
-                    <th class="text-center">Id</th>
                     <th class="text-center">Prénom</th>
                     <th class="text-center">Nom</th>
                     <th class="text-center">Email</th>
@@ -47,7 +46,6 @@
             <tbody> 
                 {% for user in users %}
                     <tr>
-                        <td class="text-center">{{ user.id }}</td>
                         <td class="text-center">{{ user.firstName }}</td>
                         <td class="text-center">{{ user.lastName }}</td>
                         <td class="text-center">{{ user.email }}</td>                       

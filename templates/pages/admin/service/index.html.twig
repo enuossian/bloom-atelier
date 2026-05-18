@@ -44,7 +44,6 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 		<table id="myTable" class="table table-hover table-bordered align-middle">
 			<thead class="table-danger">
 				<tr>
-					<th class="text-center">Id</th>
 					<th class="text-center">Image</th>
 					<th class="text-center">Service</th>
 					<th class="text-center">Prix</th>
@@ -57,7 +56,6 @@ url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/fr-FR.json'
 			<tbody>
 				{% for service in services %}
 					<tr>
-						<td class="text-center">{{ service.id }}</td>
 						<td class="text-center">
 							<div class="d-flex justify-content-center align-items-center">
 								{% if service.image %}
