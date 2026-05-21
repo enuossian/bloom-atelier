@@ -33,19 +33,15 @@
 		{% endblock %}
 	</head>
 
-	<body class="custom-auth-bg">
-
+	<body>
 		<main class="min-vh-100 d-flex align-items-center justify-content-center">
-
-		
-
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-md-10 col-lg-6 col-xl-5">
 
 						<div class="bg-white p-4 p-md-5 rounded-4 shadow">
 
-							<h1 class="text-center fw-bold fs-2 my-4 cormorant-garamond text-uppercase">Bloom Atelier</h1>
+							<h1 class="navbar-brand text-center fw-bold fs-2 my-4 cormorant-garamond text-uppercase">Bloom Atelier</h1>
 							<h2 class="text-center fw-light fs-4 my-4">Inscrivez-vous</h2>
 
 							{% for flash_error in app.flashes('verify_email_error') %}
